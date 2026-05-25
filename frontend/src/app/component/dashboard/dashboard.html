@@ -1,0 +1,145 @@
+<div class="max-w-6xl mx-auto px-4 py-16 flex flex-col items-center justify-center min-h-[calc(100vh-4rem)]">
+  <!-- Brand Header -->
+  <div class="text-center mb-16 space-y-4 animate-fade-in">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/20 bg-violet-500/5 text-violet-300 text-xs font-medium tracking-wide backdrop-blur-sm">
+      <span class="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse"></span>
+      Standalone Language App
+    </div>
+    <h1 class="text-5xl md:text-6xl font-black tracking-tight select-none">
+      <span class="bg-clip-text text-transparent bg-gradient-to-r from-slate-100 via-slate-200 to-slate-400">
+        Learn German
+      </span>
+      <span class="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-indigo-400 to-cyan-400">
+        in Bangla
+      </span>
+    </h1>
+    <p class="text-lg text-slate-400 font-light max-w-xl mx-auto leading-relaxed">
+      বাংলায় সহজ ও আকর্ষণীয় পদ্ধতিতে জার্মান ভাষা শিখুন। বর্ণমালা ও সংখ্যা দিয়ে আপনার যাত্রা শুরু করুন।
+    </p>
+  </div>
+
+  <!-- Cards Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full max-w-6xl">
+    <!-- Alphabet Card -->
+    <a routerLink="/alphabet" 
+       class="group relative flex flex-col justify-between p-8 rounded-2xl bg-slate-900/40 backdrop-blur-xl border border-slate-800/80 hover:border-violet-500/50 hover:shadow-[0_0_30px_rgba(139,92,246,0.15)] transition-all duration-300 transform hover:-translate-y-1 active:scale-[0.99] overflow-hidden cursor-pointer">
+      <!-- Glow effect -->
+      <div class="absolute inset-0 bg-gradient-to-br from-violet-600/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      
+      <div>
+        <div class="w-12 h-12 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-400 text-2xl font-bold mb-6 group-hover:scale-110 transition-transform duration-300">
+          Aa
+        </div>
+        <h2 class="text-2xl font-bold text-slate-100 mb-3 flex items-center gap-2">
+          German Alphabet
+          <span class="text-violet-400">বর্ণমালা</span>
+        </h2>
+        <p class="text-slate-400 text-sm leading-relaxed mb-6 font-light">
+          জার্মান বর্ণমালা (A-Z ও Umlauts) শিখুন এবং উচ্চারণ পরীক্ষা করুন। বাংলা অর্থ ও উচ্চারণ সহ কুইজ।
+        </p>
+      </div>
+
+      <div class="flex items-center justify-between mt-auto">
+        <span class="text-xs text-violet-300 font-semibold tracking-wider uppercase group-hover:text-violet-200 transition-colors">
+          Start Quiz &rarr;
+        </span>
+        <span class="text-xs px-2.5 py-1 rounded-md bg-violet-500/10 border border-violet-500/20 text-violet-300 font-medium">
+          30 Letters
+        </span>
+      </div>
+    </a>
+
+    <!-- Numbers Card -->
+    <a routerLink="/numbers" 
+       class="group relative flex flex-col justify-between p-8 rounded-2xl bg-slate-900/40 backdrop-blur-xl border border-slate-800/80 hover:border-cyan-500/50 hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] transition-all duration-300 transform hover:-translate-y-1 active:scale-[0.99] overflow-hidden cursor-pointer">
+      <!-- Glow effect -->
+      <div class="absolute inset-0 bg-gradient-to-br from-cyan-600/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+      <div>
+        <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 text-2xl font-bold mb-6 group-hover:scale-110 transition-transform duration-300">
+          123
+        </div>
+        <h2 class="text-2xl font-bold text-slate-100 mb-3 flex items-center gap-2">
+          German Numbers
+          <span class="text-cyan-400">সংখ্যাসমূহ</span>
+        </h2>
+        <p class="text-slate-400 text-sm leading-relaxed mb-6 font-light">
+          জার্মান গণনা (০ থেকে ১০০) সহজ নিয়মে শিখুন। সঠিক বাংলা উচ্চারণ মিলিয়ে আপনার মেধা যাচাই করুন।
+        </p>
+      </div>
+
+      <div class="flex items-center justify-between mt-auto">
+        <span class="text-xs text-cyan-300 font-semibold tracking-wider uppercase group-hover:text-cyan-200 transition-colors">
+          Start Quiz &rarr;
+        </span>
+        <span class="text-xs px-2.5 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 font-medium">
+          101 Numbers
+        </span>
+      </div>
+    </a>
+
+    <!-- Vocabulary Card -->
+    <a routerLink="/vocabulary" 
+       class="group relative flex flex-col justify-between p-8 rounded-2xl bg-slate-900/40 backdrop-blur-xl border border-slate-800/80 hover:border-indigo-500/50 hover:shadow-[0_0_30px_rgba(99,102,241,0.15)] transition-all duration-300 transform hover:-translate-y-1 active:scale-[0.99] overflow-hidden cursor-pointer">
+      <!-- Glow effect -->
+      <div class="absolute inset-0 bg-gradient-to-br from-indigo-600/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+      <div>
+        <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 text-2xl font-bold mb-6 group-hover:scale-110 transition-transform duration-300">
+          📖
+        </div>
+        <h2 class="text-2xl font-bold text-slate-100 mb-3 flex items-center gap-2">
+          Vocabulary
+          <span class="text-indigo-400">শব্দভাণ্ডার</span>
+        </h2>
+        <p class="text-slate-400 text-sm leading-relaxed mb-6 font-light">
+          দৈনন্দিন প্রয়োজনীয় জার্মান শব্দভাণ্ডার ক্যাটাগরিভিত্তিক শিখুন এবং সঠিক উচ্চারণ ঝালাই করুন।
+        </p>
+      </div>
+
+      <div class="flex items-center justify-between mt-auto">
+        <span class="text-xs text-indigo-300 font-semibold tracking-wider uppercase group-hover:text-indigo-200 transition-colors">
+          Start Quiz &rarr;
+        </span>
+        <span class="text-xs px-2.5 py-1 rounded-md bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 font-medium">
+          3 Categories
+        </span>
+      </div>
+    </a>
+
+    <!-- Conversation Card -->
+    <a routerLink="/conversation" 
+       class="group relative flex flex-col justify-between p-8 rounded-2xl bg-slate-900/40 backdrop-blur-xl border border-slate-800/80 hover:border-cyan-500/50 hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] transition-all duration-300 transform hover:-translate-y-1 active:scale-[0.99] overflow-hidden cursor-pointer">
+      <!-- Glow effect -->
+      <div class="absolute inset-0 bg-gradient-to-br from-cyan-600/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+      <div>
+        <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 text-2xl font-bold mb-6 group-hover:scale-110 transition-transform duration-300">
+          💬
+        </div>
+        <h2 class="text-2xl font-bold text-slate-100 mb-3 flex items-center gap-2">
+          Conversation
+          <span class="text-cyan-400">কথোপকথন</span>
+        </h2>
+        <p class="text-slate-400 text-sm leading-relaxed mb-6 font-light">
+          চরিত্রদের সাথে কথোপকথনের মাধ্যমে বাস্তবসম্মত জার্মান শিখুন। উচ্চারণ যাচাই ও এআই টিউটর চ্যালেঞ্জ।
+        </p>
+      </div>
+
+      <div class="flex items-center justify-between mt-auto">
+        <span class="text-xs text-cyan-300 font-semibold tracking-wider uppercase group-hover:text-cyan-200 transition-colors">
+          Start Lesson &rarr;
+        </span>
+        <span class="text-xs px-2.5 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 font-medium">
+          3 Topics
+        </span>
+      </div>
+    </a>
+  </div>
+
+  <!-- Footer Info -->
+  <p class="mt-20 text-xs text-slate-600 tracking-wider text-center">
+    Designed for native Bengali speakers learning German. Standalone App Core Module.
+  </p>
+</div>
+

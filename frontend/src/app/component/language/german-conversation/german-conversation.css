@@ -1,0 +1,85 @@
+/* Custom styling for German Conversation module */
+
+/* Soundwave bar height animations */
+.sound-wave-bar {
+  display: inline-block;
+  height: 4px;
+  transition: height 0.2s ease;
+  animation: bounceWave 0.9s ease-in-out infinite alternate;
+}
+
+.sound-bar-1 { animation-delay: 0.1s; }
+.sound-bar-2 { animation-delay: 0.3s; }
+.sound-bar-3 { animation-delay: 0.5s; }
+.sound-bar-4 { animation-delay: 0.2s; }
+
+@keyframes bounceWave {
+  0% {
+    height: 4px;
+  }
+  100% {
+    height: 24px;
+  }
+}
+
+/* Speaking glow pulse */
+.glow-pulse {
+  animation: borderGlow 2s infinite ease-in-out;
+}
+
+@keyframes borderGlow {
+  0% {
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(6, 182, 212, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.2);
+  }
+}
+
+/* Fade-in transitions */
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Collapsible speech bubble translation transitions */
+.bubble-reveal-transition {
+  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+/* Force intelligent wrapping on Bangla script combinations */
+.break-bangla {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Custom dimensions */
+.w-18 {
+  width: 4.5rem;
+}
+.h-18 {
+  height: 4.5rem;
+}
+
+/* Glowing backgrounds */
+.shadow-cyan-glow {
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.15);
+}
+.shadow-violet-glow {
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+}

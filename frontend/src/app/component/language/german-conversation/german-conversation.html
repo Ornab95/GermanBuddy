@@ -1,0 +1,538 @@
+<div
+  class="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-start px-2 sm:px-4 md:px-6 py-4 font-sans relative overflow-x-hidden">
+
+  <!-- Glowing background blobs for premium aesthetic -->
+  <div class="absolute top-0 left-1/4 w-96 h-96 bg-violet-600/10 rounded-full blur-3xl pointer-events-none"></div>
+  <div class="absolute bottom-10 right-1/4 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+  <!-- Header Header -->
+  <header class="w-full flex flex-row items-center justify-between mb-6 z-10">
+    <div class="flex items-center gap-3">
+      <div
+        class="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500/10 to-cyan-500/10 border border-violet-500/20 flex items-center justify-center text-cyan-400 font-black text-xl shadow-[0_0_15px_rgba(6,182,212,0.15)]">
+        💬
+      </div>
+      <div>
+        <h1
+          class="text-xl font-bold tracking-tight bg-gradient-to-r from-slate-100 to-slate-300 bg-clip-text text-transparent">
+          Learn German in Bangla
+        </h1>
+        <p class="text-xs text-slate-500 font-light">কথোপকথন (Conversation)</p>
+      </div>
+    </div>
+
+    <button *ngIf="selectedConversationId()" (click)="exitConversation()"
+      class="px-3.5 py-2 bg-slate-900/60 hover:bg-slate-900 border border-slate-800/80 hover:border-rose-500/30 rounded-xl font-bold text-xs text-slate-400 hover:text-rose-400 transition-all flex items-center gap-1.5 active:scale-[0.97] cursor-pointer">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+        stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+      </svg>
+      Exit Lesson
+    </button>
+
+    <a *ngIf="!selectedConversationId()" routerLink="/"
+      class="px-3.5 py-2 bg-slate-900/60 hover:bg-slate-900 border border-slate-800/80 hover:border-violet-500/30 rounded-xl font-bold text-xs text-slate-400 hover:text-violet-400 transition-all flex items-center gap-1.5 active:scale-[0.97]">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+        stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Dashboard
+    </a>
+  </header>
+
+  <main class="w-full z-10 flex-grow flex flex-col justify-start">
+
+    <!-- 1. CONVERSATION TOPIC SELECTOR GRID -->
+    <div *ngIf="!selectedConversationId()" class="space-y-6 animate-fade-in">
+      <div class="text-center md:text-left space-y-2 mb-8">
+        <h2 class="text-2xl font-bold text-slate-200">কথোপকথন অনুশীলন করুন (Choose a Conversation)</h2>
+        <p class="text-xs text-slate-400 font-light">একটি বিষয় নির্বাচন করুন এবং চরিত্রদের মধ্যে কথোপকথনের মাধ্যমে
+          জার্মান উচ্চারণ ও অর্থ শিখুন।</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div *ngFor="let item of conversations()" (mouseenter)="playAudioFeedback('hover')"
+          (click)="selectConversation(item.id)"
+          class="group relative flex flex-col justify-between p-6 rounded-2xl bg-slate-900/40 backdrop-blur-xl border border-slate-800/80 hover:border-cyan-500/50 hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] transition-all duration-300 transform hover:-translate-y-1 active:scale-[0.99] overflow-hidden cursor-pointer">
+
+          <!-- Bookmark Button -->
+          <button (click)="toggleBookmark(item.id, $event)"
+            class="absolute top-4 right-4 z-20 p-2 rounded-lg bg-slate-950/60 hover:bg-slate-950 border border-slate-800 hover:border-amber-500/40 text-slate-500 hover:text-amber-400 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4"
+              [attr.fill]="bookmarkedIds().has(item.id) ? 'currentColor' : 'none'" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.907c.961 0 1.36 1.238.588 1.81l-3.974 2.89a1 1 0 00-.364 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.89a1 1 0 00-1.176 0l-3.976 2.89c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.364-1.118l-3.976-2.89c-.77-.57-.37-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+            </svg>
+          </button>
+
+          <!-- Glow Effect background -->
+          <div
+            class="absolute inset-0 bg-gradient-to-br from-cyan-600/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+          </div>
+
+          <div class="space-y-4">
+            <!-- Topic Icon -->
+            <div
+              class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300">
+              {{ item.id === 'doctor-visit' ? '🩺' : item.id === 'restaurant' ? '🍕' : '👋' }}
+            </div>
+
+            <div>
+              <span
+                class="text-[10px] uppercase font-bold tracking-widest text-cyan-400 bg-cyan-500/5 px-2 py-0.5 rounded border border-cyan-500/10">
+                {{ item.category }}
+              </span>
+              <h3 class="text-xl font-bold text-slate-100 mt-2">
+                {{ item.title }}
+              </h3>
+              <p class="text-sm font-semibold text-slate-350 mt-1">{{ item.banglaTitle }}</p>
+            </div>
+
+            <!-- Avatars Row -->
+            <div class="flex items-center gap-2 pt-2 text-xs text-slate-400">
+              <span class="px-2 py-1 rounded bg-slate-950/60 border border-slate-800">{{ item.speakerA.avatar }} {{
+                item.speakerA.name }}</span>
+              <span class="text-slate-650">&bull;</span>
+              <span class="px-2 py-1 rounded bg-slate-950/60 border border-slate-800">{{ item.speakerB.avatar }} {{
+                item.speakerB.name }}</span>
+            </div>
+          </div>
+
+          <!-- Bottom details -->
+          <div class="flex items-center justify-between mt-6 pt-4 border-t border-slate-850/50">
+            <span
+              class="text-xs text-cyan-300 font-bold uppercase tracking-wider group-hover:text-cyan-200 transition-colors">
+              Start Lesson &rarr;
+            </span>
+            <div class="flex gap-2">
+              <span
+                class="text-[10px] px-2 py-0.5 rounded-md bg-violet-500/10 border border-violet-500/20 text-violet-300 font-medium">
+                Level {{ item.level }}
+              </span>
+              <span class="text-[10px] px-2 py-0.5 rounded-md bg-slate-950/60 border border-slate-850 text-slate-400">
+                ⏱️ {{ item.estimatedTime }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. ACTIVE DIALOGUE SESSION -->
+    <div *ngIf="selectedConversationId(); let activeId" class="space-y-4 animate-fade-in w-full">
+      <div *ngIf="activeConversation(); let conv" class="space-y-6">
+
+        <!-- Topic Progress Header -->
+        <div
+          class="bg-slate-900/40 backdrop-blur-xl border border-slate-800/80 rounded-2xl px-5 py-3 flex items-center justify-between gap-4">
+          <div class="space-y-0.5">
+            <div class="flex items-center gap-2">
+              <span class="text-xs uppercase font-extrabold tracking-widest text-cyan-400">{{ conv.category }}</span>
+              <span class="text-xs px-2 py-0.5 rounded bg-violet-500/10 border border-violet-500/20 text-violet-300 font-bold">{{ conv.level }}</span>
+            </div>
+            <h2 class="text-base font-bold text-slate-100">{{ conv.title }}</h2>
+            <p class="text-xs text-slate-400">{{ conv.banglaTitle }}</p>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="flex items-center gap-2.5 flex-shrink-0">
+            <span class="text-xs font-bold text-slate-500">{{ progressPercentage() }}%</span>
+            <div class="w-28 h-2 bg-slate-950 rounded-full overflow-hidden border border-slate-850">
+              <div class="h-full bg-gradient-to-r from-violet-500 to-cyan-500 transition-all duration-300"
+                [style.width.%]="progressPercentage()"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Animated Stage Avatars -->
+        <div
+          class="grid grid-cols-2 bg-slate-900/30 backdrop-blur-xl border border-slate-850/60 rounded-2xl relative">
+          <!-- Center divider -->
+          <div class="absolute inset-y-0 left-1/2 w-[1px] bg-slate-800/40 pointer-events-none"></div>
+
+          <!-- Speaker A (Left - Doctor) -->
+          <div class="flex flex-col items-center justify-center py-5 px-4 transition-all duration-300"
+            [class.scale-[1.03]]="activeSpeaker() === conv.speakerA.name">
+            <div class="relative flex-shrink-0">
+              <div *ngIf="activeSpeaker() === conv.speakerA.name"
+                class="absolute -inset-1.5 rounded-full border border-violet-500/30 bg-violet-500/5 animate-ping opacity-60"></div>
+              <div
+                class="w-16 h-16 rounded-full bg-slate-950 border-2 border-slate-800 flex items-center justify-center text-4xl select-none z-10 relative shadow-lg transition-transform"
+                [class.animate-bounce]="activeSpeaker() === conv.speakerA.name">
+                {{ conv.speakerA.avatar }}
+                <div *ngIf="activeSpeaker() === conv.speakerA.name"
+                  class="absolute -bottom-0.5 -right-0.5 w-6 h-6 rounded-full bg-violet-600 border border-violet-400 flex items-center justify-center text-[10px] animate-pulse">
+                  🗣️
+                </div>
+              </div>
+            </div>
+            <div class="mt-2.5 text-center">
+              <span class="block font-bold text-base text-slate-200 leading-tight">{{ conv.speakerA.name }}</span>
+              <span class="block text-xs text-slate-500 font-medium uppercase tracking-wider">{{ conv.speakerA.role }}</span>
+            </div>
+            <!-- Soundwave -->
+            <div class="h-5 flex items-end gap-1 mt-2 transition-opacity duration-300"
+              [style.opacity]="activeSpeaker() === conv.speakerA.name ? 1 : 0">
+              <span class="w-[3px] bg-violet-500 rounded sound-wave-bar sound-bar-1"></span>
+              <span class="w-[3px] bg-violet-400 rounded sound-wave-bar sound-bar-2"></span>
+              <span class="w-[3px] bg-violet-500 rounded sound-wave-bar sound-bar-3"></span>
+              <span class="w-[3px] bg-violet-600 rounded sound-wave-bar sound-bar-4"></span>
+            </div>
+          </div>
+
+          <!-- Speaker B (Right - Patient) -->
+          <div class="flex flex-col items-center justify-center py-5 px-4 transition-all duration-300"
+            [class.scale-[1.03]]="activeSpeaker() === conv.speakerB.name">
+            <div class="relative flex-shrink-0">
+              <div *ngIf="activeSpeaker() === conv.speakerB.name"
+                class="absolute -inset-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/5 animate-ping opacity-60"></div>
+              <div
+                class="w-16 h-16 rounded-full bg-slate-950 border-2 border-slate-800 flex items-center justify-center text-4xl select-none z-10 relative shadow-lg transition-transform"
+                [class.animate-bounce]="activeSpeaker() === conv.speakerB.name">
+                {{ conv.speakerB.avatar }}
+                <div *ngIf="activeSpeaker() === conv.speakerB.name"
+                  class="absolute -bottom-0.5 -left-0.5 w-6 h-6 rounded-full bg-cyan-600 border border-cyan-400 flex items-center justify-center text-[10px] animate-pulse">
+                  🗣️
+                </div>
+              </div>
+            </div>
+            <div class="mt-2.5 text-center">
+              <span class="block font-bold text-base text-slate-200 leading-tight">{{ conv.speakerB.name }}</span>
+              <span class="block text-xs text-slate-500 font-medium uppercase tracking-wider">{{ conv.speakerB.role }}</span>
+            </div>
+            <!-- Soundwave -->
+            <div class="h-5 flex items-end gap-1 mt-2 transition-opacity duration-300"
+              [style.opacity]="activeSpeaker() === conv.speakerB.name ? 1 : 0">
+              <span class="w-[3px] bg-cyan-400 rounded sound-wave-bar sound-bar-3"></span>
+              <span class="w-[3px] bg-cyan-500 rounded sound-wave-bar sound-bar-4"></span>
+              <span class="w-[3px] bg-cyan-400 rounded sound-wave-bar sound-bar-2"></span>
+              <span class="w-[3px] bg-cyan-500 rounded sound-wave-bar sound-bar-1"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat Bubble Stream Area -->
+        <div class="space-y-3 max-h-[70vh] overflow-y-auto pb-4 border-b border-slate-900 scroll-smooth font-sans px-2">
+          <div *ngFor="let dialogue of conv.dialogues; let i = index" [id]="'dialogue-' + i"
+            (mouseenter)="playAudioFeedback('hover')" (click)="playSentence(i)"
+            class="flex transition-all duration-300 cursor-pointer relative group"
+            [class.justify-start]="dialogue.speaker === conv.speakerA.name"
+            [class.justify-end]="dialogue.speaker === conv.speakerB.name">
+
+            <div class="flex flex-col max-w-[80%] sm:max-w-[75%]"
+              [class.items-start]="dialogue.speaker === conv.speakerA.name"
+              [class.items-end]="dialogue.speaker === conv.speakerB.name">
+
+              <!-- Speaker avatar + name label -->
+              <div class="flex items-center gap-1.5 mb-1 px-1"
+                [class.flex-row]="dialogue.speaker === conv.speakerA.name"
+                [class.flex-row-reverse]="dialogue.speaker === conv.speakerB.name">
+                <span class="text-sm">{{ dialogue.speaker === conv.speakerA.name ? conv.speakerA.avatar : conv.speakerB.avatar }}</span>
+                <span class="text-[11px] font-bold"
+                  [class.text-violet-400]="dialogue.speaker === conv.speakerA.name"
+                  [class.text-cyan-400]="dialogue.speaker === conv.speakerB.name">
+                  {{ dialogue.speaker }}
+                </span>
+                <span class="text-[10px] text-slate-600">&bull; #{{ dialogue.id }}</span>
+              </div>
+
+              <!-- Main Bubble Card -->
+              <div
+                class="w-full rounded-2xl p-4 md:p-5 relative transition-all duration-300 border shadow-md"
+                [class.rounded-tl-sm]="dialogue.speaker === conv.speakerA.name"
+                [class.rounded-tr-sm]="dialogue.speaker === conv.speakerB.name"
+                [class.bg-violet-950/20]="dialogue.speaker === conv.speakerA.name && currentDialogueIndex() !== i"
+                [class.border-slate-800/80]="currentDialogueIndex() !== i"
+                [class.bg-cyan-950/20]="dialogue.speaker === conv.speakerB.name && currentDialogueIndex() !== i"
+                [class.bg-gradient-to-r]="currentDialogueIndex() === i"
+                [class.from-violet-950/60]="currentDialogueIndex() === i && dialogue.speaker === conv.speakerA.name"
+                [class.to-indigo-950/60]="currentDialogueIndex() === i && dialogue.speaker === conv.speakerA.name"
+                [class.border-violet-500/80]="currentDialogueIndex() === i && dialogue.speaker === conv.speakerA.name"
+                [class.shadow-[0_0_20px_rgba(139,92,246,0.15)]]="currentDialogueIndex() === i && dialogue.speaker === conv.speakerA.name"
+                [class.from-cyan-950/60]="currentDialogueIndex() === i && dialogue.speaker === conv.speakerB.name"
+                [class.to-blue-950/60]="currentDialogueIndex() === i && dialogue.speaker === conv.speakerB.name"
+                [class.border-cyan-500/80]="currentDialogueIndex() === i && dialogue.speaker === conv.speakerB.name"
+                [class.shadow-[0_0_20px_rgba(6,182,212,0.15)]]="currentDialogueIndex() === i && dialogue.speaker === conv.speakerB.name"
+                [class.scale-[1.01]]="currentDialogueIndex() === i">
+
+              <!-- Active Highlight Ring -->
+              <div *ngIf="currentDialogueIndex() === i"
+                class="absolute -inset-0.5 rounded-[22px] bg-gradient-to-r from-violet-500/10 to-cyan-500/10 blur -z-10 animate-pulse">
+              </div>
+
+              <!-- German Sentence -->
+              <div class="flex items-center gap-3">
+                <span class="text-xl md:text-2xl font-black text-slate-100 tracking-tight leading-relaxed">
+                  {{ dialogue.german }}
+                </span>
+
+                <!-- Tiny Sound Speaker indicator -->
+                <span class="text-slate-500 group-hover:text-cyan-400 transition-colors flex-shrink-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                  </svg>
+                </span>
+              </div>
+
+              <!-- Collapsible Content Wrapper (Revealed when active/clicked) -->
+              <div class="overflow-hidden transition-all duration-300 bubble-reveal-transition"
+                [style.maxHeight]="currentDialogueIndex() === i ? '600px' : '0px'"
+                [style.opacity]="currentDialogueIndex() === i ? 1 : 0">
+                <div class="mt-4 pt-4 border-t border-slate-800/60 space-y-4.5 text-sm md:text-base">
+
+                  <!-- Bangla pronunciation transliteration -->
+                  <div class="space-y-1">
+                    <span
+                      class="text-[11px] md:text-xs uppercase tracking-wider font-extrabold text-slate-500 block">Bangla
+                      Sound (বাংলা উচ্চারণ)</span>
+                    <span class="text-base md:text-lg font-black text-amber-400">{{ dialogue.pronunciation }}</span>
+                  </div>
+
+                  <!-- Bangla translation -->
+                  <div class="space-y-1">
+                    <span
+                      class="text-[11px] md:text-xs uppercase tracking-wider font-extrabold text-slate-500 block">Bangla
+                      Meaning (বাংলা অনুবাদ)</span>
+                    <span class="text-base md:text-lg font-black text-emerald-400 leading-normal">{{ dialogue.bangla
+                      }}</span>
+                  </div>
+
+                  <!-- English translation -->
+                  <div class="space-y-1">
+                    <span
+                      class="text-[11px] md:text-xs uppercase tracking-wider font-extrabold text-slate-500 block">English
+                      Translation</span>
+                    <span class="text-sm md:text-lg text-slate-200 font-semibold leading-normal">{{ dialogue.english
+                      }}</span>
+                  </div>
+
+                  <!-- Vocabulary Chips -->
+                  <div class="space-y-2 pt-1">
+                    <span
+                      class="text-[11px] md:text-xs uppercase tracking-wider font-extrabold text-slate-500 block">Key
+                      Vocabulary (শব্দার্থ)</span>
+                    <div class="flex flex-wrap gap-2">
+                      <span *ngFor="let vocab of dialogue.vocab" (click)="playVocabWord(vocab.german, $event)"
+                        class="px-3 py-1.5 bg-slate-950/80 hover:bg-slate-900 border border-slate-800 hover:border-cyan-500/30 rounded-lg text-slate-350 hover:text-cyan-300 cursor-pointer flex items-center gap-1 active:scale-95 transition-all text-xs md:text-sm">
+                        <strong class="font-bold text-slate-100">{{ vocab.german }}</strong>: {{ vocab.bangla }}
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                          class="w-3.5 h-3.5 text-slate-500 hover:text-cyan-400 flex-shrink-0" fill="none"
+                          viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Grammar Tooltip Info -->
+                  <div *ngIf="dialogue.grammarTip"
+                    class="p-3.5 bg-violet-950/15 border border-violet-500/25 text-violet-300 rounded-xl space-y-1 leading-relaxed">
+                    <span
+                      class="font-extrabold text-[11px] md:text-xs uppercase tracking-widest text-violet-400 flex items-center gap-1">
+                      💡 GRAMMAR TIP (ব্যাকরণ টিপস)
+                    </span>
+                    <p class="font-normal text-xs md:text-sm text-violet-200">{{ dialogue.grammarTip }}</p>
+                  </div>
+
+                  <!-- AI Tutor Repeat-after-me Challenge button -->
+                  <div class="pt-2.5 border-t border-slate-800/40 flex items-center justify-between gap-2">
+                    <span class="text-xs text-slate-350 font-medium">নিজে বলুন ও উচ্চারণ যাচাই করুন:</span>
+                    <button (click)="showRepeatPanel.set(!showRepeatPanel()); $event.stopPropagation();"
+                      class="px-3.5 py-1.5 text-xs md:text-sm bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-bold rounded-lg transition-transform active:scale-95 flex items-center gap-1.5 cursor-pointer">
+                      🎙️ Challenge Mode
+                    </button>
+                  </div>
+
+                  <!-- Repeat challenge panel -->
+                  <div *ngIf="showRepeatPanel()"
+                    class="p-4 bg-slate-950/80 border border-slate-850 rounded-2xl mt-2 space-y-3 relative overflow-hidden"
+                    (click)="$event.stopPropagation();">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-bold text-violet-400">উচ্চারণ অনুশীলন (AI TUTOR CHALLENGE)</span>
+                      <button (click)="showRepeatPanel.set(false)"
+                        class="text-slate-500 hover:text-slate-350">✕</button>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                      <!-- Record Button -->
+                      <button (click)="startListening()" [class.animate-pulse]="isRecording()"
+                        [class.bg-rose-600]="isRecording()" [class.from-violet-600]="!isRecording()"
+                        [class.to-indigo-600]="!isRecording()" [class.hover:from-violet-500]="!isRecording()"
+                        class="p-3.5 bg-gradient-to-br text-white rounded-2xl shadow-lg active:scale-95 transition-all flex-shrink-0 cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                          stroke="currentColor" stroke-width="2.5">
+                          <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                        </svg>
+                      </button>
+
+                      <div class="space-y-1 flex-grow">
+                        <p class="text-[10px] text-slate-500 font-bold uppercase">Spoken Result (আপনার আওয়াজ):</p>
+                        <p class="text-xs font-semibold" [class.text-slate-400]="!recognitionResult()"
+                          [class.text-cyan-300]="recognitionResult()">
+                          {{ recognitionResult() || 'রেকর্ড বোতামে ক্লিক করে বলুন...' }}
+                        </p>
+                      </div>
+                    </div>
+
+                    <!-- Evaluation feedback -->
+                    <div *ngIf="recognitionScore() !== null"
+                      class="mt-2 p-3 rounded-xl flex items-center justify-between border"
+                      [class.bg-emerald-950/20]="recognitionSuccess()"
+                      [class.border-emerald-500/30]="recognitionSuccess()"
+                      [class.bg-rose-950/20]="!recognitionSuccess()" [class.border-rose-500/30]="!recognitionSuccess()">
+                      <div class="space-y-0.5">
+                        <span class="text-[9px] block uppercase font-bold"
+                          [class.text-emerald-400]="recognitionSuccess()" [class.text-rose-400]="!recognitionSuccess()">
+                          {{ recognitionSuccess() ? '🎉 চমৎকার উচ্চারণ!' : '⚠️ আবার চেষ্টা করুন' }}
+                        </span>
+                        <span class="text-xs text-slate-350 leading-relaxed">
+                          মিল শতকরা: <strong>{{ recognitionScore() }}%</strong>
+                        </span>
+                      </div>
+                      <span class="text-2xl">{{ recognitionSuccess() ? '🏆' : '💪' }}</span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sticky Bottom Control Console -->
+        <div
+          class="bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 sticky bottom-4 z-20 shadow-2xl">
+          <div class="flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-start">
+
+            <!-- Prev Button -->
+            <button (click)="prevSentence()" [disabled]="currentDialogueIndex() <= 0"
+              class="p-2.5 bg-slate-950/60 hover:bg-slate-950 border border-slate-850 hover:border-slate-800 text-slate-400 hover:text-slate-200 rounded-xl disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-95">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+
+            <!-- Play sequential conversation -->
+            <button (click)="togglePlayAll()"
+              class="px-5 py-2.5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold rounded-xl flex items-center gap-2 active:scale-95 transition-all cursor-pointer shadow-lg">
+              <span *ngIf="!isPlayingAll()">▶ Play Conversation</span>
+              <span *ngIf="isPlayingAll()">⏸ Pause</span>
+            </button>
+
+            <!-- Replay Active Speech bubble -->
+            <button (click)="replayCurrent()" [disabled]="currentDialogueIndex() === -1"
+              class="p-2.5 bg-slate-950/60 hover:bg-slate-950 border border-slate-850 hover:border-slate-800 text-slate-400 hover:text-slate-200 rounded-xl disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-95 cursor-pointer"
+              title="Replay Active Sentence">
+              🔄 Replay
+            </button>
+
+            <!-- Next Button -->
+            <button (click)="nextSentence()" [disabled]="currentDialogueIndex() >= conv.dialogues.length - 1"
+              class="p-2.5 bg-slate-950/60 hover:bg-slate-950 border border-slate-850 hover:border-slate-800 text-slate-400 hover:text-slate-200 rounded-xl disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-95">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+
+          </div>
+
+          <!-- Speed controller chips -->
+          <div class="flex items-center gap-2.5">
+            <span class="text-[10px] text-slate-500 font-extrabold uppercase">Audio Speed:</span>
+            <div class="bg-slate-950/60 border border-slate-850 p-0.5 rounded-xl flex">
+              <button (click)="setSpeed(0.5)"
+                class="px-2.5 py-1 text-[10px] font-bold rounded-lg transition-all cursor-pointer"
+                [class.bg-cyan-500/10]="playbackSpeed() === 0.5" [class.text-cyan-400]="playbackSpeed() === 0.5"
+                [class.text-slate-500]="playbackSpeed() !== 0.5">
+                0.5x
+              </button>
+              <button (click)="setSpeed(0.75)"
+                class="px-2.5 py-1 text-[10px] font-bold rounded-lg transition-all cursor-pointer"
+                [class.bg-cyan-500/10]="playbackSpeed() === 0.75" [class.text-cyan-400]="playbackSpeed() === 0.75"
+                [class.text-slate-500]="playbackSpeed() !== 0.75">
+                0.75x
+              </button>
+              <button (click)="setSpeed(1.0)"
+                class="px-2.5 py-1 text-[10px] font-bold rounded-lg transition-all cursor-pointer"
+                [class.bg-cyan-500/10]="playbackSpeed() === 1.0" [class.text-cyan-400]="playbackSpeed() === 1.0"
+                [class.text-slate-500]="playbackSpeed() !== 1.0">
+                1.0x
+              </button>
+              <button (click)="setSpeed(1.25)"
+                class="px-2.5 py-1 text-[10px] font-bold rounded-lg transition-all cursor-pointer"
+                [class.bg-cyan-500/10]="playbackSpeed() === 1.25" [class.text-cyan-400]="playbackSpeed() === 1.25"
+                [class.text-slate-500]="playbackSpeed() !== 1.25">
+                1.25x
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. DIALOGUE COMPLETION SUCCESS MODAL -->
+        <div *ngIf="showCompletedModal()"
+          class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div class="relative group max-w-md w-full animate-fade-in">
+            <!-- Glow background decorator -->
+            <div class="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-violet-500 to-cyan-500 blur opacity-75">
+            </div>
+
+            <div
+              class="relative bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-8 flex flex-col items-center text-center space-y-6 shadow-2xl">
+              <!-- Success Badge icon -->
+              <div
+                class="w-16 h-16 rounded-full bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-4xl animate-bounce">
+                🎉
+              </div>
+
+              <!-- Completion headers -->
+              <div class="space-y-2">
+                <h3
+                  class="text-2xl font-black text-slate-100 bg-gradient-to-b from-white to-slate-400 bg-clip-text text-transparent">
+                  কথোপকথন সম্পন্ন হয়েছে!
+                </h3>
+                <p class="text-xs text-slate-500 leading-normal">
+                  অভিনন্দন! আপনি এই ক্যাটাগরির সকল কথোপকথন সাফল্যের সাথে অনুশীলন করেছেন এবং সঠিক উচ্চারণ রপ্ত করেছেন।
+                </p>
+              </div>
+
+              <!-- Achievements Stats grid -->
+              <div class="grid grid-cols-2 gap-4 w-full">
+                <div class="bg-slate-950/40 border border-slate-850 p-4 rounded-2xl">
+                  <span class="block text-[10px] text-slate-500 font-bold uppercase">Dialogues read</span>
+                  <span class="text-xl font-black text-emerald-400">{{ conv.dialogues.length }} / {{
+                    conv.dialogues.length }}</span>
+                </div>
+                <div class="bg-slate-950/40 border border-slate-850 p-4 rounded-2xl">
+                  <span class="block text-[10px] text-slate-500 font-bold uppercase">Language Score</span>
+                  <span class="text-xl font-black text-cyan-400">+150 XP</span>
+                </div>
+              </div>
+
+              <!-- Action buttons -->
+              <div class="flex flex-col gap-2.5 w-full">
+                <button (click)="selectConversation(conv.id)"
+                  class="w-full py-3 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-bold rounded-2xl text-xs active:scale-[0.98] transition-transform cursor-pointer shadow-lg">
+                  আবার শুরু করুন (Repeat Lesson)
+                </button>
+                <button (click)="exitConversation()"
+                  class="w-full py-3 bg-slate-850 hover:bg-slate-800 border border-slate-800 text-slate-350 font-bold rounded-2xl text-xs active:scale-[0.98] transition-transform cursor-pointer">
+                  ক্যাটাগরি পেজে ফিরে যান (Return to Categories)
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+</div>
