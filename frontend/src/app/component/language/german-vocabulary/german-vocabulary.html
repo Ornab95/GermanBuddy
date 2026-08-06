@@ -231,18 +231,6 @@
                     </p>
                   }
 
-                  <!-- Virtual Bangla Letter Helpers -->
-                  @if (!hasChecked()) {
-                    <div class="flex flex-wrap justify-center gap-1.5 pt-2">
-                      @for (helper of banglaHelpers; track helper) {
-                        <button (click)="appendChar(helper)"
-                                class="px-2.5 py-1 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-indigo-300 font-extrabold text-xs hover:scale-105 active:scale-95 transition-all">
-                          {{ helper }}
-                        </button>
-                      }
-                    </div>
-                  }
-
                   <!-- Action Buttons -->
                   <div class="pt-2">
                     @if (!hasChecked()) {

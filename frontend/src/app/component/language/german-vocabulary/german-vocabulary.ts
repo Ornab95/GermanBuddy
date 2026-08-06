@@ -57,9 +57,6 @@ export class GermanVocabulary implements OnInit {
     return items.length > 0 && idx < items.length ? items[idx] : null;
   });
 
-  // Bangla virtual keyboard helpers
-  protected readonly banglaHelpers = ['আ', 'এ', 'ই', 'উ', 'ও', 'ট', 'ড', 'ফ', 'ব', 'স', 'ল', 'ম', 'ন', 'র', 'য়', 'ৎ', '্যা', '্', 'ে', 'ি', 'ু'];
-
   constructor(
     private readonly route: ActivatedRoute,
     private readonly router: Router
