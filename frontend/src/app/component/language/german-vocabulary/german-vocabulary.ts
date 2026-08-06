@@ -3,15 +3,17 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { VocabItem, VOCABULARY_DATA } from '../../../data/vocabulary.data';
+import { NavBar } from '../../nav-bar/nav-bar';
 
 @Component({
   selector: 'app-german-vocabulary',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, NavBar],
   templateUrl: './german-vocabulary.html',
   styleUrl: './german-vocabulary.css',
 })
 export class GermanVocabulary implements OnInit {
+
   @ViewChild('answerInput') answerInput!: ElementRef<HTMLInputElement>;
 
   // Entire vocab items

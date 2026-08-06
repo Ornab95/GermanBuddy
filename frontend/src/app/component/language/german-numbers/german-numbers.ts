@@ -2,6 +2,7 @@ import { Component, OnInit, signal, effect, computed, ViewChild, ElementRef } fr
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { NavBar } from '../../nav-bar/nav-bar';
 
 interface Item {
   german: string;
@@ -13,11 +14,12 @@ interface Item {
 @Component({
   selector: 'app-german-numbers',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, NavBar],
   templateUrl: './german-numbers.html',
   styleUrl: './german-numbers.css',
 })
 export class GermanNumbers implements OnInit {
+
   @ViewChild('answerInput') answerInput!: ElementRef<HTMLInputElement>;
 
   protected readonly numbers: Item[] = [

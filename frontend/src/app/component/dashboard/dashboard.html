@@ -1,166 +1,145 @@
-<div class="relative min-h-screen bg-slate-950 text-slate-100 overflow-hidden font-sans selection:bg-violet-500/30 selection:text-violet-200">
+<div class="relative min-h-screen bg-slate-950 text-slate-100 overflow-x-hidden font-sans selection:bg-violet-500/30 selection:text-violet-200">
   
-  <!-- Ambient Background Orbs -->
+  <!-- Dynamic Ambient Glowing Mesh Background Orbs -->
   <div class="bg-orb bg-orb-1"></div>
   <div class="bg-orb bg-orb-2"></div>
   <div class="bg-orb bg-orb-3"></div>
 
+  <!-- Shared Top Navigation Header -->
+  <app-nav-bar></app-nav-bar>
+
   <!-- Main Container -->
-  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-20">
+  <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
     
-    <!-- Top Navigation Header -->
-    <header class="flex items-center justify-between py-4 mb-12 border-b border-slate-800/60 backdrop-blur-md bg-slate-950/40 rounded-2xl px-6">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-violet-600 to-cyan-500 p-0.5 shadow-lg shadow-violet-500/20">
-          <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center font-bold text-violet-400 text-lg">
-            DE
-          </div>
-        </div>
-        <div>
-          <span class="text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-slate-100 via-slate-200 to-slate-400">
-            DeutschBuddy
-          </span>
-          <span class="hidden sm:inline-block ml-2 text-xs px-2 py-0.5 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-300 font-medium">
-            বাংলায়
-          </span>
-        </div>
-      </div>
-
-      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
-        <a routerLink="/alphabet" class="hover:text-violet-400 transition-colors">বর্ণমালা</a>
-        <a routerLink="/numbers" class="hover:text-cyan-400 transition-colors">সংখ্যা</a>
-        <a routerLink="/vocabulary" class="hover:text-indigo-400 transition-colors">শব্দভাণ্ডার</a>
-        <a routerLink="/conversation" class="hover:text-emerald-400 transition-colors">কথোপকথন</a>
-      </nav>
-
-      <a routerLink="/alphabet" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white text-xs sm:text-sm font-semibold shadow-lg shadow-violet-600/25 transition-all duration-300 hover:scale-105 active:scale-95">
-        <span>পড়া শুরু করুন</span>
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-        </svg>
-      </a>
-    </header>
-
-    <!-- Hero Section with Integrated Interactive 3D Card -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-24">
+    <!-- Hero Section with Integrated Interactive 3D Card Showcase -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center my-10 lg:my-16">
       
       <!-- Left Hero Text Content -->
       <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-xs font-semibold tracking-wide backdrop-blur-md animate-pulse-glow">
-          <span class="w-2 h-2 rounded-full bg-violet-400 animate-ping"></span>
-          <span>বাংলাভাষীদের জন্য সবচেয়ে সহজ জার্মান প্ল্যাটফর্ম</span>
+        <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-xs font-extrabold tracking-wide backdrop-blur-md animate-pulse-glow">
+          <span class="w-2.5 h-2.5 rounded-full bg-violet-400 animate-ping"></span>
+          <span>বাংলাভাষীদের জন্য সবচেয়ে আধুনিক ও সহজ জার্মান শেখার প্ল্যাটফর্ম 🇩🇪🇧🇩</span>
         </div>
 
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight select-none">
-          <span class="block bg-clip-text text-transparent bg-gradient-to-r from-slate-100 via-slate-200 to-slate-400">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight select-none">
+          <span class="block text-white">
             বাংলায় শিখুন
           </span>
-          <span class="block bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-cyan-400 to-emerald-400 font-black">
+          <span class="block bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-cyan-300 to-emerald-400">
             জার্মান ভাষা (Deutsch)
           </span>
         </h1>
 
         <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
-          জার্মান বর্ণমালা, সংখ্যা, দৈনন্দিন শব্দকোষ এবং বাস্তব জীবনের সংলাপ শিখুন সবচেয়ে সহজ উপায়ে। সাথে রয়েছে অডিও উচ্চারণ এবং কুইজ অনুশীলনের সুবিধা।
+          জার্মান বর্ণমালা, সংখ্যা, দৈনন্দিন শব্দকোষ এবং বাস্তব জীবনের সংলাপ শিখুন অত্যন্ত সহজ উপায়ে। সাথে রয়েছে নিখুঁত অডিও উচ্চারণ, ফ্ল্যাশকার্ড এবং ইন্টারেক্টিভ শব্দ খেলা কুইজ।
         </p>
 
         <!-- CTA Action Buttons -->
         <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
           <a routerLink="/alphabet" 
-             class="px-8 py-4 rounded-2xl bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-600 text-white font-bold text-base shadow-xl shadow-violet-600/30 hover:shadow-violet-600/50 hover:scale-105 transition-all duration-300 flex items-center gap-3">
-            <span>মডিউল নির্বাচন করুন</span>
+             class="px-8 py-4 rounded-2xl bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-500 text-white font-extrabold text-base shadow-2xl shadow-violet-600/40 hover:shadow-violet-600/60 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-3">
+            <span>পড়া শুরু করুন</span>
             <span class="text-xl">➔</span>
           </a>
 
+          <a routerLink="/game" 
+             class="px-7 py-4 rounded-2xl glass-card border border-amber-500/40 text-amber-300 font-extrabold text-base hover:bg-amber-500/10 hover:border-amber-400 transition-all duration-300 flex items-center gap-3 group">
+            <span class="text-2xl group-hover:rotate-12 transition-transform">🎮</span>
+            <span>শব্দ খেলা খেলুন</span>
+          </a>
+
           <button (click)="playAudio(currentSample().german)"
-                  class="px-6 py-4 rounded-2xl glass-card border border-slate-700/80 hover:border-violet-500/50 text-slate-200 font-semibold text-base hover:bg-slate-800/80 transition-all duration-300 flex items-center gap-3 group">
+                  class="px-6 py-4 rounded-2xl glass-card border border-slate-800 hover:border-violet-500/50 text-slate-200 font-semibold text-base hover:bg-slate-800/80 transition-all duration-300 flex items-center gap-3 group">
             <span class="w-8 h-8 rounded-full bg-violet-500/20 text-violet-400 flex items-center justify-center text-sm group-hover:scale-110 transition-transform">🔊</span>
-            <span>ডেমো উচ্চারণ শুনুন</span>
+            <span>ডেমো শোনো</span>
           </button>
         </div>
 
-        <!-- Micro Features Badges -->
-        <div class="flex items-center justify-center lg:justify-start gap-6 pt-4 text-xs text-slate-400 font-medium">
-          <div class="flex items-center gap-2">
-            <span class="text-emerald-400 text-base">✓</span> ১০০% নিখরচায়
+        <!-- Dynamic Platform Stats Badges -->
+        <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-800/80 max-w-lg mx-auto lg:mx-0 text-center lg:text-left">
+          <div>
+            <div class="text-2xl sm:text-3xl font-black text-violet-400">৩০+</div>
+            <div class="text-xs text-slate-400 font-semibold">জার্মান বর্ণমালা</div>
           </div>
-          <div class="flex items-center gap-2">
-            <span class="text-emerald-400 text-base">✓</span> অডিও সুবিধা
+          <div>
+            <div class="text-2xl sm:text-3xl font-black text-cyan-400">১০১+</div>
+            <div class="text-xs text-slate-400 font-semibold">সংখ্যা গণনা</div>
           </div>
-          <div class="flex items-center gap-2">
-            <span class="text-emerald-400 text-base">✓</span> সহজ বাংলা ব্যাখ্যা
+          <div>
+            <div class="text-2xl sm:text-3xl font-black text-emerald-400">২৫০+</div>
+            <div class="text-xs text-slate-400 font-semibold">প্রয়োজনীয় শব্দকোষ</div>
           </div>
         </div>
       </div>
 
-      <!-- Right 3D Interactive Flashcard Widget Showcase -->
+      <!-- Right 3D Interactive Demo Flashcard Widget -->
       <div class="lg:col-span-5 flex justify-center perspective-1000">
-        <div class="w-full max-w-sm h-80 relative cursor-pointer group" (click)="toggleFlip()">
+        <div class="w-full max-w-sm h-96 relative cursor-pointer group" (click)="toggleFlip()">
           
-          <!-- Outer 3D Glow halo -->
-          <div class="absolute -inset-2 bg-gradient-to-r from-violet-600 via-cyan-500 to-emerald-500 rounded-3xl blur-xl opacity-40 group-hover:opacity-75 transition duration-700 animate-pulse-glow"></div>
+          <!-- Outer Ambient Glow Halo -->
+          <div class="absolute -inset-3 bg-gradient-to-r from-violet-600 via-cyan-500 to-emerald-500 rounded-3xl blur-2xl opacity-40 group-hover:opacity-80 transition duration-700 animate-pulse-glow"></div>
 
-          <!-- Flip Card Container -->
-          <div class="flip-card-inner glass-card rounded-3xl p-8 border border-slate-700/80 shadow-2xl flex flex-col justify-between"
+          <!-- Flip Card Inner Container -->
+          <div class="flip-card-inner rounded-3xl shadow-2xl border border-slate-700/80 backdrop-blur-2xl"
                [class.flipped]="isCardFlipped()">
             
             <!-- FRONT OF CARD -->
-            <div class="flip-card-front flex flex-col justify-between p-8 bg-slate-900/90 rounded-3xl backdrop-blur-xl">
+            <div class="flip-card-front flex flex-col justify-between p-8 bg-slate-900/90 rounded-3xl border border-slate-700/80">
               <div class="flex items-center justify-between">
-                <span class="text-xs px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-300 font-semibold tracking-wider uppercase">
+                <span class="text-[10px] px-3 py-1 rounded-full bg-violet-500/15 border border-violet-500/30 text-violet-300 font-extrabold uppercase tracking-wider">
                   {{ currentSample().category }}
                 </span>
-                <span class="text-2xl">{{ currentSample().icon }}</span>
+                <span class="text-3xl">{{ currentSample().icon }}</span>
               </div>
 
-              <div class="text-center my-auto space-y-2">
-                <div class="text-xs text-slate-400 font-medium">জার্মান শব্দ (German Word)</div>
-                <h3 class="text-3xl font-black text-slate-100 tracking-tight">
+              <div class="text-center my-auto space-y-3">
+                <div class="text-xs text-slate-400 font-bold uppercase tracking-wider">জার্মান শব্দ (German Word)</div>
+                <h3 class="text-4xl font-black text-white tracking-tight">
                   {{ currentSample().german }}
                 </h3>
-                <div class="inline-block px-3 py-1 rounded-lg bg-slate-800/80 text-violet-300 text-sm font-medium">
+                <div class="inline-block px-4 py-1.5 rounded-xl bg-slate-800/80 text-violet-300 text-sm font-semibold border border-slate-700/60">
                   উচ্চারণ: {{ currentSample().phonetic }}
                 </div>
               </div>
 
-              <div class="flex items-center justify-between pt-4 border-t border-slate-800 text-xs text-slate-400">
+              <div class="flex items-center justify-between pt-4 border-t border-slate-800 text-xs text-slate-400 font-semibold">
                 <button (click)="playAudio(currentSample().german, $event)" 
-                        class="flex items-center gap-1.5 text-violet-400 font-semibold hover:text-violet-300 transition-colors">
-                  <span>🔊 শুনুন</span>
+                        class="flex items-center gap-1.5 text-violet-400 font-bold hover:text-violet-300 transition-colors">
+                  <span>🔊 উচ্চারণ শুনুন</span>
                 </button>
-                <span class="text-slate-500 group-hover:text-slate-300 transition-colors">
+                <span class="text-slate-400 group-hover:text-violet-300 transition-colors">
                   ক্লিক করে অনুবাদ দেখুন 🔄
                 </span>
               </div>
             </div>
 
             <!-- BACK OF CARD -->
-            <div class="flip-card-back flex flex-col justify-between p-8 bg-gradient-to-br from-violet-950/90 to-slate-900/95 rounded-3xl backdrop-blur-xl border border-violet-500/30">
+            <div class="flip-card-back flex flex-col justify-between p-8 bg-gradient-to-br from-violet-950/95 via-slate-900 to-indigo-950 rounded-3xl border border-violet-500/40">
               <div class="flex items-center justify-between">
-                <span class="text-xs px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 font-semibold tracking-wider uppercase">
+                <span class="text-[10px] px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-extrabold uppercase tracking-wider">
                   বাংলা অর্থ
                 </span>
-                <span class="text-2xl">🇧🇩</span>
+                <span class="text-3xl">🇧🇩</span>
               </div>
 
               <div class="text-center my-auto space-y-3">
                 <div class="text-xs text-slate-400 font-medium">{{ currentSample().german }}</div>
-                <h3 class="text-2xl font-bold text-emerald-300 leading-snug">
+                <h3 class="text-3xl font-black text-emerald-300 leading-snug">
                   {{ currentSample().bangla }}
                 </h3>
-                <p class="text-xs text-slate-400 italic">
+                <p class="text-xs text-slate-300 font-medium italic">
                   উচ্চারণ: {{ currentSample().phonetic }}
                 </p>
               </div>
 
               <div class="flex items-center justify-between pt-4 border-t border-slate-800/80 text-xs">
                 <button (click)="playAudio(currentSample().german, $event)" 
-                        class="flex items-center gap-1 text-violet-400 font-semibold hover:text-violet-300">
+                        class="flex items-center gap-1 text-violet-400 font-bold hover:text-violet-300">
                   <span>🔊 পুনঃশ্রবণ</span>
                 </button>
 
                 <button (click)="nextSample($event)" 
-                        class="px-3 py-1.5 rounded-lg bg-violet-600 hover:bg-violet-500 text-white font-semibold text-xs shadow-md transition-colors">
+                        class="px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-bold text-xs shadow-md transition-all hover:scale-105 active:scale-95">
                   পরবর্তী শব্দ ➔
                 </button>
               </div>
@@ -172,44 +151,47 @@
 
     </div>
 
-    <!-- Section Divider -->
+    <!-- Section Heading: Learning Modules -->
     <div class="text-center mb-12">
-      <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-100 tracking-tight">
-        শেখার মডিউলসমূহ <span class="text-violet-400 font-light">(Learning Modules)</span>
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-300 text-xs font-bold uppercase tracking-wider mb-2">
+        লার্নিং পথপঞ্জি
+      </div>
+      <h2 class="text-3xl sm:text-4xl font-black text-white tracking-tight">
+        শেখার প্রধান মডিউলসমূহ <span class="text-violet-400 font-light">(Learning Modules)</span>
       </h2>
-      <p class="text-slate-400 text-sm mt-2">আপনার সুবিধামতো যেকোনো মডিউল বেছে নিন</p>
+      <p class="text-slate-400 text-sm mt-2">আপনার চাহিদানুযায়ী যেকোনো মডিউল নির্বাচন করে যাত্রা শুরু করুন</p>
     </div>
 
     <!-- 3D Interactive Module Cards Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-24">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
       
       <!-- Module 1: Alphabet -->
       <a routerLink="/alphabet" 
-         class="card-3d group relative flex flex-col justify-between p-8 rounded-3xl glass-card glass-card-hover border border-slate-800 cursor-pointer overflow-hidden">
+         class="tilt-card-3d group relative flex flex-col justify-between p-8 rounded-3xl glass-card glass-card-interactive border border-slate-800 cursor-pointer overflow-hidden">
         
-        <div class="absolute -right-10 -bottom-10 w-32 h-32 bg-violet-500/10 rounded-full blur-2xl group-hover:bg-violet-500/20 transition-all"></div>
+        <div class="absolute -right-10 -bottom-10 w-36 h-36 bg-violet-500/15 rounded-full blur-3xl group-hover:bg-violet-500/30 transition-all"></div>
         
         <div>
-          <div class="w-14 h-14 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-400 text-2xl font-black mb-6 icon-3d shadow-lg shadow-violet-500/10">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500/20 to-indigo-500/20 border border-violet-500/30 flex items-center justify-center text-violet-400 text-3xl font-black mb-6 shadow-xl shadow-violet-500/10 group-hover:scale-110 transition-transform">
             Aa
           </div>
 
-          <div class="text-xs text-violet-400 font-bold uppercase tracking-wider mb-1">ধাপ ১</div>
-          <h3 class="text-2xl font-bold text-slate-100 mb-2 flex items-center gap-2">
-            Alphabet
-            <span class="text-violet-400 font-semibold text-lg">বর্ণমালা</span>
+          <div class="text-xs text-violet-400 font-extrabold uppercase tracking-wider mb-1">ধাপ ১ — Alphabet</div>
+          <h3 class="text-2xl font-black text-white mb-2 flex items-center gap-2">
+            বর্ণমালা
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-violet-500/20 text-violet-300 font-bold">A to Z</span>
           </h3>
 
-          <p class="text-slate-400 text-sm leading-relaxed mb-6 font-light">
-            জার্মান বর্ণমালা (A-Z, Ä, Ö, Ü, ß) শিখুন। সাথে সঠিক বাংলা উচ্চারণ ও শব্দ অনুশীলন কুইজ।
+          <p class="text-slate-400 text-sm leading-relaxed mb-6 font-normal">
+            জার্মান বর্ণমালা (A-Z, Ä, Ö, Ü, ß) শিখুন। সাথে প্রতিটি বর্ণের নিখুঁত বাংলা উচ্চারণ এবং অনুশীলন কুইজ।
           </p>
         </div>
 
         <div class="flex items-center justify-between pt-4 border-t border-slate-800/80">
-          <span class="text-xs text-violet-300 font-bold uppercase tracking-wider group-hover:translate-x-1 transition-transform flex items-center gap-1">
-            পড়া শুরু করুন ➔
+          <span class="text-xs text-violet-300 font-extrabold uppercase tracking-wider group-hover:translate-x-1 transition-transform flex items-center gap-1">
+            বর্ণমালা পড়া শুরু করুন ➔
           </span>
-          <span class="text-xs px-2.5 py-1 rounded-md bg-violet-500/10 border border-violet-500/20 text-violet-300 font-medium">
+          <span class="text-xs px-3 py-1 rounded-lg bg-violet-500/10 border border-violet-500/20 text-violet-300 font-bold">
             ৩০ টি বর্ণ
           </span>
         </div>
@@ -217,31 +199,31 @@
 
       <!-- Module 2: Numbers -->
       <a routerLink="/numbers" 
-         class="card-3d card-3d-cyan group relative flex flex-col justify-between p-8 rounded-3xl glass-card glass-card-hover border border-slate-800 cursor-pointer overflow-hidden">
+         class="tilt-card-3d group relative flex flex-col justify-between p-8 rounded-3xl glass-card glass-card-interactive border border-slate-800 cursor-pointer overflow-hidden">
         
-        <div class="absolute -right-10 -bottom-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/20 transition-all"></div>
+        <div class="absolute -right-10 -bottom-10 w-36 h-36 bg-cyan-500/15 rounded-full blur-3xl group-hover:bg-cyan-500/30 transition-all"></div>
 
         <div>
-          <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 text-2xl font-black mb-6 icon-3d shadow-lg shadow-cyan-500/10">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-teal-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-3xl font-black mb-6 shadow-xl shadow-cyan-500/10 group-hover:scale-110 transition-transform">
             123
           </div>
 
-          <div class="text-xs text-cyan-400 font-bold uppercase tracking-wider mb-1">ধাপ ২</div>
-          <h3 class="text-2xl font-bold text-slate-100 mb-2 flex items-center gap-2">
-            Numbers
-            <span class="text-cyan-400 font-semibold text-lg">সংখ্যা</span>
+          <div class="text-xs text-cyan-400 font-extrabold uppercase tracking-wider mb-1">ধাপ ২ — Numbers</div>
+          <h3 class="text-2xl font-black text-white mb-2 flex items-center gap-2">
+            সংখ্যা গণনা
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 font-bold">0-100</span>
           </h3>
 
-          <p class="text-slate-400 text-sm leading-relaxed mb-6 font-light">
-            জার্মান গণনা (০ থেকে ১০০+) সহজ নিয়মে শিখুন। সঠিক সংখ্যা গঠন ও বাংলা উচ্চারণ সহ কুইজ।
+          <p class="text-slate-400 text-sm leading-relaxed mb-6 font-normal">
+            জার্মান গণনা (০ থেকে ১০০+) অত্যন্ত সহজ নিয়মে শিখুন। সঠিক সংখ্যা গঠন, উচ্চারণ এবং বাংলা কুইজ।
           </p>
         </div>
 
         <div class="flex items-center justify-between pt-4 border-t border-slate-800/80">
-          <span class="text-xs text-cyan-300 font-bold uppercase tracking-wider group-hover:translate-x-1 transition-transform flex items-center gap-1">
-            গণনা শিখুন ➔
+          <span class="text-xs text-cyan-300 font-extrabold uppercase tracking-wider group-hover:translate-x-1 transition-transform flex items-center gap-1">
+            সংখ্যা গণনা শিখুন ➔
           </span>
-          <span class="text-xs px-2.5 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 font-medium">
+          <span class="text-xs px-3 py-1 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 font-bold">
             ১০১ টি সংখ্যা
           </span>
         </div>
@@ -249,64 +231,101 @@
 
       <!-- Module 3: Vocabulary -->
       <a routerLink="/vocabulary" 
-         class="card-3d card-3d-emerald group relative flex flex-col justify-between p-8 rounded-3xl glass-card glass-card-hover border border-slate-800 cursor-pointer overflow-hidden">
+         class="tilt-card-3d group relative flex flex-col justify-between p-8 rounded-3xl glass-card glass-card-interactive border border-slate-800 cursor-pointer overflow-hidden">
         
-        <div class="absolute -right-10 -bottom-10 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl group-hover:bg-indigo-500/20 transition-all"></div>
+        <div class="absolute -right-10 -bottom-10 w-36 h-36 bg-indigo-500/15 rounded-full blur-3xl group-hover:bg-indigo-500/30 transition-all"></div>
 
         <div>
-          <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 text-2xl font-black mb-6 icon-3d shadow-lg shadow-indigo-500/10">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 text-3xl font-black mb-6 shadow-xl shadow-indigo-500/10 group-hover:scale-110 transition-transform">
             📖
           </div>
 
-          <div class="text-xs text-indigo-400 font-bold uppercase tracking-wider mb-1">ধাপ ৩</div>
-          <h3 class="text-2xl font-bold text-slate-100 mb-2 flex items-center gap-2">
-            Vocabulary
-            <span class="text-indigo-400 font-semibold text-lg">শব্দকোষ</span>
+          <div class="text-xs text-indigo-400 font-extrabold uppercase tracking-wider mb-1">ধাপ ৩ — Vocabulary</div>
+          <h3 class="text-2xl font-black text-white mb-2 flex items-center gap-2">
+            শব্দকোষ
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-bold">বিষয়ভিত্তিক</span>
           </h3>
 
-          <p class="text-slate-400 text-sm leading-relaxed mb-6 font-light">
-            দৈনন্দিন প্রয়োজনীয় জার্মান শব্দভাণ্ডার ক্যাটাগরিভিত্তিক শিখুন এবং ফ্ল্যাশকার্ড দিয়ে চর্চা করুন।
+          <p class="text-slate-400 text-sm leading-relaxed mb-6 font-normal">
+            দৈনন্দিন প্রয়োজনীয় জার্মান শব্দভাণ্ডার ক্যাটাগরিভিত্তিক শিখুন এবং ৩ডি ফ্ল্যাশকার্ড ও অডিও দিয়ে চর্চা করুন।
           </p>
         </div>
 
         <div class="flex items-center justify-between pt-4 border-t border-slate-800/80">
-          <span class="text-xs text-indigo-300 font-bold uppercase tracking-wider group-hover:translate-x-1 transition-transform flex items-center gap-1">
+          <span class="text-xs text-indigo-300 font-extrabold uppercase tracking-wider group-hover:translate-x-1 transition-transform flex items-center gap-1">
             শব্দকোষ দেখুন ➔
           </span>
-          <span class="text-xs px-2.5 py-1 rounded-md bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 font-medium">
-            ক্যাটাগরি কুইজ
+          <span class="text-xs px-3 py-1 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 font-bold">
+            ২৫০+ শব্দ
           </span>
         </div>
       </a>
 
       <!-- Module 4: Conversation -->
       <a routerLink="/conversation" 
-         class="card-3d card-3d-amber group relative flex flex-col justify-between p-8 rounded-3xl glass-card glass-card-hover border border-slate-800 cursor-pointer overflow-hidden">
+         class="tilt-card-3d group relative flex flex-col justify-between p-8 rounded-3xl glass-card glass-card-interactive border border-slate-800 cursor-pointer overflow-hidden">
         
-        <div class="absolute -right-10 -bottom-10 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl group-hover:bg-emerald-500/20 transition-all"></div>
+        <div class="absolute -right-10 -bottom-10 w-36 h-36 bg-emerald-500/15 rounded-full blur-3xl group-hover:bg-emerald-500/30 transition-all"></div>
 
         <div>
-          <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-2xl font-black mb-6 icon-3d shadow-lg shadow-emerald-500/10">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-3xl font-black mb-6 shadow-xl shadow-emerald-500/10 group-hover:scale-110 transition-transform">
             💬
           </div>
 
-          <div class="text-xs text-emerald-400 font-bold uppercase tracking-wider mb-1">ধাপ ৪</div>
-          <h3 class="text-2xl font-bold text-slate-100 mb-2 flex items-center gap-2">
-            Conversation
-            <span class="text-emerald-400 font-semibold text-lg">কথোপকথন</span>
+          <div class="text-xs text-emerald-400 font-extrabold uppercase tracking-wider mb-1">ধাপ ৪ — Conversation</div>
+          <h3 class="text-2xl font-black text-white mb-2 flex items-center gap-2">
+            কথোপকথন
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold">সংলাপ ও টিউটর</span>
           </h3>
 
-          <p class="text-slate-400 text-sm leading-relaxed mb-6 font-light">
-            বাস্তব জীবনের বিভিন্ন পরিস্থিতিতে জার্মান ভাষায় কথা বলার সংলাপ ও এআই টিউটর রোলপ্লে।
+          <p class="text-slate-400 text-sm leading-relaxed mb-6 font-normal">
+            বাস্তব জীবনের পরিস্থিতিতে কথা বলার সংলাপ অনুশীলন করুন। সাথে রয়েছে এআই ভয়েস টিউটর রোলপ্লে।
           </p>
         </div>
 
         <div class="flex items-center justify-between pt-4 border-t border-slate-800/80">
-          <span class="text-xs text-emerald-300 font-bold uppercase tracking-wider group-hover:translate-x-1 transition-transform flex items-center gap-1">
-            সংলাপ শুনুন ➔
+          <span class="text-xs text-emerald-300 font-extrabold uppercase tracking-wider group-hover:translate-x-1 transition-transform flex items-center gap-1">
+            সংলাপ অনুশীলন করুন ➔
           </span>
-          <span class="text-xs px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 font-medium">
-            ইন্টারেক্টিভ টিউটর
+          <span class="text-xs px-3 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 font-bold">
+            ইন্টারেক্টিভ
+          </span>
+        </div>
+      </a>
+
+      <!-- Module 5: Word Game -->
+      <a routerLink="/game" 
+         class="tilt-card-3d md:col-span-2 lg:col-span-2 group relative flex flex-col justify-between p-8 rounded-3xl glass-card glass-card-interactive border border-amber-500/30 cursor-pointer overflow-hidden bg-gradient-to-r from-amber-950/20 via-slate-900 to-slate-900">
+        
+        <div class="absolute -right-10 -bottom-10 w-44 h-44 bg-amber-500/20 rounded-full blur-3xl group-hover:bg-amber-500/40 transition-all"></div>
+
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-6">
+          <div class="flex items-center gap-4">
+            <div class="w-16 h-16 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 text-3xl font-black shadow-xl shadow-amber-500/15 group-hover:rotate-12 transition-transform">
+              🎮
+            </div>
+            <div>
+              <div class="text-xs text-amber-400 font-extrabold uppercase tracking-wider">বোনাস গেম — Speed Quiz & Pairs</div>
+              <h3 class="text-2xl font-black text-white flex items-center gap-2">
+                শব্দ খেলা ও কুইজ চ্যালেঞ্জ
+              </h3>
+            </div>
+          </div>
+          <span class="px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-black uppercase tracking-wider animate-pulse">
+            NEW FEATURE 🔥
+          </span>
+        </div>
+
+        <p class="text-slate-300 text-sm leading-relaxed mb-6 font-normal">
+          খেলার ছলে জার্মান শব্দকোষ ঝালাই করে নিন! ৪-অপশন স্পিড কুইজ এবং কার্ড পেয়ার ম্যাচ গেমে অংশ নিয়ে আপনার স্মৃতিশক্তি পরীক্ষা করুন ও সর্বোচ্চ পয়েন্ট অর্জন করুন।
+        </p>
+
+        <div class="flex items-center justify-between pt-4 border-t border-slate-800/80">
+          <span class="text-xs text-amber-300 font-extrabold uppercase tracking-wider group-hover:translate-x-1 transition-transform flex items-center gap-1">
+            এখনই খেলা শুরু করুন ➔
+          </span>
+          <span class="text-xs px-3 py-1 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-300 font-bold">
+            খেলা ও স্কোর
           </span>
         </div>
       </a>
@@ -316,36 +335,37 @@
     <!-- Feature Highlights Grid -->
     <div class="p-8 sm:p-12 rounded-3xl glass-card border border-slate-800/80 mb-20 relative overflow-hidden">
       <div class="text-center mb-10">
-        <span class="text-xs px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-300 font-bold uppercase tracking-wider">
-          কেন DeutschBuddy বেছে নেবেন?
+        <span class="text-xs px-3.5 py-1.5 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-300 font-extrabold uppercase tracking-wider">
+          কেন DeutschBuddy সেরা?
         </span>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-100 tracking-tight mt-3">
-          সহজে জার্মান শেখার বিশ্বস্ত মাধ্যম
+        <h2 class="text-3xl font-black text-white tracking-tight mt-3">
+          সহজে জার্মান শেখার নির্ভরযোগ্য ডিজিটাল প্ল্যাটফর্ম
         </h2>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         @for (feat of features; track feat.title) {
-          <div class="p-6 rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-slate-700 transition-all duration-300">
-            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr {{ feat.color }} text-white text-2xl flex items-center justify-center mb-4 shadow-md">
+          <div class="p-6 rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-violet-500/40 transition-all duration-300 hover:-translate-y-1">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr {{ feat.color }} text-white text-2xl flex items-center justify-center mb-4 shadow-lg">
               {{ feat.icon }}
             </div>
-            <h4 class="text-lg font-bold text-slate-100 mb-2">{{ feat.title }}</h4>
-            <p class="text-slate-400 text-sm leading-relaxed font-light">{{ feat.desc }}</p>
+            <h4 class="text-lg font-bold text-white mb-2">{{ feat.title }}</h4>
+            <p class="text-slate-400 text-sm leading-relaxed font-normal">{{ feat.desc }}</p>
           </div>
         }
       </div>
     </div>
 
     <!-- Footer -->
-    <footer class="pt-8 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+    <footer class="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400 font-medium">
       <div class="flex items-center gap-2">
-        <span class="font-bold text-slate-400">DeutschBuddy</span> — Learn German in Bangla
+        <span class="font-extrabold text-white">DeutschBuddy</span> — Learn German in Bangla with ease
       </div>
       <div>
         Designed with ❤️ for Bengali native speakers worldwide.
       </div>
     </footer>
 
-  </div>
+  </main>
 </div>
+

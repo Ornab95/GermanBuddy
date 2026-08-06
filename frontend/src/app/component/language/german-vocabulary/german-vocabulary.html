@@ -1,410 +1,321 @@
-<div
-  class="min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-start p-4 md:p-8 font-sans relative overflow-x-hidden">
-  <!-- Glowing background blobs for ambient aesthetic -->
-  <div class="absolute top-0 left-1/4 w-96 h-96 bg-violet-600/10 rounded-full blur-3xl pointer-events-none"></div>
-  <div class="absolute bottom-10 right-1/4 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="relative min-h-screen bg-slate-950 text-slate-100 font-sans overflow-x-hidden pb-20 selection:bg-indigo-500/30 selection:text-indigo-200">
+  
+  <!-- Ambient background light orbs -->
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
 
-  <!-- Top Navigation Header -->
-  <header class="w-full max-w-6xl flex flex-row items-center justify-between mb-8 z-10">
-    <div class="flex items-center gap-3">
-      <div
-        class="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-400 font-black text-xl shadow-[0_0_15px_rgba(139,92,246,0.15)]">
-        📖
-      </div>
-      <div>
-        <h1
-          class="text-xl font-bold tracking-tight bg-gradient-to-r from-slate-100 to-slate-300 bg-clip-text text-transparent">
-          German Vocabulary
-        </h1>
-        <p class="text-xs text-slate-500 font-light">শব্দভাণ্ডার</p>
-      </div>
-    </div>
+  <!-- Shared Top Navigation Header -->
+  <app-nav-bar></app-nav-bar>
 
-    <a routerLink="/"
-      class="px-3.5 py-2 bg-slate-900/60 hover:bg-slate-900 border border-slate-800/80 hover:border-violet-500/30 rounded-xl font-bold text-xs text-slate-400 hover:text-violet-400 transition-all flex items-center gap-1.5 active:scale-[0.97]">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-        stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-      </svg>
-      Dashboard
-    </a>
-  </header>
-
-  <!-- Main Content Layout -->
-  <main class="w-full max-w-6xl z-10 flex-grow flex flex-col gap-6">
-    <!-- Category Selector View -->
+  <main class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
+    
+    <!-- CATEGORY SELECTION VIEW -->
     @if (selectedCategory() === null) {
-    <div class="space-y-6 animate-fade-in">
-      <div class="text-center py-6">
-        <h2 class="text-2xl md:text-3xl font-black text-slate-100">একটি বিষয় নির্বাচন করুন</h2>
-        <p class="text-xs text-slate-500 mt-1">জার্মান শব্দের সঠিক বাংলা অর্থ মিলিয়ে আপনার মেধা যাচাই করুন</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- Greetings & General -->
-        <div (click)="selectCategory('greetings')"
-          class="group relative flex flex-col justify-between p-8 rounded-3xl bg-slate-900/40 backdrop-blur-xl border border-slate-800/80 hover:border-violet-500/50 hover:shadow-[0_0_30px_rgba(139,92,246,0.15)] transition-all duration-300 transform hover:-translate-y-1 active:scale-[0.99] overflow-hidden cursor-pointer">
-          <div
-            class="absolute inset-0 bg-gradient-to-br from-violet-600/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+      <div class="space-y-8">
+        <div class="text-center">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-xs font-bold tracking-wider backdrop-blur-md mb-3 animate-pulse-glow">
+            <span>📖 German Vocabulary — শব্দকোষ</span>
           </div>
-          <div>
-            <div
-              class="w-12 h-12 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-400 text-2xl font-bold mb-6 group-hover:scale-110 transition-transform duration-300">
-              👋
-            </div>
-            <h3 class="text-2xl font-bold text-slate-100 mb-3 flex items-center gap-2">
-              Greetings
-              <span class="text-violet-400">অভিবাদন</span>
-            </h3>
-            <p class="text-slate-400 text-sm leading-relaxed mb-6 font-light">
-              সাধারণ কথাবার্তা ও অভিবাদন জানাতে ব্যবহৃত ৫টি গুরুত্বপূর্ণ জার্মান শব্দ শিখুন।
-            </p>
-          </div>
-          <div class="flex items-center justify-between mt-auto pt-4 border-t border-slate-850/50">
-            <span
-              class="text-xs text-violet-300 font-semibold uppercase group-hover:text-violet-200 transition-colors">শুরু
-              করুন &rarr;</span>
-            <span
-              class="text-xs px-2.5 py-1 rounded-md bg-violet-500/10 border border-violet-500/20 text-violet-300 font-medium">৫টি
-              শব্দ</span>
-          </div>
+          <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-white">
+            জার্মান <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-300 to-pink-400">শব্দভাণ্ডার (Vocabulary)</span>
+          </h1>
+          <p class="text-slate-400 text-sm mt-2 max-w-xl mx-auto">
+            দৈনন্দিন প্রয়োজনীয় শব্দকোষ বিষয়ভিত্তিক শিখুন। কার্ডে ক্লিক করে সঠিক অডিও উচ্চারণ শুনুন ও কুইজ দিন।
+          </p>
         </div>
 
-        <!-- Family & Relationships -->
-        <div (click)="selectCategory('family')"
-          class="group relative flex flex-col justify-between p-8 rounded-3xl bg-slate-900/40 backdrop-blur-xl border border-slate-800/80 hover:border-violet-500/50 hover:shadow-[0_0_30px_rgba(139,92,246,0.15)] transition-all duration-300 transform hover:-translate-y-1 active:scale-[0.99] overflow-hidden cursor-pointer">
-          <div
-            class="absolute inset-0 bg-gradient-to-br from-violet-600/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-          </div>
-          <div>
-            <div
-              class="w-12 h-12 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-400 text-2xl font-bold mb-6 group-hover:scale-110 transition-transform duration-300">
-              👪
-            </div>
-            <h3 class="text-2xl font-bold text-slate-100 mb-3 flex items-center gap-2">
-              Family
-              <span class="text-violet-400">পরিবার</span>
-            </h3>
-            <p class="text-slate-400 text-sm leading-relaxed mb-6 font-light">
-              পরিবারের সদস্যদের পরিচয় ও সম্পর্কভিত্তিক ৫টি দৈনন্দিন জার্মান শব্দ।
-            </p>
-          </div>
-          <div class="flex items-center justify-between mt-auto pt-4 border-t border-slate-850/50">
-            <span
-              class="text-xs text-violet-300 font-semibold uppercase group-hover:text-violet-200 transition-colors">শুরু
-              করুন &rarr;</span>
-            <span
-              class="text-xs px-2.5 py-1 rounded-md bg-violet-500/10 border border-violet-500/20 text-violet-300 font-medium">৫টি
-              শব্দ</span>
-          </div>
-        </div>
-
-        <!-- Food & Drink -->
-        <div (click)="selectCategory('food-drink')"
-          class="group relative flex flex-col justify-between p-8 rounded-3xl bg-slate-900/40 backdrop-blur-xl border border-slate-800/80 hover:border-violet-500/50 hover:shadow-[0_0_30px_rgba(139,92,246,0.15)] transition-all duration-300 transform hover:-translate-y-1 active:scale-[0.99] overflow-hidden cursor-pointer">
-          <div
-            class="absolute inset-0 bg-gradient-to-br from-violet-600/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-          </div>
-          <div>
-            <div
-              class="w-12 h-12 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-400 text-2xl font-bold mb-6 group-hover:scale-110 transition-transform duration-300">
-              🍎
-            </div>
-            <h3 class="text-2xl font-bold text-slate-100 mb-3 flex items-center gap-2">
-              Food & Drink
-              <span class="text-violet-400">খাবার ও পানীয়</span>
-            </h3>
-            <p class="text-slate-400 text-sm leading-relaxed mb-6 font-light">
-              খাবার দাবার, ফলমূল এবং পানীয় সংক্রান্ত ৫টি অপরিহার্য জার্মান শব্দ।
-            </p>
-          </div>
-          <div class="flex items-center justify-between mt-auto pt-4 border-t border-slate-850/50">
-            <span
-              class="text-xs text-violet-300 font-semibold uppercase group-hover:text-violet-200 transition-colors">শুরু
-              করুন &rarr;</span>
-            <span
-              class="text-xs px-2.5 py-1 rounded-md bg-violet-500/10 border border-violet-500/20 text-violet-300 font-medium">৫টি
-              শব্দ</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    } @else {
-    <!-- Flashcard Quiz & Results View -->
-    <div class="space-y-6">
-      <!-- Back Navigation & Header Status -->
-      <div class="flex items-center justify-between">
-        <button (click)="clearCategory()"
-          class="px-4 py-2 bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-violet-500/40 rounded-xl font-bold text-xs text-slate-400 hover:text-violet-400 transition-all flex items-center gap-1.5 cursor-pointer active:scale-95">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-            stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-          </svg>
-          ক্যাটাগরি বদলে ফেলুন (Back)
-        </button>
-
-        <div class="text-xs font-bold text-slate-500">
-          শ্রেণী: <span class="text-violet-400 capitalize">{{ selectedCategory() === 'food-drink' ? 'Food & Drink' :
-            selectedCategory() }}</span>
-        </div>
-      </div>
-
-      <!-- Tab Toggles -->
-      <div class="w-full flex bg-slate-900/60 border border-slate-800/80 rounded-2xl p-1 mb-6 z-10">
-        <button (click)="setMode('learn')"
-          [class]="currentMode() === 'learn' ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-slate-200'"
-          class="flex-1 py-2.5 text-xs font-bold rounded-xl transition-all duration-200 cursor-pointer">
-          Learn German in Bangla (শব্দ শিখুন)
-        </button>
-        <button (click)="setMode('practice')"
-          [class]="currentMode() === 'practice' ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-slate-200'"
-          class="flex-1 py-2.5 text-xs font-bold rounded-xl transition-all duration-200 cursor-pointer">
-          Practice (অনুশীলন)
-        </button>
-      </div>
-
-      @if (currentMode() === 'learn') {
-      <!-- Learn Grid of Vocabulary Words -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 animate-fade-in">
-        @for (item of filteredVocab(); track item.word) {
-        <div class="relative group">
-          <div
-            class="absolute -inset-0.5 rounded-3xl bg-gradient-to-br from-violet-500/10 to-indigo-500/10 blur opacity-75 group-hover:opacity-100 transition-opacity">
-          </div>
-          <div (click)="playAudio(item.word)"
-            class="relative bg-slate-900/40 backdrop-blur-xl border border-slate-800/80 hover:border-violet-500/40 p-6 md:p-8 rounded-3xl min-h-[200px] text-center flex flex-col justify-between transition-all hover:-translate-y-0.5 duration-350 cursor-pointer group/card">
-
-            <span
-              class="text-3xl font-black text-slate-100 bg-gradient-to-b from-white to-slate-400 bg-clip-text text-transparent select-none leading-tight">{{
-              item.word }}</span>
-
-            <div class="mt-4 space-y-2">
-              <span
-                class="block text-xs text-slate-500 font-medium italic break-words whitespace-normal leading-normal">Pronunciation:
-                {{ item.pronunciation }}</span>
-              <span
-                class="block text-lg font-bold text-violet-400 break-words whitespace-normal px-1 leading-relaxed break-bangla">{{
-                item.meaning }}</span>
-            </div>
-
-            <button
-              class="absolute top-3.5 right-3.5 p-1 text-slate-600 group-hover/card:text-violet-400 transition-colors"
-              title="Listen">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-              </svg>
-            </button>
-          </div>
-        </div>
-        }
-      </div>
-      } @else if (currentMode() === 'practice') {
-      @if (!isCompleted()) {
-      @if (currentItem(); as item) {
-      <!-- Active Flashcard -->
-      <div class="relative group animate-fade-in">
-        <!-- Glow backdrop wrapper -->
-        <div
-          class="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-violet-500/20 to-indigo-500/20 blur-xl opacity-75 group-hover:opacity-100 transition duration-500">
-        </div>
-
-        <div
-          class="relative bg-slate-900/40 backdrop-blur-xl border border-slate-800/80 rounded-3xl p-6 md:p-8 flex flex-col items-center shadow-2xl">
-          <!-- Top Statistics Panel -->
-          <div class="w-full grid grid-cols-3 gap-2 mb-6 pb-4 border-b border-slate-800/50 text-center">
-            <div class="bg-slate-950/40 border border-slate-800/60 px-3 py-2 rounded-xl">
-              <span class="block text-[10px] text-slate-500 font-bold uppercase tracking-wider">Correct</span>
-              <span class="text-sm font-black text-emerald-400">{{ scoreCorrect() }}</span>
-            </div>
-            <div class="bg-slate-950/40 border border-slate-800/60 px-3 py-2 rounded-xl">
-              <span class="block text-[10px] text-slate-500 font-bold uppercase tracking-wider">Accuracy</span>
-              <span class="text-sm font-black text-violet-400">{{ accuracy() }}%</span>
-            </div>
-            <div class="bg-slate-950/40 border border-slate-800/60 px-3 py-2 rounded-xl">
-              <span class="block text-[10px] text-slate-500 font-bold uppercase tracking-wider">Streak 🔥</span>
-              <span class="text-sm font-black text-amber-400">{{ streak() }}</span>
-            </div>
-          </div>
-
-          <!-- Word display & Audio player -->
-          <div class="my-6 text-center select-none flex flex-col items-center gap-2">
-            <span
-              class="text-[10px] uppercase tracking-widest font-black text-violet-400/80 px-2.5 py-1 bg-violet-500/10 rounded-md border border-violet-500/20">
-              Translate into Bangla
-            </span>
-
-            <div class="flex items-center justify-center gap-4 mt-2">
-              <h2
-                class="text-4xl sm:text-6xl md:text-7xl font-black text-slate-100 bg-gradient-to-b from-white to-slate-400 bg-clip-text text-transparent break-bangla">
-                {{ item.word }}
-              </h2>
-              <button (click)="playAudio(item.word)" title="Listen Pronunciation"
-                class="p-3 bg-slate-950/60 hover:bg-slate-950 border border-slate-800 hover:border-violet-500/50 rounded-2xl text-slate-400 hover:text-violet-400 transition-all active:scale-95 shadow-[0_4px_12px_rgba(0,0,0,0.3)] cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-                </svg>
-              </button>
-            </div>
-            <span class="block text-xs text-slate-500 font-light mt-1">Pronunciation: {{ item.pronunciation }}</span>
-          </div>
-
-          <!-- Input section and verification -->
-          <div class="w-full space-y-4 mt-2">
+        <!-- Category Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Greetings & General -->
+          <div (click)="selectCategory('greetings')"
+               class="tilt-card-3d group relative flex flex-col justify-between p-8 rounded-3xl glass-card glass-card-interactive border border-slate-800 cursor-pointer overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 w-36 h-36 bg-violet-500/15 rounded-full blur-3xl group-hover:bg-violet-500/30 transition-all"></div>
+            
             <div>
-              <label for="answerInput" class="block text-xs font-bold text-slate-400 mb-2 text-center">
-                সঠিক বাংলা অর্থ লিখুন:
-              </label>
-
-              <div class="relative">
-                <input #answerInput id="answerInput" type="text" [disabled]="hasChecked()" [ngModel]="userInput()"
-                  (ngModelChange)="onInputChange($event)" (keydown)="handleKeyDown($event)"
-                  placeholder="উদা: মা, বাবা, পানি, ধন্যবাদ..." autocomplete="off"
-                  class="w-full text-center bg-slate-950/60 border border-slate-800/80 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/30 rounded-2xl px-4 py-3.5 text-lg text-slate-100 placeholder:text-slate-600 transition-all font-semibold outline-none disabled:opacity-70 disabled:cursor-not-allowed" />
+              <div class="w-14 h-14 rounded-2xl bg-violet-500/15 border border-violet-500/30 flex items-center justify-center text-violet-400 text-3xl font-black mb-6 group-hover:scale-110 transition-transform">
+                👋
               </div>
-              @if (showEmptyWarning()) {
-                <p class="text-xs text-rose-400 mt-2 text-center animate-pulse">
-                  ⚠️ দয়া করে উত্তর টাইপ করুন!
-                </p>
-              }
+              <h3 class="text-2xl font-black text-white mb-2 flex items-center gap-2">
+                Greetings
+                <span class="text-violet-400 text-lg font-bold">অভিবাদন</span>
+              </h3>
+              <p class="text-slate-400 text-sm leading-relaxed mb-6 font-normal">
+                সাধারণ কথাবার্তা, কুশল বিনিময় ও প্রতিদিনের প্রয়োজনীয় শব্দমালা।
+              </p>
             </div>
 
-            <!-- Virtual Bangla Key Helpers -->
-            @if (!hasChecked()) {
-            <div class="flex flex-wrap justify-center gap-1.5 py-1 max-w-lg mx-auto">
-              @for (helper of banglaHelpers; track helper) {
-              <button (click)="appendChar(helper)"
-                class="px-2.5 py-1 bg-slate-900/60 hover:bg-slate-850 border border-slate-800 hover:border-slate-700 active:scale-95 rounded-lg text-xs font-medium text-slate-300 transition-all cursor-pointer">
-                {{ helper }}
-              </button>
-              }
+            <div class="flex items-center justify-between pt-4 border-t border-slate-800/80">
+              <span class="text-xs text-violet-300 font-extrabold uppercase tracking-wider group-hover:translate-x-1 transition-transform">
+                শুরু করুন ➔
+              </span>
+              <span class="text-xs px-3 py-1 rounded-lg bg-violet-500/10 border border-violet-500/20 text-violet-300 font-bold">
+                ক্যাটাগরি
+              </span>
             </div>
-            }
+          </div>
 
-            <!-- Controls -->
-            <div class="flex gap-3">
-              @if (!hasChecked()) {
-              <button (click)="checkAnswer()"
-                class="w-full py-3.5 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 disabled:from-slate-900 disabled:to-slate-900 disabled:border-slate-850/80 border border-transparent disabled:text-slate-600 text-white rounded-2xl text-sm font-bold active:scale-[0.99] transition-all shadow-[0_4px_20px_rgba(99,102,241,0.15)] disabled:shadow-none cursor-pointer">
-                Verify Answer (Enter)
-              </button>
-              } @else {
-              <button (click)="loadNext()"
-                class="w-full py-3.5 bg-slate-800/80 hover:bg-slate-850 border border-slate-700/80 text-slate-100 rounded-2xl text-sm font-bold active:scale-[0.99] transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg">
-                Next Word (Enter)
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor" stroke-width="2.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </button>
-              }
-            </div>
-
-            <!-- Feedback Section -->
-            @if (hasChecked()) {
-            <div class="mt-4 transition-all duration-300">
-              @if (isCorrect()) {
-              <div
-                class="bg-emerald-950/30 border border-emerald-500/30 text-emerald-400 p-4 rounded-2xl flex items-start gap-3">
-                <span class="p-1 bg-emerald-500/10 text-emerald-400 rounded-lg flex-shrink-0">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor" stroke-width="3">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                </span>
-                <div>
-                  <h4 class="text-sm font-bold text-emerald-300">চমৎকার! উত্তরটি সঠিক হয়েছে।</h4>
-                  <p class="text-xs text-slate-400 mt-1 leading-relaxed">
-                    German word <strong class="text-slate-200">{{ item.word }}</strong> is translated as
-                    <strong class="text-violet-300">"{{ item.meaning }}"</strong>@if ($any(item).english) { (English: <strong class="text-violet-300">"{{ $any(item).english }}"</strong>) }.
-                  </p>
-                </div>
+          <!-- Family & Relationships -->
+          <div (click)="selectCategory('family')"
+               class="tilt-card-3d group relative flex flex-col justify-between p-8 rounded-3xl glass-card glass-card-interactive border border-slate-800 cursor-pointer overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 w-36 h-36 bg-indigo-500/15 rounded-full blur-3xl group-hover:bg-indigo-500/30 transition-all"></div>
+            
+            <div>
+              <div class="w-14 h-14 rounded-2xl bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center text-indigo-400 text-3xl font-black mb-6 group-hover:scale-110 transition-transform">
+                👪
               </div>
-              } @else {
-              <div
-                class="bg-rose-950/30 border border-rose-500/30 text-rose-400 p-4 rounded-2xl flex items-start gap-3">
-                <span class="p-1 bg-rose-500/10 text-rose-400 rounded-lg flex-shrink-0">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor" stroke-width="3">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </span>
-                <div>
-                  <h4 class="text-sm font-bold text-rose-300">দুঃখিত! উত্তরটি ভুল হয়েছে।</h4>
-                  <p class="text-xs text-slate-400 mt-1 leading-relaxed">
-                    Correct Translation: <strong class="text-emerald-400 text-sm">{{ item.meaning }}</strong>@if ($any(item).english) { / <strong class="text-emerald-400 text-sm">{{ $any(item).english }}</strong> }.
-                  </p>
-                  <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-                    German word <strong class="text-slate-350">{{ item.word }}</strong> is pronounced as <span
-                      class="italic font-light text-slate-400">"{{ item.pronunciation }}"</span>.
-                  </p>
-                </div>
-              </div>
-              }
+              <h3 class="text-2xl font-black text-white mb-2 flex items-center gap-2">
+                Family
+                <span class="text-indigo-400 text-lg font-bold">পরিবার</span>
+              </h3>
+              <p class="text-slate-400 text-sm leading-relaxed mb-6 font-normal">
+                পরিবারের সদস্য ও আত্মীয়স্বজন সংক্রান্ত প্রয়োজনীয় জার্মান শব্দ।
+              </p>
             </div>
-            }
+
+            <div class="flex items-center justify-between pt-4 border-t border-slate-800/80">
+              <span class="text-xs text-indigo-300 font-extrabold uppercase tracking-wider group-hover:translate-x-1 transition-transform">
+                শুরু করুন ➔
+              </span>
+              <span class="text-xs px-3 py-1 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 font-bold">
+                ক্যাটাগরি
+              </span>
+            </div>
+          </div>
+
+          <!-- Food & Drink -->
+          <div (click)="selectCategory('food-drink')"
+               class="tilt-card-3d group relative flex flex-col justify-between p-8 rounded-3xl glass-card glass-card-interactive border border-slate-800 cursor-pointer overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 w-36 h-36 bg-pink-500/15 rounded-full blur-3xl group-hover:bg-pink-500/30 transition-all"></div>
+            
+            <div>
+              <div class="w-14 h-14 rounded-2xl bg-pink-500/15 border border-pink-500/30 flex items-center justify-center text-pink-400 text-3xl font-black mb-6 group-hover:scale-110 transition-transform">
+                🍎
+              </div>
+              <h3 class="text-2xl font-black text-white mb-2 flex items-center gap-2">
+                Food & Drink
+                <span class="text-pink-400 text-lg font-bold">খাবার ও পানীয়</span>
+              </h3>
+              <p class="text-slate-400 text-sm leading-relaxed mb-6 font-normal">
+                খাবারের তালিকা, রেস্তোরাঁ ও পানীয় সংক্রান্ত গুরুত্বপূর্ণ শব্দভাণ্ডার।
+              </p>
+            </div>
+
+            <div class="flex items-center justify-between pt-4 border-t border-slate-800/80">
+              <span class="text-xs text-pink-300 font-extrabold uppercase tracking-wider group-hover:translate-x-1 transition-transform">
+                শুরু করুন ➔
+              </span>
+              <span class="text-xs px-3 py-1 rounded-lg bg-pink-500/10 border border-pink-500/20 text-pink-300 font-bold">
+                ক্যাটাগরি
+              </span>
+            </div>
           </div>
         </div>
+
       </div>
-      }
-      } @else {
-      <!-- Complete Results Card -->
-      <div class="relative group animate-fade-in max-w-2xl mx-auto">
-        <div
-          class="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-violet-500/20 to-indigo-500/20 blur-xl opacity-75">
+    } @else {
+
+      <!-- CATEGORY FLASHCARD & PRACTICE VIEW -->
+      <div class="space-y-6">
+        
+        <!-- Back Bar -->
+        <div class="flex items-center justify-between">
+          <button (click)="clearCategory()"
+                  class="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-indigo-500/40 text-xs font-bold transition-all flex items-center gap-2">
+            <span>← ক্যাটাগরি পেজে ফিরুন</span>
+          </button>
+
+          <span class="text-xs font-extrabold text-indigo-400 uppercase tracking-wider px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20">
+            শ্রেণী: {{ selectedCategory() }}
+          </span>
         </div>
 
-        <div
-          class="relative bg-slate-900/40 backdrop-blur-xl border border-slate-800/80 rounded-3xl p-8 flex flex-col items-center text-center shadow-2xl space-y-6">
-          <div
-            class="w-16 h-16 rounded-full bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-400 text-4xl font-bold animate-bounce">
-            🎉
-          </div>
-
-          <div class="space-y-2">
-            <h2
-              class="text-3xl font-black text-slate-100 bg-gradient-to-b from-white to-slate-400 bg-clip-text text-transparent">
-              ক্যাটাগরি সম্পন্ন হয়েছে!</h2>
-            <p class="text-xs text-slate-500">অভিনন্দন! আপনি এই ক্যাটাগরির সকল শব্দ সফলভাবে অনুশীলন করেছেন।</p>
-          </div>
-
-          <!-- Score Grid -->
-          <div class="w-full grid grid-cols-2 gap-4 max-w-sm">
-            <div class="bg-slate-950/40 border border-slate-800/60 p-4 rounded-2xl">
-              <span class="block text-xs text-slate-500 font-bold uppercase tracking-wider">Correct Words</span>
-              <span class="text-2xl font-black text-emerald-400">{{ scoreCorrect() }} / {{ filteredVocab().length
-                }}</span>
-            </div>
-            <div class="bg-slate-950/40 border border-slate-800/60 p-4 rounded-2xl">
-              <span class="block text-xs text-slate-500 font-bold uppercase tracking-wider">Final Accuracy</span>
-              <span class="text-2xl font-black text-violet-400">{{ accuracy() }}%</span>
-            </div>
-          </div>
-
-          <!-- Actions -->
-          <div class="w-full flex flex-col sm:flex-row gap-3 pt-4 max-w-md">
-            <button (click)="restartCategory()"
-              class="flex-1 py-3 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white rounded-2xl font-bold text-sm cursor-pointer transition-all active:scale-[0.98]">
-              আবার চেষ্টা করুন (Play Again)
-            </button>
-            <button (click)="clearCategory()"
-              class="flex-1 py-3 bg-slate-850 hover:bg-slate-800 border border-slate-700 hover:border-violet-500/40 text-slate-200 rounded-2xl font-bold text-sm cursor-pointer transition-all active:scale-[0.98]">
-              ক্যাটাগরি পেজে ফিরুন
-            </button>
-          </div>
+        <!-- Mode Selector -->
+        <div class="inline-flex p-1.5 rounded-2xl glass-card border border-slate-800 bg-slate-900/80 w-full gap-2">
+          <button (click)="setMode('learn')" 
+                  [class.bg-indigo-600]="currentMode() === 'learn'"
+                  [class.text-white]="currentMode() === 'learn'"
+                  [class.text-slate-300]="currentMode() !== 'learn'"
+                  class="flex-1 py-2.5 rounded-xl font-extrabold text-xs transition-all shadow-md">
+            📖 শব্দভাণ্ডার শিখুন (Learn)
+          </button>
+          <button (click)="setMode('practice')" 
+                  [class.bg-indigo-600]="currentMode() === 'practice'"
+                  [class.text-white]="currentMode() === 'practice'"
+                  [class.text-slate-300]="currentMode() !== 'practice'"
+                  class="flex-1 py-2.5 rounded-xl font-extrabold text-xs transition-all shadow-md">
+            🎧 অনুবাদ অনুশীলন (Practice)
+          </button>
         </div>
+
+        <!-- LEARN FLASHCARDS GRID -->
+        @if (currentMode() === 'learn') {
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            @for (item of filteredVocab(); track item.word) {
+              <div (click)="playAudio(item.word)"
+                   class="tilt-card-3d group relative rounded-3xl glass-card glass-card-interactive border border-slate-800 p-6 text-center cursor-pointer flex flex-col justify-between items-center transition-all duration-300 min-h-[220px]">
+                
+                <button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-slate-800/60 text-slate-400 group-hover:text-indigo-300 group-hover:bg-indigo-500/20 flex items-center justify-center text-xs transition-colors" title="উচ্চারণ শুনুন">
+                  🔊
+                </button>
+
+                <div class="my-auto space-y-2">
+                  <h3 class="text-3xl font-black text-white group-hover:scale-105 transition-transform tracking-tight">
+                    {{ item.word }}
+                  </h3>
+                  <div class="text-xs text-slate-400 italic">
+                    {{ item.pronunciation }}
+                  </div>
+                </div>
+
+                <div class="mt-4 w-full pt-3 border-t border-slate-800/60">
+                  <span class="text-lg font-black text-indigo-300 block">
+                    {{ item.meaning }}
+                  </span>
+                </div>
+
+              </div>
+            }
+          </div>
+        }
+
+        <!-- PRACTICE QUIZ MODE -->
+        @if (currentMode() === 'practice') {
+          @if (!isCompleted()) {
+            @if (currentItem(); as item) {
+              <div class="max-w-2xl mx-auto p-8 sm:p-10 rounded-3xl glass-card border border-slate-800 shadow-2xl space-y-8">
+                
+                <!-- Stats Header -->
+                <div class="grid grid-cols-3 gap-3 text-center p-3 rounded-2xl bg-slate-900/80 border border-slate-800">
+                  <div>
+                    <div class="text-[10px] text-slate-400 font-bold uppercase">সঠিক</div>
+                    <div class="text-lg font-black text-emerald-400">{{ scoreCorrect() }}</div>
+                  </div>
+                  <div>
+                    <div class="text-[10px] text-slate-400 font-bold uppercase">সঠিকতা</div>
+                    <div class="text-lg font-black text-indigo-400">{{ accuracy() }}%</div>
+                  </div>
+                  <div>
+                    <div class="text-[10px] text-slate-400 font-bold uppercase">কম্বো 🔥</div>
+                    <div class="text-lg font-black text-amber-400">{{ streak() }}</div>
+                  </div>
+                </div>
+
+                <!-- Word Question Display -->
+                <div class="text-center space-y-3">
+                  <div class="inline-block px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-bold">
+                    শব্দটির সঠিক বাংলা অনুবাদ টাইপ করুন
+                  </div>
+
+                  <div class="flex items-center justify-center gap-4">
+                    <h2 class="text-4xl sm:text-5xl font-black text-white tracking-tight">
+                      {{ item.word }}
+                    </h2>
+                    <button (click)="playAudio(item.word)" 
+                            class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 flex items-center justify-center text-xl hover:scale-110 active:scale-95 transition-all shadow-lg">
+                      🔊
+                    </button>
+                  </div>
+                  <p class="text-xs text-slate-400 italic">উচ্চারণ: {{ item.pronunciation }}</p>
+                </div>
+
+                <!-- Input Form -->
+                <div class="space-y-4">
+                  <input #answerInput id="answerInput" type="text" [disabled]="hasChecked()" [ngModel]="userInput()"
+                         (ngModelChange)="onInputChange($event)" (keydown)="handleKeyDown($event)"
+                         placeholder="বাংলা অনুবাদ লিখুন..." autocomplete="off"
+                         class="w-full text-center bg-slate-950 border border-slate-800 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/30 rounded-2xl px-4 py-4 text-2xl font-black text-white placeholder:text-slate-600 outline-none disabled:opacity-60" />
+
+                  @if (showEmptyWarning()) {
+                    <p class="text-xs text-rose-400 text-center font-bold animate-pulse">
+                      ⚠️ উত্তর টাইপ করুন!
+                    </p>
+                  }
+
+                  <!-- Virtual Bangla Letter Helpers -->
+                  @if (!hasChecked()) {
+                    <div class="flex flex-wrap justify-center gap-1.5 pt-2">
+                      @for (helper of banglaHelpers; track helper) {
+                        <button (click)="appendChar(helper)"
+                                class="px-2.5 py-1 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-indigo-300 font-extrabold text-xs hover:scale-105 active:scale-95 transition-all">
+                          {{ helper }}
+                        </button>
+                      }
+                    </div>
+                  }
+
+                  <!-- Action Buttons -->
+                  <div class="pt-2">
+                    @if (!hasChecked()) {
+                      <button (click)="checkAnswer()"
+                              class="w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white font-extrabold text-sm shadow-lg shadow-indigo-600/30 hover:scale-[1.02] active:scale-95 transition-all">
+                        উত্তর যাঁচাই করুন (Enter)
+                      </button>
+                    } @else {
+                      <button (click)="loadNext()"
+                              class="w-full py-4 rounded-2xl bg-slate-900 border border-slate-700 text-white font-extrabold text-sm hover:bg-slate-800 transition-all flex items-center justify-center gap-2">
+                        <span>পরবর্তী শব্দ ➔ (Enter)</span>
+                      </button>
+                    }
+                  </div>
+
+                  <!-- Feedback -->
+                  @if (hasChecked()) {
+                    <div class="p-5 rounded-2xl border text-sm font-bold animate-in fade-in duration-200"
+                         [class.bg-emerald-950\/40]="isCorrect()"
+                         [class.border-emerald-500\/40]="isCorrect()"
+                         [class.text-emerald-300]="isCorrect()"
+                         [class.bg-rose-950\/40]="!isCorrect()"
+                         [class.border-rose-500\/40]="!isCorrect()"
+                         [class.text-rose-300]="!isCorrect()">
+                      @if (isCorrect()) {
+                        <div class="flex items-center gap-3">
+                          <span class="text-2xl">✅</span>
+                          <div>
+                            <div>সঠিক উত্তর! (Correct)</div>
+                            <div class="text-xs font-normal text-slate-300">
+                              Word: <strong class="text-white">{{ item.word }}</strong> = <strong class="text-indigo-300">"{{ item.meaning }}"</strong>
+                            </div>
+                          </div>
+                        </div>
+                      } @else {
+                        <div class="flex items-center gap-3">
+                          <span class="text-2xl">❌</span>
+                          <div>
+                            <div>ভুল উত্তর! সঠিক অনুবাদ: <span class="text-white text-lg font-black">{{ item.meaning }}</span></div>
+                            <div class="text-xs font-normal text-slate-300">
+                              Pronunciation: <strong>"{{ item.pronunciation }}"</strong>
+                            </div>
+                          </div>
+                        </div>
+                      }
+                    </div>
+                  }
+
+                </div>
+
+              </div>
+            }
+          } @else {
+            <!-- Completion Card -->
+            <div class="max-w-md mx-auto p-8 rounded-3xl glass-card border border-slate-800 shadow-2xl text-center space-y-6">
+              <div class="text-6xl animate-bounce">🏆</div>
+              <h2 class="text-3xl font-black text-white">ক্যাটাগরি সম্পন্ন!</h2>
+              <p class="text-slate-300 text-sm">আপনি এই ক্যাটাগরির শব্দকুইজ সফলভাবে শেষ করেছেন।</p>
+              <div class="flex gap-3">
+                <button (click)="restartCategory()" class="flex-1 py-3.5 rounded-2xl bg-indigo-600 font-bold text-white text-sm">
+                  পুনরায় খেলুন 🔄
+                </button>
+                <button (click)="clearCategory()" class="flex-1 py-3.5 rounded-2xl glass-card border border-slate-700 text-slate-300 font-bold text-sm">
+                  অন্যান্য বিষয়
+                </button>
+              </div>
+            </div>
+          }
+        }
+
       </div>
-      }
-      }
-    </div>
+
     }
-  </main>
 
-  <footer
-    class="w-full text-center py-8 text-[10px] text-slate-600 z-10 border-t border-slate-900 mt-12 tracking-wide uppercase">
-    Learn German in Bangla &bull; Madke by AB
-  </footer>
+  </main>
 </div>

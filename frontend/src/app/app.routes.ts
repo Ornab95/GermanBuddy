@@ -4,6 +4,7 @@ import { GermanAlphabet } from './component/language/german-alphabet/german-alph
 import { GermanNumbers } from './component/language/german-numbers/german-numbers';
 import { GermanVocabulary } from './component/language/german-vocabulary/german-vocabulary';
 import { GermanConversation } from './component/language/german-conversation/german-conversation';
+import { WordGame } from './component/game/word-game/word-game';
 
 export const routes: Routes = [
   { path: '', component: Dashboard },
@@ -13,7 +14,9 @@ export const routes: Routes = [
   { path: 'vocabulary', component: GermanVocabulary },
   { path: 'vocabulary/:category', component: GermanVocabulary },
   { path: 'conversation', component: GermanConversation },
+  { path: 'game', component: WordGame },
   { path: '**', redirectTo: '' }
 ];
+
 
 

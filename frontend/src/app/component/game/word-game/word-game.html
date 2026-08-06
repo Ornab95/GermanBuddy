@@ -1,1 +1,242 @@
-<p>word-game works!</p>
+<div class="relative min-h-screen bg-slate-950 text-slate-100 font-sans overflow-x-hidden pb-20 selection:bg-amber-500/30 selection:text-amber-200">
+  
+  <!-- Ambient glowing background lights -->
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+
+  <!-- Shared Top Navigation Bar -->
+  <app-nav-bar></app-nav-bar>
+
+  <main class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6">
+    
+    <!-- Game Header Section -->
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300 text-xs font-bold tracking-wider backdrop-blur-md mb-3 animate-pulse-glow">
+        <span>🎮 শব্দ খেলা ও কুইজ চ্যালেঞ্জ</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-white">
+        জার্মান <span class="bg-clip-text text-transparent bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-300">শব্দ মেলানোর খেলা</span>
+      </h1>
+      <p class="text-slate-400 text-sm mt-2 max-w-xl mx-auto">
+        খেলার ছলে জার্মান শব্দকোষ মুখস্থ করুন! দ্রুততম সময়ে সঠিক উত্তর বেছে নিয়ে সর্বোচ্চ স্কোর করুন।
+      </p>
+
+      <!-- Game Mode Selector Switch -->
+      <div class="inline-flex p-1.5 rounded-2xl glass-card border border-slate-800 bg-slate-900/80 mt-6 gap-2">
+        <button (click)="switchMode('quiz')" 
+                [class.bg-amber-500]="gameMode() === 'quiz'"
+                [class.text-slate-950]="gameMode() === 'quiz'"
+                [class.text-slate-300]="gameMode() !== 'quiz'"
+                class="px-6 py-2.5 rounded-xl font-extrabold text-xs transition-all shadow-md flex items-center gap-2">
+          <span>⚡ স্পিড কুইজ (Speed Quiz)</span>
+        </button>
+        <button (click)="switchMode('match')" 
+                [class.bg-amber-500]="gameMode() === 'match'"
+                [class.text-slate-950]="gameMode() === 'match'"
+                [class.text-slate-300]="gameMode() !== 'match'"
+                class="px-6 py-2.5 rounded-xl font-extrabold text-xs transition-all shadow-md flex items-center gap-2">
+          <span>🧩 কার্ড পেয়ার ম্যাচ (Pair Match)</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- HUD Stats Header -->
+    <div class="grid grid-cols-3 gap-4 mb-8">
+      <!-- Score Box -->
+      <div class="p-4 rounded-2xl glass-card border border-slate-800 flex items-center justify-between">
+        <div>
+          <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">মোট স্কোর</div>
+          <div class="text-2xl font-black text-amber-400 tracking-tight">{{ score() }}</div>
+        </div>
+        <div class="text-3xl">⭐</div>
+      </div>
+
+      <!-- Streak / Pairs Box -->
+      @if (gameMode() === 'quiz') {
+        <div class="p-4 rounded-2xl glass-card border border-slate-800 flex items-center justify-between">
+          <div>
+            <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">কম্বো স্ট্রাইক</div>
+            <div class="text-2xl font-black text-orange-400 tracking-tight">🔥 {{ streak() }}x</div>
+          </div>
+          <div class="text-xs px-2.5 py-1 rounded-lg bg-orange-500/10 border border-orange-500/20 text-orange-300 font-bold">
+            Max: {{ maxStreak() }}
+          </div>
+        </div>
+      } @else {
+        <div class="p-4 rounded-2xl glass-card border border-slate-800 flex items-center justify-between">
+          <div>
+            <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">মিল পাওয়া কার্ড</div>
+            <div class="text-2xl font-black text-emerald-400 tracking-tight">{{ matchedPairsCount() }} / 6</div>
+          </div>
+          <div class="text-3xl">🎯</div>
+        </div>
+      }
+
+      <!-- Lives / Progress Box -->
+      @if (gameMode() === 'quiz') {
+        <div class="p-4 rounded-2xl glass-card border border-slate-800 flex items-center justify-between">
+          <div>
+            <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">লাইফ (Health)</div>
+            <div class="flex items-center gap-1 mt-1 text-lg">
+              @for (h of [1,2,3]; track h) {
+                <span>{{ h <= lives() ? '❤️' : '🖤' }}</span>
+              }
+            </div>
+          </div>
+          <div class="text-xs text-slate-400 font-medium">
+            প্রশ্ন {{ questionsAnswered() + 1 }} / {{ totalQuestions }}
+          </div>
+        </div>
+      } @else {
+        <div class="p-4 rounded-2xl glass-card border border-slate-800 flex items-center justify-between">
+          <div>
+            <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">গেম মোড</div>
+            <div class="text-sm font-bold text-amber-300">স্মৃতিশক্তি পরীক্ষা</div>
+          </div>
+          <button (click)="startMatchGame()" class="px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-bold text-xs border border-amber-500/30 transition-all">
+            পুনরায় শুরু 🔄
+          </button>
+        </div>
+      }
+    </div>
+
+    <!-- MODE 1: SPEED QUIZ -->
+    @if (gameMode() === 'quiz') {
+      @if (currentQuestion() && !isGameOver() && !isVictory()) {
+        <div class="p-8 sm:p-12 rounded-3xl glass-card border border-slate-800 shadow-2xl relative overflow-hidden">
+          
+          <div class="text-center space-y-4 mb-10">
+            <div class="text-xs text-slate-400 font-semibold uppercase tracking-wider">
+              এই জার্মান শব্দটির বাংলা অর্থ কি?
+            </div>
+
+            <div class="flex items-center justify-center gap-3">
+              <h2 class="text-4xl sm:text-5xl font-black text-white tracking-tight">
+                {{ currentQuestion()?.targetWord?.word }}
+              </h2>
+              <button (click)="playSpeech(currentQuestion()!.targetWord.word)" 
+                      class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center text-xl hover:scale-110 active:scale-95 transition-all shadow-lg">
+                🔊
+              </button>
+            </div>
+
+            <div class="inline-block px-4 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 text-sm font-medium">
+              উচ্চারণ: {{ currentQuestion()?.targetWord?.pronunciation }}
+            </div>
+          </div>
+
+          <!-- Options Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+            @for (opt of currentQuestion()?.options; track opt) {
+              <button (click)="selectQuizOption(opt)"
+                      [disabled]="isOptionChecked()"
+                      [class.border-emerald-500]="isOptionChecked() && opt === currentQuestion()?.correctAnswer"
+                      [class.bg-emerald-500\/20]="isOptionChecked() && opt === currentQuestion()?.correctAnswer"
+                      [class.text-emerald-300]="isOptionChecked() && opt === currentQuestion()?.correctAnswer"
+                      [class.border-rose-500]="isOptionChecked() && selectedOption() === opt && opt !== currentQuestion()?.correctAnswer"
+                      [class.bg-rose-500\/20]="isOptionChecked() && selectedOption() === opt && opt !== currentQuestion()?.correctAnswer"
+                      [class.text-rose-300]="isOptionChecked() && selectedOption() === opt && opt !== currentQuestion()?.correctAnswer"
+                      class="p-5 rounded-2xl glass-card border border-slate-800 hover:border-amber-500/50 text-left font-bold text-base sm:text-lg hover:bg-slate-800/80 transition-all duration-200 flex items-center justify-between group cursor-pointer disabled:cursor-default">
+                <span>{{ opt }}</span>
+                @if (isOptionChecked() && opt === currentQuestion()?.correctAnswer) {
+                  <span class="text-xl">✅</span>
+                } @else if (isOptionChecked() && selectedOption() === opt && opt !== currentQuestion()?.correctAnswer) {
+                  <span class="text-xl">❌</span>
+                }
+              </button>
+            }
+          </div>
+
+          <!-- Next Button -->
+          @if (isOptionChecked()) {
+            <div class="flex justify-end pt-4 border-t border-slate-800 animate-in fade-in duration-300">
+              <button (click)="nextQuizQuestion()"
+                      class="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-black text-sm shadow-xl shadow-amber-500/25 transition-all hover:scale-105 active:scale-95 flex items-center gap-2">
+                <span>পরবর্তী প্রশ্ন</span>
+                <span class="text-lg">➔</span>
+              </button>
+            </div>
+          }
+
+        </div>
+      }
+    }
+
+    <!-- MODE 2: MATCH PAIRS GRID -->
+    @if (gameMode() === 'match') {
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        @for (tile of tiles(); track tile.id) {
+          <div (click)="handleTileClick(tile)"
+               class="h-32 rounded-2xl glass-card border border-slate-800 cursor-pointer flex items-center justify-center p-4 text-center transition-all duration-300 perspective-1000 group hover:border-amber-500/40"
+               [class.opacity-40]="tile.isMatched"
+               [class.pointer-events-none]="tile.isMatched">
+            
+            <div class="w-full h-full flex flex-col items-center justify-center">
+              @if (tile.isFlipped || tile.isMatched) {
+                <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
+                  {{ tile.type === 'german' ? 'DE 🇩🇪' : 'BN 🇧🇩' }}
+                </span>
+                <span class="text-base sm:text-lg font-black"
+                      [class.text-amber-300]="tile.type === 'german'"
+                      [class.text-emerald-300]="tile.type === 'bangla'">
+                  {{ tile.text }}
+                </span>
+              } @else {
+                <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center font-black text-lg group-hover:scale-110 transition-transform">
+                  ?
+                </div>
+                <span class="text-[10px] text-slate-500 font-semibold uppercase tracking-wider mt-2">কার্ড উল্টান</span>
+              }
+            </div>
+
+          </div>
+        }
+      </div>
+    }
+
+    <!-- GAME OVER / VICTORY MODAL -->
+    @if (isGameOver() || isVictory()) {
+      <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-300">
+        <div class="w-full max-w-md p-8 rounded-3xl glass-card border border-slate-800 shadow-2xl text-center space-y-6">
+          
+          <div class="text-6xl animate-bounce">
+            {{ isVictory() ? '🏆' : '💔' }}
+          </div>
+
+          <h2 class="text-3xl font-black text-white">
+            {{ isVictory() ? 'অভিনন্দন! আপনি জয়ী হয়েছেন!' : 'গেম ওভার!' }}
+          </h2>
+
+          <p class="text-slate-300 text-sm">
+            {{ isVictory() ? 'আপনি সবকটি প্রশ্নের সঠিক উত্তর দিয়ে চমৎকার দক্ষতা প্রদর্শন করেছেন।' : 'আপনার সবকটি লাইফ শেষ হয়ে গেছে। আবার চেষ্টা করুন!' }}
+          </p>
+
+          <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
+            <div class="flex justify-between text-xs text-slate-400 font-bold">
+              <span>অর্জিত স্কোর:</span>
+              <span class="text-amber-400 text-base font-black">{{ score() }}</span>
+            </div>
+            <div class="flex justify-between text-xs text-slate-400 font-bold">
+              <span>সর্বোচ্চ স্ট্রাইক:</span>
+              <span class="text-orange-400 text-base font-black">🔥 {{ maxStreak() }}x</span>
+            </div>
+          </div>
+
+          <div class="flex gap-4 pt-2">
+            <button (click)="gameMode() === 'quiz' ? startQuizGame() : startMatchGame()"
+                    class="flex-1 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black text-sm shadow-lg shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all">
+              পুনরায় খেলুন 🔄
+            </button>
+            <a routerLink="/" 
+               class="px-6 py-3.5 rounded-2xl glass-card border border-slate-700 text-slate-300 font-bold text-sm hover:text-white transition-all">
+              হোম
+            </a>
+          </div>
+
+        </div>
+      </div>
+    }
+
+  </main>
+</div>
+

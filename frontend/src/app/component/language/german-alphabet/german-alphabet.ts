@@ -2,6 +2,7 @@ import { Component, OnInit, signal, effect, computed, ViewChild, ElementRef } fr
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
+import { NavBar } from '../../nav-bar/nav-bar';
 
 interface Item {
   german: string;
@@ -13,11 +14,12 @@ interface Item {
 @Component({
   selector: 'app-german-alphabet',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, NavBar],
   templateUrl: './german-alphabet.html',
   styleUrl: './german-alphabet.css',
 })
 export class GermanAlphabet implements OnInit {
+
   @ViewChild('answerInput') answerInput!: ElementRef<HTMLInputElement>;
 
   protected readonly alphabets: Item[] = [

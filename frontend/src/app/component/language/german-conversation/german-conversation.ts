@@ -3,15 +3,17 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CONVERSATION_DATA, Conversation, Dialogue } from '../../../data/conversation.data';
+import { NavBar } from '../../nav-bar/nav-bar';
 
 @Component({
   selector: 'app-german-conversation',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, NavBar],
   templateUrl: './german-conversation.html',
   styleUrl: './german-conversation.css',
 })
 export class GermanConversation implements OnInit, OnDestroy {
+
   // Raw conversations list
   protected readonly conversations = signal<Conversation[]>(CONVERSATION_DATA);
 

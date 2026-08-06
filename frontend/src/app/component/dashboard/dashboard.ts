@@ -2,6 +2,7 @@ import { Component, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { NavBar } from '../nav-bar/nav-bar';
 
 export interface SampleWord {
   german: string;
@@ -14,11 +15,12 @@ export interface SampleWord {
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, NavBar],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
 export class Dashboard {
+
   // Interactive 3D Demo Flashcard State
   protected readonly sampleWords: SampleWord[] = [
     { german: 'Guten Tag', bangla: 'শুভ দিন / হ্যালো', phonetic: 'গুঠেন টাগ', category: 'Greetings', icon: '👋' },
