@@ -166,8 +166,8 @@ export class GermanNumbers implements OnInit {
     return total > 0 ? Math.round((this.scoreCorrect() / total) * 100) : 0;
   });
 
-  // Bangla virtual keyboard helpers
-  protected readonly banglaHelpers = ['ন', 'ই', 'উ', 'ও', 'ট', 'ড', 'ফ', 'ব', 'স', 'ল', 'ম', 'র', 'য়', 'ৎ', 'া', '্', 'ে', 'ি', 'ু', 'ূ'];
+  // Number helper buttons for quick input
+  protected readonly numberHelpers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
 
   constructor() {
     // Effect to focus input and auto-play pronunciation when current item changes
@@ -175,8 +175,6 @@ export class GermanNumbers implements OnInit {
       const item = this.currentItem();
       if (item && this.activeTab() === 'practise') {
         this.playAudio(item.german);
-      }
-      if (this.activeTab() === 'practise') {
         this.focusInput();
       }
     });
@@ -230,7 +228,11 @@ export class GermanNumbers implements OnInit {
     this.hasChecked.set(false);
     this.isCorrect.set(false);
     this.showEmptyWarning.set(false);
-    this.focusInput();
+
+    if (this.activeTab() === 'practise' && nextItem) {
+      this.playAudio(nextItem.german);
+      this.focusInput();
+    }
   }
 
   // Handle value change and warning reset
@@ -241,21 +243,25 @@ export class GermanNumbers implements OnInit {
     }
   }
 
-  // Verify answer
+  // Verify answer: accepts digits (e.g. 25 or ২৫), German spelling, or Bangla match
   protected checkAnswer(): void {
     const item = this.currentItem();
     if (!item || this.hasChecked()) return;
 
-    if (!this.userInput().trim()) {
+    const raw = this.userInput().trim();
+    if (!raw) {
       this.showEmptyWarning.set(true);
       return;
     }
     this.showEmptyWarning.set(false);
 
-    const normalizedUser = this.normalize(this.userInput());
-    const isMatch = item.banglaMatches.some(
-      match => this.normalize(match) === normalizedUser
-    );
+    const userConverted = this.banglaToEngDigits(this.normalize(raw)).toLowerCase();
+    const targetDigit = item.german.trim().toLowerCase();
+    const targetPronunciation = item.pronunciation.trim().toLowerCase();
+
+    const isMatch = (userConverted === targetDigit) ||
+      (userConverted === targetPronunciation) ||
+      item.banglaMatches.some(m => this.normalize(m).toLowerCase() === userConverted);
 
     this.isCorrect.set(isMatch);
     this.hasChecked.set(true);
@@ -280,9 +286,15 @@ export class GermanNumbers implements OnInit {
     }
   }
 
-  // Virtual keyboard helper to insert char
+  // Virtual keyboard helper to insert digit
   protected appendChar(char: string): void {
     this.userInput.update(val => val + char);
+    this.focusInput();
+  }
+
+  // Clear input
+  protected clearInput(): void {
+    this.userInput.set('');
     this.focusInput();
   }
 
@@ -304,6 +316,12 @@ export class GermanNumbers implements OnInit {
     }, 50);
   }
 
+  // Convert Bengali digits (০-৯) to English digits (0-9)
+  private banglaToEngDigits(str: string): string {
+    const bnDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+    return str.replace(/[০-৯]/g, (w) => bnDigits.indexOf(w).toString());
+  }
+
   // String normalizer
   private normalize(str: string): string {
     if (!str) return '';
@@ -312,4 +330,5 @@ export class GermanNumbers implements OnInit {
       .trim();
   }
 }
+
 
