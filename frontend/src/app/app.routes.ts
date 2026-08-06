@@ -8,6 +8,7 @@ import { GermanConversation } from './component/language/german-conversation/ger
 export const routes: Routes = [
   { path: '', component: Dashboard },
   { path: 'alphabet', component: GermanAlphabet },
+  { path: 'alphabet/:tab', component: GermanAlphabet },
   { path: 'numbers', component: GermanNumbers },
   { path: 'vocabulary', component: GermanVocabulary },
   { path: 'vocabulary/:category', component: GermanVocabulary },

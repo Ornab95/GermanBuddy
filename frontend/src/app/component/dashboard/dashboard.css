@@ -1,0 +1,104 @@
+/* Dashboard Ambient Background Orbs */
+.bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-orb-1 {
+  top: -100px;
+  left: 10%;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.45) 0%, rgba(99, 102, 241, 0) 70%);
+  animation: pulseGlow 10s ease-in-out infinite alternate;
+}
+
+.bg-orb-2 {
+  top: 300px;
+  right: 5%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.35) 0%, rgba(59, 130, 246, 0) 70%);
+  animation: floatSlow 12s ease-in-out infinite alternate;
+}
+
+.bg-orb-3 {
+  bottom: 50px;
+  left: 20%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.25) 0%, rgba(139, 92, 246, 0) 70%);
+  animation: floatReverse 14s ease-in-out infinite alternate;
+}
+
+/* 3D Interactive Card Styling */
+.card-3d {
+  position: relative;
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease, border-color 0.5s ease;
+  transform-style: preserve-3d;
+}
+
+.card-3d:hover {
+  transform: translateY(-8px) rotateX(4deg) rotateY(-4deg);
+  box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.25),
+              0 0 35px 0 rgba(139, 92, 246, 0.15);
+}
+
+.card-3d-cyan:hover {
+  transform: translateY(-8px) rotateX(4deg) rotateY(4deg);
+  box-shadow: 0 25px 50px -12px rgba(6, 182, 212, 0.25),
+              0 0 35px 0 rgba(6, 182, 212, 0.15);
+}
+
+.card-3d-emerald:hover {
+  transform: translateY(-8px) rotateX(-4deg) rotateY(-4deg);
+  box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.25),
+              0 0 35px 0 rgba(16, 185, 129, 0.15);
+}
+
+.card-3d-amber:hover {
+  transform: translateY(-8px) rotateX(-4deg) rotateY(4deg);
+  box-shadow: 0 25px 50px -12px rgba(245, 158, 11, 0.25),
+              0 0 35px 0 rgba(245, 158, 11, 0.15);
+}
+
+/* 3D Badge Inner Floating Icon */
+.icon-3d {
+  transform: translateZ(30px);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.card-3d:hover .icon-3d {
+  transform: translateZ(50px) scale(1.15) rotate(5deg);
+}
+
+/* 3D Demo Flashcard Flip Container */
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.flip-card-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+}

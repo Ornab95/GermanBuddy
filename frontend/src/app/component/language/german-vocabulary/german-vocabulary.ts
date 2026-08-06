@@ -165,7 +165,7 @@ export class GermanVocabulary implements OnInit {
 
     // Dynamically check English matches if the user adds them to the data model
     const anyItem = item as any;
-    
+
     // Check englishMatches array
     if (!isMatch && anyItem.englishMatches && Array.isArray(anyItem.englishMatches)) {
       isMatch = anyItem.englishMatches.some(

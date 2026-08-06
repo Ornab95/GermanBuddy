@@ -1,7 +1,7 @@
 import { Component, OnInit, signal, effect, computed, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 
 interface Item {
   german: string;
@@ -74,17 +74,18 @@ export class GermanAlphabet implements OnInit {
     return total > 0 ? Math.round((this.scoreCorrect() / total) * 100) : 0;
   });
 
-  // Bangla virtual keyboard helpers
-  protected readonly banglaHelpers = ['আ', 'এ', 'ই', 'উ', 'ও', 'ট', 'ড', 'ফ', 'ব', 'স', 'ল', 'ম', 'ন', 'র', 'য়', 'ৎ', '্যা', '্', 'ে', 'ি', 'ু'];
+  // German Special Character Helpers for quick selection
+  protected readonly germanHelpers = ['Ä', 'Ö', 'Ü', 'ß'];
 
-  constructor() {
-    // Effect to focus input and auto-play pronunciation when current item changes
+  constructor(
+    private readonly route: ActivatedRoute,
+    private readonly router: Router
+  ) {
+    // Effect to focus input and auto-play pronunciation when current item changes in practice mode
     effect(() => {
       const item = this.currentItem();
       if (item && this.activeTab() === 'practise') {
         this.playAudio(item.german);
-      }
-      if (this.activeTab() === 'practise') {
         this.focusInput();
       }
     });
@@ -100,8 +101,11 @@ export class GermanAlphabet implements OnInit {
     }
   }
 
-  protected selectTab(tab: 'learn' | 'practise'): void {
+  protected selectTab(tab: 'learn' | 'practise', updateUrl: boolean = true): void {
     this.activeTab.set(tab);
+    if (updateUrl) {
+      this.router.navigate(['/alphabet', tab]);
+    }
     if (tab === 'practise') {
       this.focusInput();
       const item = this.currentItem();
@@ -113,6 +117,14 @@ export class GermanAlphabet implements OnInit {
 
   ngOnInit(): void {
     this.loadNext();
+    this.route.paramMap.subscribe(params => {
+      const tabParam = params.get('tab');
+      if (tabParam === 'practise' || tabParam === 'practice') {
+        this.selectTab('practise', false);
+      } else if (tabParam === 'learn') {
+        this.selectTab('learn', false);
+      }
+    });
   }
 
   // Load a new random item, avoiding immediate repetition
@@ -138,7 +150,11 @@ export class GermanAlphabet implements OnInit {
     this.hasChecked.set(false);
     this.isCorrect.set(false);
     this.showEmptyWarning.set(false);
-    this.focusInput();
+
+    if (this.activeTab() === 'practise' && nextItem) {
+      this.playAudio(nextItem.german);
+      this.focusInput();
+    }
   }
 
   // Handle value change and warning reset
@@ -149,21 +165,25 @@ export class GermanAlphabet implements OnInit {
     }
   }
 
-  // Verify answer
+  // Verify answer: checks if user input matches German letter (case-insensitive) or Bangla match
   protected checkAnswer(): void {
     const item = this.currentItem();
     if (!item || this.hasChecked()) return;
 
-    if (!this.userInput().trim()) {
+    const rawInput = this.userInput().trim();
+    if (!rawInput) {
       this.showEmptyWarning.set(true);
       return;
     }
     this.showEmptyWarning.set(false);
 
-    const normalizedUser = this.normalize(this.userInput());
-    const isMatch = item.banglaMatches.some(
-      match => this.normalize(match) === normalizedUser
-    );
+    // Normalize letter comparison (case insensitive)
+    const targetLetter = item.german.toUpperCase();
+    const userLetter = rawInput.toUpperCase();
+
+    // Check letter match OR Bangla match fallback
+    const isMatch = (userLetter === targetLetter) || 
+      item.banglaMatches.some(m => m.trim() === rawInput);
 
     this.isCorrect.set(isMatch);
     this.hasChecked.set(true);
@@ -188,7 +208,7 @@ export class GermanAlphabet implements OnInit {
     }
   }
 
-  // Virtual keyboard helper to insert char
+  // Virtual helper to insert char
   protected appendChar(char: string): void {
     this.userInput.update(val => val + char);
     this.focusInput();
@@ -211,14 +231,4 @@ export class GermanAlphabet implements OnInit {
       }
     }, 50);
   }
-
-  // String normalizer
-  private normalize(str: string): string {
-    if (!str) return '';
-    return str
-      .replace(/[\u200B-\u200D\uFEFF]/g, '') // remove zero-width spaces/chars
-      .trim();
-  }
 }
-
-
