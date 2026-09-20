@@ -125,7 +125,7 @@
   animation: flagBillow 10s ease-in-out infinite alternate;
   mask-image: radial-gradient(ellipse 75% 65% at 50% 50%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 80%);
   -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 50%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 80%);
-  opacity: 0.12;
+  opacity: 0.40;
   filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.7));
   will-change: transform;
 }
