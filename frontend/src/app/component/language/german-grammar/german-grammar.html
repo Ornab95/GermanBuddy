@@ -1,1 +1,246 @@
-<p>german-grammar works!</p>
+<div class="relative min-h-screen text-slate-100 font-sans overflow-x-hidden pb-20 selection:bg-teal-500/30 selection:text-teal-200">
+
+  <!-- Shared Top Navigation Header -->
+  <app-nav-bar class="mt-2"></app-nav-bar>
+
+  <main class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
+    
+    <!-- Section Header -->
+    <div class="text-center mb-8" appScrollReveal revealVariant="fade-up">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-teal-500/30 bg-teal-500/10 text-teal-300 text-xs font-bold tracking-wider backdrop-blur-md mb-3 animate-pulse-glow">
+        <span>📐 German Grammar Laboratory — ব্যাকরণ ল্যাব</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-white">
+        জার্মান <span class="bg-clip-text text-transparent bg-gradient-to-r from-teal-400 via-cyan-300 to-emerald-400">ব্যাকরণ ও গঠনরীতি (Grammar)</span>
+      </h1>
+      <p class="text-slate-400 text-sm mt-2 max-w-xl mx-auto">
+        আর্টিকেলের সঠিক চেনার নিয়ম, কেসের তুলনামূলক চার্ট এবং ক্রিয়াপদের রূপান্তর সহজে আয়ত্ত করুন।
+      </p>
+
+      <!-- Grammar Tab Selector -->
+      <div class="inline-flex p-1.5 rounded-2xl glass-2 border border-slate-800 bg-slate-900/80 mt-6 gap-2">
+        <button (click)="setTab('articles')" 
+                [class.bg-teal-600]="activeTab() === 'articles'"
+                [class.text-white]="activeTab() === 'articles'"
+                [class.text-slate-300]="activeTab() !== 'articles'"
+                class="px-5 py-2.5 rounded-xl font-extrabold text-xs transition-all shadow-md flex items-center gap-2 cursor-pointer">
+          <span>🏷️ আর্টিকেলের নিয়ম (Der/Die/Das)</span>
+        </button>
+        <button (click)="setTab('cases')" 
+                [class.bg-teal-600]="activeTab() === 'cases'"
+                [class.text-white]="activeTab() === 'cases'"
+                [class.text-slate-300]="activeTab() !== 'cases'"
+                class="px-5 py-2.5 rounded-xl font-extrabold text-xs transition-all shadow-md flex items-center gap-2 cursor-pointer">
+          <span>📊 কেস চার্ট (Kasus)</span>
+        </button>
+        <button (click)="setTab('verbs')" 
+                [class.bg-teal-600]="activeTab() === 'verbs'"
+                [class.text-white]="activeTab() === 'verbs'"
+                [class.text-slate-300]="activeTab() !== 'verbs'"
+                class="px-5 py-2.5 rounded-xl font-extrabold text-xs transition-all shadow-md flex items-center gap-2 cursor-pointer">
+          <span>⚡ ক্রিয়াপদ (Verbs)</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- TAB 1: ARTICLES (Der, Die, Das, Plural) -->
+    @if (activeTab() === 'articles') {
+      <div class="space-y-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          @for (rule of articleRules; track rule.article; let idx = $index) {
+            <div appTiltCard
+                 appScrollReveal revealVariant="depth-in" [revealDelay]="idx * 50"
+                 class="tilt-card-3d p-7 rounded-3xl glass-2 glass-reflection border border-slate-800 space-y-6">
+              
+              <!-- Header -->
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="w-14 h-14 rounded-2xl bg-gradient-to-br {{ rule.bgGradient }} border border-slate-700 flex items-center justify-center text-2xl font-black {{ rule.colorClass }} shadow-lg">
+                    {{ rule.article }}
+                  </div>
+                  <div>
+                    <h3 class="text-xl font-black text-white">{{ rule.gender }}</h3>
+                    <p class="text-xs text-slate-400 font-medium">{{ rule.banglaGender }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Suffix Endings Hint -->
+              <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-2">
+                <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 block">
+                  যেসব প্রত্যয় (Endings) থাকলে এই আর্টিকেল হয়:
+                </span>
+                <div class="flex flex-wrap gap-2">
+                  @for (ending of rule.endings; track ending) {
+                    <span class="px-2.5 py-1 rounded-lg bg-slate-800/80 border border-slate-700 text-xs font-black {{ rule.colorClass }}">
+                      {{ ending }}
+                    </span>
+                  }
+                </div>
+              </div>
+
+              <!-- Examples with Audio -->
+              <div class="space-y-3">
+                <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 block">
+                  গুরুত্বপূর্ণ উদাহরণসমূহ (Click for Audio):
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  @for (ex of rule.examples; track ex.german) {
+                    <div (click)="playAudio(ex.german)"
+                         class="p-3 rounded-xl glass-1 hover:border-teal-500/40 border border-slate-800 flex items-center justify-between cursor-pointer transition-all active:scale-95 group">
+                      <div>
+                        <span class="text-sm font-black text-white group-hover:text-teal-300 transition-colors block">
+                          {{ ex.german }}
+                        </span>
+                        <span class="text-[11px] text-slate-400">
+                          {{ ex.bangla }}
+                        </span>
+                      </div>
+                      <span class="text-xs text-slate-500 group-hover:text-teal-300 transition-colors">🔊</span>
+                    </div>
+                  }
+                </div>
+              </div>
+
+            </div>
+          }
+        </div>
+
+        <!-- Pro-tip card -->
+        <div class="p-6 rounded-3xl glass-1 border border-slate-800/80 text-xs text-slate-300 leading-relaxed" appScrollReveal revealVariant="fade-up">
+          <h4 class="text-teal-400 font-black text-sm mb-2 flex items-center gap-2">
+            <span>💡 টিপস: কীভাবে আর্টিকেল মনে রাখবেন?</span>
+          </h4>
+          <p>
+            জার্মান ভাষায় কোনো শব্দ শেখার সময় কখনোই একা শব্দ শিখবেন না। সবসময় তার আর্টিকেলসহ এক সাথে মুখস্থ করুন (যেমন: শুধু "Auto" নয়, বরং <strong>"das Auto"</strong>)। এছাড়া রঙের সাহায্যে মনে রাখা সহজ: পুরুষবাচকে নীল, স্ত্রীবাচকে লাল/গোলাপি এবং ক্লীবলিঙ্গে সবুজ ব্যবহার করুন।
+          </p>
+        </div>
+      </div>
+    }
+
+    <!-- TAB 2: CASES (Kasus: Nominativ, Akkusativ, Dativ) -->
+    @if (activeTab() === 'cases') {
+      <div class="space-y-8">
+        
+        <!-- Summary Comparison Table -->
+        <div class="p-6 sm:p-8 rounded-3xl glass-2 border border-slate-800 shadow-xl overflow-x-auto" appScrollReveal revealVariant="fade-up">
+          <h3 class="text-base font-black text-white mb-4 flex items-center gap-2">
+            <span>📊 নির্দিষ্ট ও অনির্দিষ্ট আর্টিকেল পরিবর্তন চার্ট (Articles Declension)</span>
+          </h3>
+          
+          <table class="w-full text-left text-xs text-slate-300 min-w-[550px]">
+            <thead>
+              <tr class="border-b border-slate-800 text-slate-400 font-extrabold uppercase tracking-wider">
+                <th class="py-3 px-4">কেস (Case)</th>
+                <th class="py-3 px-4 text-blue-400">Maskulin (পুং)</th>
+                <th class="py-3 px-4 text-pink-400">Feminin (স্ত্রী)</th>
+                <th class="py-3 px-4 text-emerald-400">Neutral (ক্লীব)</th>
+                <th class="py-3 px-4 text-violet-400">Plural (বহু)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-850">
+              @for (c of cases; track c.germanCase) {
+                <tr class="hover:bg-slate-900/50 transition-colors">
+                  <td class="py-3.5 px-4 font-black text-white flex items-center gap-2">
+                    <span>{{ c.germanCase }}</span>
+                    <span class="text-[10px] text-slate-500 font-normal">({{ c.role.split(' ')[0] }})</span>
+                  </td>
+                  <td class="py-3.5 px-4 font-bold text-blue-300">{{ c.masculine }}</td>
+                  <td class="py-3.5 px-4 font-bold text-pink-300">{{ c.feminine }}</td>
+                  <td class="py-3.5 px-4 font-bold text-emerald-300">{{ c.neuter }}</td>
+                  <td class="py-3.5 px-4 font-bold text-violet-300">{{ c.plural }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Detailed Breakdown Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          @for (c of cases; track c.germanCase; let idx = $index) {
+            <div appTiltCard
+                 appScrollReveal revealVariant="depth-in" [revealDelay]="idx * 60"
+                 class="tilt-card-3d p-6 rounded-3xl glass-2 border border-slate-800 space-y-4">
+              <div>
+                <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-teal-500/15 border border-teal-500/30 text-teal-300 font-bold uppercase tracking-wider">
+                  {{ c.role }}
+                </span>
+                <h3 class="text-2xl font-black text-white mt-2">{{ c.germanCase }}</h3>
+                <p class="text-xs text-slate-400 mt-1">{{ c.banglaRole }}</p>
+              </div>
+
+              <!-- Sentence Example -->
+              <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
+                <span class="text-[10px] font-extrabold uppercase text-slate-500 block">উদাহরণ বাক্য:</span>
+                <div class="flex items-center justify-between">
+                  <p class="text-sm font-black text-white">{{ c.sampleSentence.german }}</p>
+                  <button (click)="playAudio(c.sampleSentence.german)" class="text-teal-400 hover:text-teal-300 text-xs">🔊</button>
+                </div>
+                <p class="text-xs text-emerald-400 font-medium">{{ c.sampleSentence.bangla }}</p>
+                <p class="text-[11px] text-slate-400 italic pt-1 border-t border-slate-800/80">
+                  {{ c.sampleSentence.explanation }}
+                </p>
+              </div>
+            </div>
+          }
+        </div>
+
+      </div>
+    }
+
+    <!-- TAB 3: VERBS CONJUGATION -->
+    @if (activeTab() === 'verbs') {
+      <div class="space-y-8">
+        
+        <!-- Conjugation Table -->
+        <div class="p-6 sm:p-8 rounded-3xl glass-2 border border-slate-800 shadow-xl overflow-x-auto" appScrollReveal revealVariant="fade-up">
+          <h3 class="text-base font-black text-white mb-4 flex items-center gap-2">
+            <span>⚡ বর্তমান কালের ক্রিয়ার রূপান্তর (Präsens Conjugation Table)</span>
+          </h3>
+
+          <table class="w-full text-left text-xs text-slate-300 min-w-[550px]">
+            <thead>
+              <tr class="border-b border-slate-800 text-slate-400 font-extrabold uppercase tracking-wider">
+                <th class="py-3 px-4">সর্বনাম (Pronoun)</th>
+                <th class="py-3 px-4 text-teal-400">নিয়মিত প্রত্যয় (Ending)</th>
+                <th class="py-3 px-4 text-cyan-300">lernen (শেখা)</th>
+                <th class="py-3 px-4 text-amber-300">sein (হওয়া)</th>
+                <th class="py-3 px-4 text-pink-300">haben (থাকা)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-850">
+              @for (v of verbConjugations; track v.pronoun) {
+                <tr class="hover:bg-slate-900/50 transition-colors">
+                  <td class="py-3 px-4 font-bold text-white">{{ v.pronoun }}</td>
+                  <td class="py-3 px-4 font-black text-teal-400">{{ v.regular }}</td>
+                  <td class="py-3 px-4 font-semibold text-cyan-200">{{ v.lernen }}</td>
+                  <td class="py-3 px-4 font-semibold text-amber-200">{{ v.sein }}</td>
+                  <td class="py-3 px-4 font-semibold text-pink-200">{{ v.haben }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Rules Notice -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" appScrollReveal revealVariant="fade-up">
+          <div class="p-6 rounded-3xl glass-1 border border-slate-800 space-y-2">
+            <h4 class="text-teal-400 font-bold text-sm">নিয়মিত ক্রিয়াপদ (Regular Verbs):</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              জার্মান ভাষার অধিকাংশ ক্রিয়ার শেষে <strong>"-en"</strong> থাকে (যেমন: mach-en, wohn-en, komm-en)। মূল অংশ (Root)-এর সাথে সর্বনাম অনুযায়ী <strong>-e, -st, -t, -en, -t, -en</strong> যোগ হয়।
+            </p>
+          </div>
+
+          <div class="p-6 rounded-3xl glass-1 border border-slate-800 space-y-2">
+            <h4 class="text-amber-400 font-bold text-sm">অনিয়মিত ক্রিয়াপদ (Irregular Verbs):</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              <strong>sein</strong> (to be) এবং <strong>haben</strong> (to have) হলো সবচেয়ে গুরুত্বপূর্ণ অনিয়মিত ক্রিয়া। এগুলো মুখস্থ রাখা বাঞ্ছনীয় কারণ দৈনন্দিন ও পারফেক্ট টেন্স গঠনে এগুলো সবসময় কাজে লাগে।
+            </p>
+          </div>
+        </div>
+
+      </div>
+    }
+
+  </main>
+</div>

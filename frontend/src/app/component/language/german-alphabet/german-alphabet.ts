@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { NavBar } from '../../nav-bar/nav-bar';
+import { TiltCardDirective } from '../../../directives/tilt-card.directive';
+import { ScrollRevealDirective } from '../../../directives/scroll-reveal.directive';
 
 interface Item {
   german: string;
@@ -14,7 +16,7 @@ interface Item {
 @Component({
   selector: 'app-german-alphabet',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, NavBar],
+  imports: [CommonModule, FormsModule, RouterModule, NavBar, TiltCardDirective, ScrollRevealDirective],
   templateUrl: './german-alphabet.html',
   styleUrl: './german-alphabet.css',
 })
@@ -91,6 +93,10 @@ export class GermanAlphabet implements OnInit {
         this.focusInput();
       }
     });
+  }
+
+  protected isSpecialLetter(letter: string): boolean {
+    return ['Ä', 'Ö', 'Ü', 'ß'].includes(letter);
   }
 
   protected playAudio(text: string): void {

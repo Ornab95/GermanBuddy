@@ -1,0 +1,50 @@
+:host {
+  display: block;
+}
+
+@media (max-width: 1023px) {
+  :host {
+    display: contents;
+  }
+}
+
+header,
+header > div {
+  transform: none !important;
+}
+
+.active-nav-link {
+  background: rgba(139, 92, 246, 0.16) !important;
+  border-color: rgba(139, 92, 246, 0.35) !important;
+  box-shadow: 0 0 16px -4px rgba(139, 92, 246, 0.3) !important;
+}
+
+.nav-link {
+  position: relative;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-link:hover {
+  transform: none !important;
+}
+
+/* Instagram-style Mobile Bottom Bar */
+.bottom-tab {
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.active-bottom-tab {
+  transform: translateY(-2px);
+}
+
+.active-bottom-tab .active-dot {
+  opacity: 1 !important;
+  box-shadow: 0 0 8px currentColor;
+}
+
+.active-bottom-tab svg {
+  stroke-width: 2.2;
+}

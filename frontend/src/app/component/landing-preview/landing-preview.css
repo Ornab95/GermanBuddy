@@ -2,11 +2,112 @@
   display: block;
 }
 
-/* Learning Avatar Blending */
+/* ==========================================================================
+   Theme Modes: Dark vs Light Surfaces & Typography
+   ========================================================================== */
+
+/* Dark Theme (Default) */
+.dark {
+  background-color: #080B10;
+  color: #f8fafc;
+}
+
+.dark .text-main {
+  color: #ffffff;
+}
+
+.dark .text-muted {
+  color: #cbd5e1;
+}
+
+.dark .header-surface {
+  background-color: rgba(11, 15, 20, 0.85);
+  border-color: rgba(51, 65, 85, 0.7);
+}
+
+.dark .card-surface {
+  background-color: rgba(15, 23, 42, 0.75);
+  border-color: rgba(51, 65, 85, 0.7);
+  box-shadow: 0 16px 35px -8px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.dark .card-surface:hover {
+  border-color: rgba(139, 92, 246, 0.5);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8), 0 0 25px rgba(139, 92, 246, 0.2);
+}
+
+.dark .badge-surface {
+  background-color: rgba(15, 23, 42, 0.9);
+  border-color: rgba(51, 65, 85, 0.8);
+  color: #cbd5e1;
+}
+
+.dark .avatar-blend {
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.9));
+}
+
+.dark .flag-3d-canvas {
+  opacity: 0.12;
+}
+
+
+/* Light Theme */
+.light-mode {
+  background-color: #f8fafc;
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(139, 92, 246, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 85% 65%, rgba(6, 182, 212, 0.05) 0%, transparent 45%);
+  color: #0f172a;
+}
+
+.light-mode .text-main {
+  color: #0f172a;
+}
+
+.light-mode .text-muted {
+  color: #475569;
+}
+
+.light-mode .header-surface {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(226, 232, 240, 0.95);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
+.light-mode .card-surface {
+  background-color: rgba(255, 255, 255, 0.92);
+  border-color: rgba(226, 232, 240, 0.95);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.03);
+}
+
+.light-mode .card-surface:hover {
+  border-color: rgba(139, 92, 246, 0.4);
+  box-shadow: 0 16px 36px -6px rgba(139, 92, 246, 0.12), 0 0 0 1px rgba(139, 92, 246, 0.2);
+}
+
+.light-mode .badge-surface {
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #334155;
+}
+
+.light-mode .avatar-blend {
+  mix-blend-mode: multiply;
+  filter: drop-shadow(0 15px 30px rgba(99, 102, 241, 0.12));
+  mask-image: radial-gradient(circle at 50% 50%, black 70%, transparent 98%);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, black 70%, transparent 98%);
+}
+
+.light-mode .flag-3d-canvas {
+  opacity: 0.08;
+}
+
+/* ==========================================================================
+   Learning Avatar Blending & Float Animation
+   ========================================================================== */
 .avatar-blend {
   mask-image: radial-gradient(circle at 50% 50%, black 60%, transparent 92%);
   -webkit-mask-image: radial-gradient(circle at 50% 50%, black 60%, transparent 92%);
-  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.9));
   animation: avatarFloat 6s ease-in-out infinite alternate;
   will-change: transform;
 }
@@ -23,12 +124,12 @@
   }
 }
 
-/* Learning Point Cards & Staircase Progression */
-.learning-point-card,
+/* ==========================================================================
+   Staircase Steps & Progression
+   ========================================================================== */
 .staircase-step {
   position: relative;
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.3s ease;
-  box-shadow: 0 16px 35px -8px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
 .step-1 {
@@ -36,7 +137,6 @@
 }
 .step-1:hover {
   border-color: rgba(139, 92, 246, 0.6) !important;
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8), 0 0 25px rgba(139, 92, 246, 0.25) !important;
 }
 
 .step-2 {
@@ -44,7 +144,6 @@
 }
 .step-2:hover {
   border-color: rgba(6, 182, 212, 0.6) !important;
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8), 0 0 25px rgba(6, 182, 212, 0.25) !important;
 }
 
 .step-3 {
@@ -52,7 +151,6 @@
 }
 .step-3:hover {
   border-color: rgba(16, 185, 129, 0.6) !important;
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8), 0 0 25px rgba(16, 185, 129, 0.25) !important;
 }
 
 @media (min-width: 1024px) {
@@ -97,17 +195,9 @@
   }
 }
 
-/* Module Cards */
-.module-card {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.module-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.5);
-}
-
-/* 3D Moving German Flag Background */
+/* ==========================================================================
+   3D Moving German Flag Background
+   ========================================================================== */
 .flag-3d-scene {
   perspective: 1200px;
   perspective-origin: 50% 50%;
@@ -125,7 +215,6 @@
   animation: flagBillow 10s ease-in-out infinite alternate;
   mask-image: radial-gradient(ellipse 75% 65% at 50% 50%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 80%);
   -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 50%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 80%);
-  opacity: 0.12;
   filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.7));
   will-change: transform;
 }
@@ -219,10 +308,14 @@
   }
 }
 
+/* ==========================================================================
+   Reduced Motion Accessibility
+   ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
   .flag-3d-canvas,
   .flag-column,
-  .flag-lighting {
+  .flag-lighting,
+  .avatar-blend {
     animation: none !important;
   }
 }

@@ -1,16 +1,12 @@
-<div class="relative min-h-screen bg-slate-950 text-slate-100 font-sans overflow-x-hidden pb-20 selection:bg-amber-500/30 selection:text-amber-200">
-  
-  <!-- Ambient glowing background lights -->
-  <div class="bg-orb bg-orb-1"></div>
-  <div class="bg-orb bg-orb-2"></div>
+<div class="relative min-h-screen text-slate-100 font-sans overflow-x-hidden pb-20 selection:bg-amber-500/30 selection:text-amber-200">
 
   <!-- Shared Top Navigation Bar -->
-  <app-nav-bar></app-nav-bar>
+  <app-nav-bar class="mt-2"></app-nav-bar>
 
   <main class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6">
     
     <!-- Game Header Section -->
-    <div class="text-center mb-8">
+    <div class="text-center mb-8" appScrollReveal revealVariant="fade-up">
       <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300 text-xs font-bold tracking-wider backdrop-blur-md mb-3 animate-pulse-glow">
         <span>🎮 শব্দ খেলা ও কুইজ চ্যালেঞ্জ</span>
       </div>
@@ -22,28 +18,28 @@
       </p>
 
       <!-- Game Mode Selector Switch -->
-      <div class="inline-flex p-1.5 rounded-2xl glass-card border border-slate-800 bg-slate-900/80 mt-6 gap-2">
+      <div class="inline-flex p-1.5 rounded-2xl glass-2 border border-slate-800 bg-slate-900/80 mt-6 gap-2">
         <button (click)="switchMode('quiz')" 
                 [class.bg-amber-500]="gameMode() === 'quiz'"
                 [class.text-slate-950]="gameMode() === 'quiz'"
                 [class.text-slate-300]="gameMode() !== 'quiz'"
-                class="px-6 py-2.5 rounded-xl font-extrabold text-xs transition-all shadow-md flex items-center gap-2">
+                class="px-6 py-2.5 rounded-xl font-extrabold text-xs transition-all shadow-md flex items-center gap-2 cursor-pointer">
           <span>⚡ স্পিড কুইজ (Speed Quiz)</span>
         </button>
         <button (click)="switchMode('match')" 
                 [class.bg-amber-500]="gameMode() === 'match'"
                 [class.text-slate-950]="gameMode() === 'match'"
                 [class.text-slate-300]="gameMode() !== 'match'"
-                class="px-6 py-2.5 rounded-xl font-extrabold text-xs transition-all shadow-md flex items-center gap-2">
+                class="px-6 py-2.5 rounded-xl font-extrabold text-xs transition-all shadow-md flex items-center gap-2 cursor-pointer">
           <span>🧩 কার্ড পেয়ার ম্যাচ (Pair Match)</span>
         </button>
       </div>
     </div>
 
     <!-- HUD Stats Header -->
-    <div class="grid grid-cols-3 gap-4 mb-8">
+    <div class="grid grid-cols-3 gap-4 mb-8" appScrollReveal revealVariant="depth-in">
       <!-- Score Box -->
-      <div class="p-4 rounded-2xl glass-card border border-slate-800 flex items-center justify-between">
+      <div class="p-4 rounded-2xl glass-2 border border-slate-800 flex items-center justify-between">
         <div>
           <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">মোট স্কোর</div>
           <div class="text-2xl font-black text-amber-400 tracking-tight">{{ score() }}</div>
@@ -53,7 +49,7 @@
 
       <!-- Streak / Pairs Box -->
       @if (gameMode() === 'quiz') {
-        <div class="p-4 rounded-2xl glass-card border border-slate-800 flex items-center justify-between">
+        <div class="p-4 rounded-2xl glass-2 border border-slate-800 flex items-center justify-between">
           <div>
             <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">কম্বো স্ট্রাইক</div>
             <div class="text-2xl font-black text-orange-400 tracking-tight">🔥 {{ streak() }}x</div>
@@ -63,7 +59,7 @@
           </div>
         </div>
       } @else {
-        <div class="p-4 rounded-2xl glass-card border border-slate-800 flex items-center justify-between">
+        <div class="p-4 rounded-2xl glass-2 border border-slate-800 flex items-center justify-between">
           <div>
             <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">মিল পাওয়া কার্ড</div>
             <div class="text-2xl font-black text-emerald-400 tracking-tight">{{ matchedPairsCount() }} / 6</div>
@@ -74,7 +70,7 @@
 
       <!-- Lives / Progress Box -->
       @if (gameMode() === 'quiz') {
-        <div class="p-4 rounded-2xl glass-card border border-slate-800 flex items-center justify-between">
+        <div class="p-4 rounded-2xl glass-2 border border-slate-800 flex items-center justify-between">
           <div>
             <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">লাইফ (Health)</div>
             <div class="flex items-center gap-1 mt-1 text-lg">
@@ -88,12 +84,12 @@
           </div>
         </div>
       } @else {
-        <div class="p-4 rounded-2xl glass-card border border-slate-800 flex items-center justify-between">
+        <div class="p-4 rounded-2xl glass-2 border border-slate-800 flex items-center justify-between">
           <div>
             <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">গেম মোড</div>
             <div class="text-sm font-bold text-amber-300">স্মৃতিশক্তি পরীক্ষা</div>
           </div>
-          <button (click)="startMatchGame()" class="px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-bold text-xs border border-amber-500/30 transition-all">
+          <button (click)="startMatchGame()" class="px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-bold text-xs border border-amber-500/30 transition-all cursor-pointer">
             পুনরায় শুরু 🔄
           </button>
         </div>
@@ -103,7 +99,8 @@
     <!-- MODE 1: SPEED QUIZ -->
     @if (gameMode() === 'quiz') {
       @if (currentQuestion() && !isGameOver() && !isVictory()) {
-        <div class="p-8 sm:p-12 rounded-3xl glass-card border border-slate-800 shadow-2xl relative overflow-hidden">
+        <div class="p-8 sm:p-12 rounded-3xl glass-3 border border-slate-700/80 shadow-2xl relative overflow-hidden"
+             appScrollReveal revealVariant="depth-in">
           
           <div class="text-center space-y-4 mb-10">
             <div class="text-xs text-slate-400 font-semibold uppercase tracking-wider">
@@ -115,7 +112,7 @@
                 {{ currentQuestion()?.targetWord?.word }}
               </h2>
               <button (click)="playSpeech(currentQuestion()!.targetWord.word)" 
-                      class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center text-xl hover:scale-110 active:scale-95 transition-all shadow-lg">
+                      class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center text-xl hover:scale-110 active:scale-95 transition-all shadow-lg cursor-pointer">
                 🔊
               </button>
             </div>
@@ -130,13 +127,14 @@
             @for (opt of currentQuestion()?.options; track opt) {
               <button (click)="selectQuizOption(opt)"
                       [disabled]="isOptionChecked()"
+                      appTiltCard
                       [class.border-emerald-500]="isOptionChecked() && opt === currentQuestion()?.correctAnswer"
                       [class.bg-emerald-500\/20]="isOptionChecked() && opt === currentQuestion()?.correctAnswer"
                       [class.text-emerald-300]="isOptionChecked() && opt === currentQuestion()?.correctAnswer"
                       [class.border-rose-500]="isOptionChecked() && selectedOption() === opt && opt !== currentQuestion()?.correctAnswer"
                       [class.bg-rose-500\/20]="isOptionChecked() && selectedOption() === opt && opt !== currentQuestion()?.correctAnswer"
                       [class.text-rose-300]="isOptionChecked() && selectedOption() === opt && opt !== currentQuestion()?.correctAnswer"
-                      class="p-5 rounded-2xl glass-card border border-slate-800 hover:border-amber-500/50 text-left font-bold text-base sm:text-lg hover:bg-slate-800/80 transition-all duration-200 flex items-center justify-between group cursor-pointer disabled:cursor-default">
+                      class="p-5 rounded-2xl glass-2 glass-reflection border border-slate-800 hover:border-amber-500/50 text-left font-bold text-base sm:text-lg hover:bg-slate-800/80 transition-all duration-200 flex items-center justify-between group cursor-pointer disabled:cursor-default">
                 <span>{{ opt }}</span>
                 @if (isOptionChecked() && opt === currentQuestion()?.correctAnswer) {
                   <span class="text-xl">✅</span>
@@ -151,7 +149,7 @@
           @if (isOptionChecked()) {
             <div class="flex justify-end pt-4 border-t border-slate-800 animate-in fade-in duration-300">
               <button (click)="nextQuizQuestion()"
-                      class="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-black text-sm shadow-xl shadow-amber-500/25 transition-all hover:scale-105 active:scale-95 flex items-center gap-2">
+                      class="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-black text-sm shadow-xl shadow-amber-500/25 transition-all hover:scale-105 active:scale-95 flex items-center gap-2 cursor-pointer">
                 <span>পরবর্তী প্রশ্ন</span>
                 <span class="text-lg">➔</span>
               </button>
@@ -164,10 +162,11 @@
 
     <!-- MODE 2: MATCH PAIRS GRID -->
     @if (gameMode() === 'match') {
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-        @for (tile of tiles(); track tile.id) {
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4" appScrollReveal revealVariant="depth-in">
+        @for (tile of tiles(); track tile.id; let idx = $index) {
           <div (click)="handleTileClick(tile)"
-               class="h-32 rounded-2xl glass-card border border-slate-800 cursor-pointer flex items-center justify-center p-4 text-center transition-all duration-300 perspective-1000 group hover:border-amber-500/40"
+               appTiltCard
+               class="h-32 rounded-2xl glass-2 glass-reflection border border-slate-800 cursor-pointer flex items-center justify-center p-4 text-center transition-all duration-300 perspective-1000 group hover:border-amber-500/40"
                [class.opacity-40]="tile.isMatched"
                [class.pointer-events-none]="tile.isMatched">
             
@@ -197,7 +196,7 @@
     <!-- GAME OVER / VICTORY MODAL -->
     @if (isGameOver() || isVictory()) {
       <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-300">
-        <div class="w-full max-w-md p-8 rounded-3xl glass-card border border-slate-800 shadow-2xl text-center space-y-6">
+        <div class="w-full max-w-md p-8 rounded-3xl glass-3 border border-slate-700/80 shadow-2xl text-center space-y-6">
           
           <div class="text-6xl animate-bounce">
             {{ isVictory() ? '🏆' : '💔' }}
@@ -224,11 +223,11 @@
 
           <div class="flex gap-4 pt-2">
             <button (click)="gameMode() === 'quiz' ? startQuizGame() : startMatchGame()"
-                    class="flex-1 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black text-sm shadow-lg shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all">
+                    class="flex-1 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black text-sm shadow-lg shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all cursor-pointer">
               পুনরায় খেলুন 🔄
             </button>
             <a routerLink="/" 
-               class="px-6 py-3.5 rounded-2xl glass-card border border-slate-700 text-slate-300 font-bold text-sm hover:text-white transition-all">
+               class="px-6 py-3.5 rounded-2xl glass-2 border border-slate-700 text-slate-300 font-bold text-sm hover:text-white transition-all">
               হোম
             </a>
           </div>
@@ -239,4 +238,3 @@
 
   </main>
 </div>
-

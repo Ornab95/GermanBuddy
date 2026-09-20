@@ -1,16 +1,12 @@
-<div class="relative min-h-screen bg-slate-950 text-slate-100 font-sans overflow-x-hidden pb-20 selection:bg-violet-500/30 selection:text-violet-200">
-  
-  <!-- Ambient background light orbs -->
-  <div class="bg-orb bg-orb-1"></div>
-  <div class="bg-orb bg-orb-2"></div>
+<div class="relative min-h-screen text-slate-100 font-sans overflow-x-hidden pb-20 selection:bg-violet-500/30 selection:text-violet-200">
 
   <!-- Shared Top Navigation Header -->
-  <app-nav-bar></app-nav-bar>
+  <app-nav-bar class="mt-2"></app-nav-bar>
 
   <main class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
     
     <!-- Section Header -->
-    <div class="text-center mb-8">
+    <div class="text-center mb-8" appScrollReveal revealVariant="fade-up">
       <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-xs font-bold tracking-wider backdrop-blur-md mb-3 animate-pulse-glow">
         <span>Aa — German Alphabet & Pronunciation</span>
       </div>
@@ -22,7 +18,7 @@
       </p>
 
       <!-- Mode Switcher -->
-      <div class="inline-flex p-1.5 rounded-2xl glass-card border border-slate-800 bg-slate-900/80 mt-6 gap-2">
+      <div class="inline-flex p-1.5 rounded-2xl glass-2 border border-slate-800 bg-slate-900/80 mt-6 gap-2">
         <button (click)="selectTab('learn')" 
                 [class.bg-violet-600]="activeTab() === 'learn'"
                 [class.text-white]="activeTab() === 'learn'"
@@ -43,16 +39,27 @@
     <!-- LEARN MODE GRID -->
     @if (activeTab() === 'learn') {
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
-        @for (item of alphabets; track item.german) {
+        @for (item of alphabets; track item.german; let idx = $index) {
           <div (click)="playAudio(item.german)"
-               class="tilt-card-3d group relative rounded-3xl glass-card glass-card-interactive border border-slate-800/80 hover:border-violet-500/50 p-6 text-center cursor-pointer flex flex-col justify-between items-center transition-all duration-300">
+               appTiltCard
+               appScrollReveal revealVariant="depth-in" [revealDelay]="(idx % 10) * 40"
+               [class.border-violet-500\/60]="isSpecialLetter(item.german)"
+               [class.shadow-violet-500\/20]="isSpecialLetter(item.german)"
+               class="tilt-card-3d group relative rounded-3xl glass-2 glass-reflection border border-slate-800/80 hover:border-violet-500/50 p-6 text-center cursor-pointer flex flex-col justify-between items-center transition-all duration-300 min-h-[190px]">
             
-            <button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-slate-800/60 text-slate-400 group-hover:text-violet-300 group-hover:bg-violet-500/20 flex items-center justify-center text-xs transition-colors" title="উচ্চারণ শুনুন">
+            @if (isSpecialLetter(item.german)) {
+              <div class="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-md bg-gradient-to-r from-violet-600 to-indigo-600 text-[9px] font-black text-white uppercase tracking-wider shadow-sm">
+                উমলাউট
+              </div>
+            }
+
+            <button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-slate-800/70 text-slate-400 group-hover:text-violet-300 group-hover:bg-violet-500/20 flex items-center justify-center text-xs transition-colors" title="উচ্চারণ শুনুন">
               🔊
             </button>
 
-            <div class="my-auto">
-              <span class="text-4xl sm:text-5xl font-black text-white group-hover:scale-110 transition-transform block tracking-tight">
+            <div class="my-auto pt-2">
+              <span class="text-4xl sm:text-5xl font-black text-white group-hover:scale-110 transition-transform block tracking-tight"
+                    [class.text-violet-300]="isSpecialLetter(item.german)">
                 {{ item.german }}
               </span>
             </div>
@@ -74,7 +81,8 @@
     <!-- PRACTICE QUIZ MODE -->
     @if (activeTab() === 'practise') {
       @if (currentItem(); as item) {
-        <div class="max-w-2xl mx-auto p-8 sm:p-10 rounded-3xl glass-card border border-slate-800 shadow-2xl space-y-8">
+        <div class="max-w-2xl mx-auto p-8 sm:p-10 rounded-3xl glass-3 border border-slate-700/80 shadow-2xl space-y-8"
+             appScrollReveal revealVariant="depth-in">
           
           <!-- Quiz Stats Header -->
           <div class="grid grid-cols-3 gap-3 text-center p-3 rounded-2xl bg-slate-900/80 border border-slate-800">
@@ -94,13 +102,14 @@
 
           <!-- Sound Player Card -->
           <div class="text-center space-y-4">
-            <div class="inline-block px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-bold">
+            <div class="inline-block px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-bold">
               🔊 শব্দটি শুনে সঠিক বর্ণটি টাইপ করুন
             </div>
 
             <div class="flex justify-center">
               <button (click)="playAudio(item.german)" 
-                      class="px-8 py-6 rounded-3xl bg-slate-900 border border-violet-500/30 hover:border-violet-400 text-violet-300 hover:text-white transition-all shadow-xl shadow-violet-500/15 active:scale-95 flex flex-col items-center gap-2 group">
+                      class="px-8 py-6 rounded-3xl bg-slate-900/80 border border-violet-500/30 hover:border-violet-400 text-violet-300 hover:text-white transition-all shadow-xl shadow-violet-500/15 active:scale-95 flex flex-col items-center gap-2 group cursor-pointer"
+                      appTiltCard>
                 <div class="w-16 h-16 rounded-2xl bg-violet-500/20 text-violet-300 flex items-center justify-center text-3xl group-hover:scale-110 transition-transform">
                   🔊
                 </div>
@@ -118,7 +127,7 @@
             <input #answerInput id="answerInput" type="text" [disabled]="hasChecked()" [ngModel]="userInput()"
                    (ngModelChange)="onInputChange($event)" (keydown)="handleKeyDown($event)"
                    placeholder="উদা: A, B, Ä, Ö, ß..." autocomplete="off"
-                   class="w-full text-center bg-slate-950 border border-slate-800 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/30 rounded-2xl px-4 py-4 text-3xl font-black text-white uppercase placeholder:text-slate-600 outline-none disabled:opacity-60" />
+                   class="w-full text-center bg-slate-950/80 border border-slate-700 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/30 rounded-2xl px-4 py-4 text-3xl font-black text-white uppercase placeholder:text-slate-600 outline-none disabled:opacity-60 transition-all" />
 
             @if (showEmptyWarning()) {
               <p class="text-xs text-rose-400 text-center font-bold animate-pulse">
@@ -132,7 +141,7 @@
                 <span class="text-xs text-slate-500 font-bold self-center">বিশেষ বর্ণ:</span>
                 @for (char of germanHelpers; track char) {
                   <button (click)="appendChar(char)"
-                          class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-violet-300 font-extrabold text-sm hover:scale-105 active:scale-95 transition-all">
+                          class="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-violet-500/40 text-violet-300 font-extrabold text-sm hover:scale-105 active:scale-95 transition-all cursor-pointer">
                     {{ char }}
                   </button>
                 }
@@ -143,12 +152,12 @@
             <div class="pt-2">
               @if (!hasChecked()) {
                 <button (click)="checkAnswer()"
-                        class="w-full py-4 rounded-2xl bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-500 text-white font-extrabold text-sm shadow-lg shadow-violet-600/30 hover:scale-[1.02] active:scale-95 transition-all">
+                        class="w-full py-4 rounded-2xl bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-500 text-white font-extrabold text-sm shadow-lg shadow-violet-600/30 hover:scale-[1.01] active:scale-95 transition-all cursor-pointer">
                   উত্তর যাঁচাই করুন (Enter)
                 </button>
               } @else {
                 <button (click)="loadNext()"
-                        class="w-full py-4 rounded-2xl bg-slate-900 border border-slate-700 text-white font-extrabold text-sm hover:bg-slate-800 transition-all flex items-center justify-center gap-2">
+                        class="w-full py-4 rounded-2xl bg-slate-900 border border-slate-700 hover:border-violet-500/40 text-white font-extrabold text-sm hover:bg-slate-800 transition-all flex items-center justify-center gap-2 cursor-pointer">
                   <span>পরবর্তী বর্ণ ➔ (Enter)</span>
                 </button>
               }
@@ -157,11 +166,11 @@
             <!-- Feedback -->
             @if (hasChecked()) {
               <div class="p-5 rounded-2xl border text-sm font-bold animate-in fade-in duration-200"
-                   [class.bg-emerald-950\/40]="isCorrect()"
-                   [class.border-emerald-500\/40]="isCorrect()"
+                   [class.bg-emerald-950\/50]="isCorrect()"
+                   [class.border-emerald-500\/50]="isCorrect()"
                    [class.text-emerald-300]="isCorrect()"
-                   [class.bg-rose-950\/40]="!isCorrect()"
-                   [class.border-rose-500\/40]="!isCorrect()"
+                   [class.bg-rose-950\/50]="!isCorrect()"
+                   [class.border-rose-500\/50]="!isCorrect()"
                    [class.text-rose-300]="!isCorrect()">
                 @if (isCorrect()) {
                   <div class="flex items-center gap-3">
@@ -177,8 +186,8 @@
                   <div class="flex items-center gap-3">
                     <span class="text-2xl">❌</span>
                     <div>
-                      <div>ভুল উত্তর! সঠিক বর্ণটি হলো: <span class="text-white text-lg font-black">{{ item.german }}</span></div>
-                      <div class="text-xs font-normal text-slate-300">
+                      <div>ভুল উত্তর! সঠিক বর্ণটি হলো: <span class="text-white text-lg font-black bg-slate-900 px-2 py-0.5 rounded border border-rose-500/40 ml-1">{{ item.german }}</span></div>
+                      <div class="text-xs font-normal text-slate-300 mt-1">
                         বাংলা উচ্চারণ: <strong>"{{ item.primaryBangla }}"</strong> ({{ item.pronunciation }})
                       </div>
                     </div>
@@ -194,28 +203,28 @@
     }
 
     <!-- Phonetic Rule Info Section -->
-    <div class="mt-12 p-6 rounded-3xl glass-card border border-slate-800/80">
-      <h3 class="text-xs font-extrabold uppercase tracking-widest text-violet-400 mb-4 border-l-4 border-violet-500 pl-3">
+    <div class="mt-14 p-8 rounded-3xl glass-1 border border-slate-800/80" appScrollReveal revealVariant="fade-up">
+      <h3 class="text-xs font-extrabold uppercase tracking-widest text-violet-400 mb-5 border-l-4 border-violet-500 pl-3">
         জার্মান উচ্চারণের বিশেষ নিয়মাবলি (Phonetic Rules)
       </h3>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-        <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800">
-          <span class="font-black text-violet-300 text-sm block mb-1">ei ➔ "আই"</span>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 text-xs">
+        <div class="p-5 rounded-2xl glass-2 border border-slate-800">
+          <span class="font-black text-violet-300 text-sm block mb-1.5">ei ➔ "আই"</span>
           <p class="text-slate-400 leading-relaxed font-normal">
             শব্দে "ei" থাকলে তার উচ্চারণ বাংলা "আই"-এর মতো হয়। যেমন: <span class="text-slate-200 font-semibold">Nein (নাইন)</span>, <span class="text-slate-200 font-semibold">Zwei (সোয়াই)</span>।
           </p>
         </div>
 
-        <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800">
-          <span class="font-black text-cyan-300 text-sm block mb-1">ie ➔ "ঈ"</span>
+        <div class="p-5 rounded-2xl glass-2 border border-slate-800">
+          <span class="font-black text-cyan-300 text-sm block mb-1.5">ie ➔ "ঈ"</span>
           <p class="text-slate-400 leading-relaxed font-normal">
             শব্দে "ie" থাকলে তা দীর্ঘ "ঈ" কারের মতো উচ্চারিত হয়। যেমন: <span class="text-slate-200 font-semibold">Vier (ফীয়ার)</span>, <span class="text-slate-200 font-semibold">Sie (জী)</span>।
           </p>
         </div>
 
-        <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800">
-          <span class="font-black text-emerald-300 text-sm block mb-1">ch ➔ "খ" / "শ"</span>
+        <div class="p-5 rounded-2xl glass-2 border border-slate-800">
+          <span class="font-black text-emerald-300 text-sm block mb-1.5">ch ➔ "খ" / "শ"</span>
           <p class="text-slate-400 leading-relaxed font-normal">
             a, o, u-এর পর "ch" থাকলে উচ্চারণ "খ"-এর মতো (যেমন Bach)। অন্য ক্ষেত্রে "শ"-এর মতো (যেমন Ich)।
           </p>

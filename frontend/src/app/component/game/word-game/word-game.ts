@@ -1,8 +1,10 @@
-import { Component, signal, computed, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, signal, computed, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NavBar } from '../../nav-bar/nav-bar';
 import { VOCABULARY_DATA, VocabItem } from '../../../data/vocabulary.data';
+import { TiltCardDirective } from '../../../directives/tilt-card.directive';
+import { ScrollRevealDirective } from '../../../directives/scroll-reveal.directive';
 
 export interface QuizQuestion {
   targetWord: VocabItem;
@@ -22,11 +24,13 @@ export interface MatchTile {
 @Component({
   selector: 'app-word-game',
   standalone: true,
-  imports: [CommonModule, RouterModule, NavBar],
+  imports: [CommonModule, RouterModule, NavBar, TiltCardDirective, ScrollRevealDirective],
   templateUrl: './word-game.html',
   styleUrl: './word-game.css',
 })
 export class WordGame implements OnInit {
+  private isBrowser = false;
+
   protected readonly gameMode = signal<'quiz' | 'match'>('quiz');
 
   // Stats
@@ -49,6 +53,10 @@ export class WordGame implements OnInit {
   protected readonly selectedTile = signal<MatchTile | null>(null);
   protected readonly isCheckingMatch = signal<boolean>(false);
   protected readonly matchedPairsCount = signal<number>(0);
+
+  constructor(@Inject(PLATFORM_ID) platformId: object) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   ngOnInit(): void {
     this.startQuizGame();
@@ -224,7 +232,7 @@ export class WordGame implements OnInit {
           this.updateTileState(tile.id, { isFlipped: false });
           this.selectedTile.set(null);
           this.isCheckingMatch.set(false);
-        }, 900);
+        }, 850);
       }
     }
   }
@@ -237,7 +245,7 @@ export class WordGame implements OnInit {
 
   // Speech Helper
   protected playSpeech(text: string): void {
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+    if (this.isBrowser && 'speechSynthesis' in window) {
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'de-DE';
@@ -248,7 +256,7 @@ export class WordGame implements OnInit {
 
   // Web Audio Synthesizer Sounds
   protected playSynthSound(type: 'correct' | 'wrong' | 'victory' | 'gameover'): void {
-    if (typeof window === 'undefined') return;
+    if (!this.isBrowser) return;
 
     try {
       const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
@@ -265,8 +273,8 @@ export class WordGame implements OnInit {
 
       if (type === 'correct') {
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(523.25, now); // C5
-        osc.frequency.setValueAtTime(659.25, now + 0.1); // E5
+        osc.frequency.setValueAtTime(523.25, now);
+        osc.frequency.setValueAtTime(659.25, now + 0.1);
         gain.gain.setValueAtTime(0.08, now);
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
         osc.start();
@@ -303,4 +311,3 @@ export class WordGame implements OnInit {
     }
   }
 }
-

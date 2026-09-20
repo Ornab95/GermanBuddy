@@ -1,8 +1,10 @@
-import { Component, signal, computed } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, signal, computed, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NavBar } from '../nav-bar/nav-bar';
+import { TiltCardDirective } from '../../directives/tilt-card.directive';
+import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive';
 
 export interface SampleWord {
   german: string;
@@ -15,11 +17,26 @@ export interface SampleWord {
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, NavBar],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    NavBar,
+    TiltCardDirective,
+    ScrollRevealDirective,
+  ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
 export class Dashboard {
+  private isBrowser = false;
+
+  constructor(@Inject(PLATFORM_ID) platformId: object) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
+
+  // 3D Moving German Flag Background columns
+  protected readonly flagColumns = Array.from({ length: 14 }, (_, i) => i);
 
   // Interactive 3D Demo Flashcard State
   protected readonly sampleWords: SampleWord[] = [
@@ -46,13 +63,13 @@ export class Dashboard {
     this.isCardFlipped.set(false);
     setTimeout(() => {
       this.activeSampleIndex.update(idx => (idx + 1) % this.sampleWords.length);
-    }, 200);
+    }, 220);
   }
 
   // Play Speech Audio
   protected playAudio(text: string, event?: Event): void {
     if (event) event.stopPropagation();
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+    if (this.isBrowser && 'speechSynthesis' in window) {
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'de-DE';
@@ -64,30 +81,28 @@ export class Dashboard {
   // Quick Feature highlights
   protected readonly features = [
     {
-      title: 'বাংলায় সহজ সঠিক উচ্চারণ',
-      desc: 'প্রতিটি জার্মান শব্দের সঠিক বাংলা উচ্চারণ ও আন্তর্জাতিক ধ্বনি নির্দেশিকা।',
+      title: 'বাংলায় সঠিক উচ্চারণ',
+      desc: 'প্রতিটি জার্মান শব্দের সঠিক বাংলা সমতুল্য উচ্চারণ ও আন্তর্জাতিক ধ্বনি নির্দেশিকা।',
       icon: '🎙️',
       color: 'from-violet-500 to-indigo-500'
     },
     {
-      title: 'শব্দভাণ্ডার ও কুইজ',
-      desc: 'ইন্টারেক্টিভ কুইজ ও ফ্ল্যাশকার্ড দিয়ে খুব দ্রুত আত্মস্থ করুন।',
+      title: 'স্প্যাশিয়াল ফ্ল্যাশকার্ড ও কুইজ',
+      desc: '৩ডি ফ্ল্যাশকার্ড ও গ্যামিফায়েড কুইজ দিয়ে খুব দ্রুত আত্মস্থ করুন।',
       icon: '🧠',
       color: 'from-cyan-500 to-blue-500'
     },
     {
-      title: 'বাস্তবসম্মত কথোপকথন',
-      desc: 'দৈনন্দিন জীবনের প্রয়োজনীয় বাক্য ও ইন্টারেক্টিভ টিউটর রোলের সুবিধা।',
+      title: 'বাস্তব কথোপকথন ও টিউটর',
+      desc: 'দৈনন্দিন বাস্তব জীবনের সংলাপ ও এআই ভয়েস টিউটর চ্যালেঞ্জ।',
       icon: '💬',
       color: 'from-emerald-500 to-teal-500'
     },
     {
-      title: 'অফলাইন ও দ্রুতগতি',
-      desc: 'কোনো ঝুটঝামেলা ছাড়াই যেকোনো ডিভাইস থেকে অফলাইনে শেখার অভিজ্ঞতা।',
-      icon: '⚡',
+      title: 'ব্যাকরণ ল্যাবরেটরি',
+      desc: 'Der, Die, Das আর্টিকেলের নিয়ম ও কেসের তুলনামূলক চার্ট সহজে আয়ত্ত করুন।',
+      icon: '📐',
       color: 'from-amber-500 to-orange-500'
     }
   ];
 }
-
-

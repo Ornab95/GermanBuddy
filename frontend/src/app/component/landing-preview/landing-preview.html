@@ -1,0 +1,658 @@
+<div [class.dark]="isDarkMode()" [class.light-mode]="!isDarkMode()"
+  class="min-h-screen transition-colors duration-500 font-sans selection:bg-violet-500/30 selection:text-violet-700 dark:selection:text-violet-200">
+
+  <!-- ================================================================= -->
+  <!-- 00: Sticky Top Header with Dedicated Light/Dark Theme Switcher   -->
+  <!-- ================================================================= -->
+  <header class="sticky top-3 z-50 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4 transition-all duration-300">
+    <div
+      class="flex items-center justify-between rounded-2xl header-surface border px-4 sm:px-6 py-2.5 transition-all duration-300 shadow-xl backdrop-blur-xl">
+
+      <!-- Brand Logo -->
+      <a routerLink="/" class="flex items-center gap-2.5 group select-none">
+        <div
+          class="w-9 h-9 rounded-xl bg-gradient-to-tr from-violet-600 via-cyan-500 to-emerald-400 p-0.5 shadow-md group-hover:scale-105 transition-transform">
+          <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center overflow-hidden p-1">
+            <img src="/logo.png" alt="DeutschBuddy Logo" class="w-full h-full object-contain" />
+          </div>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="text-lg font-black tracking-tight text-main">
+            DeutschBuddy
+          </span>
+          <span
+            class="text-[9px] px-2 py-0.5 rounded-full bg-violet-500/15 border border-violet-500/30 text-violet-600 dark:text-violet-300 font-bold uppercase tracking-wider">
+            বাংলায়
+          </span>
+        </div>
+      </a>
+
+      <!-- Navigation Links (Desktop) -->
+      <nav class="hidden md:flex items-center gap-1 text-xs font-semibold">
+        <a href="#modules"
+          class="px-3 py-1.5 rounded-xl text-muted hover:text-main hover:bg-slate-500/10 transition-colors">মডিউলসমূহ</a>
+        <a href="#personas"
+          class="px-3 py-1.5 rounded-xl text-muted hover:text-main hover:bg-slate-500/10 transition-colors">কাদের
+          জন্য</a>
+        <a href="#method"
+          class="px-3 py-1.5 rounded-xl text-muted hover:text-main hover:bg-slate-500/10 transition-colors">পদ্ধতি</a>
+        <a href="#faq"
+          class="px-3 py-1.5 rounded-xl text-muted hover:text-main hover:bg-slate-500/10 transition-colors">প্রশ্নোত্তর</a>
+      </nav>
+
+      <!-- Right Action Area: Live Theme Switcher & Primary Button -->
+      <div class="flex items-center gap-2.5 sm:gap-3">
+
+        <!-- Single Click Theme Toggle Button -->
+        <button type="button" (click)="toggleTheme()"
+          class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl card-surface border hover:border-violet-500/50 text-xs font-bold text-main transition-all active:scale-95 cursor-pointer shadow-sm select-none"
+          [title]="isDarkMode() ? 'লাইট মোডে পরিবর্তন করুন' : 'ডার্ক মোডে পরিবর্তন করুন'">
+          <span class="text-sm transition-transform duration-300" [class.rotate-12]="isDarkMode()">
+            {{ isDarkMode() ? '☀️' : '🌙' }}
+          </span>
+          <span class="hidden sm:inline">
+            {{ isDarkMode() ? 'লাইট মোড' : 'ডার্ক মোড' }}
+          </span>
+        </button>
+
+        <!-- Primary CTA Button -->
+        <a routerLink="/alphabet"
+          class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-bold text-xs shadow-md active:scale-95 transition-all">
+          <span>শেখা শুরু করুন</span>
+          <span>→</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ================================================================= -->
+  <!-- Main Container                                                    -->
+  <!-- ================================================================= -->
+  <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+
+    <!-- =============================================================== -->
+    <!-- 01: Hero Section (with 3D German Flag, Avatar & Staircase Steps) -->
+    <!-- =============================================================== -->
+    <section class="relative mt-2 lg:mt-4 mb-16 lg:mb-20">
+
+      <!-- 3D Moving German Flag Background -->
+      <div
+        class="absolute inset-0 -z-10 pointer-events-none overflow-hidden flex items-center justify-center select-none"
+        aria-hidden="true">
+        <div class="flag-3d-scene">
+          <div class="flag-3d-canvas">
+            @for (col of flagColumns; track col) {
+            <div class="flag-column" [style.--col]="col">
+              <div class="flag-stripe flag-stripe-black"></div>
+              <div class="flag-stripe flag-stripe-red"></div>
+              <div class="flag-stripe flag-stripe-gold"></div>
+              <div class="flag-lighting"></div>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-start">
+
+        <!-- Left Column: Value Proposition & CTA -->
+        <div class="lg:col-span-6 space-y-6 text-left" appScrollReveal revealVariant="fade-up">
+
+          <!-- Product Label -->
+          <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full badge-surface border text-xs font-semibold tracking-wide">
+            <span>🇩🇪</span>
+            <span>DeutschBuddy · বাংলাভাষীদের জন্য বিশেষায়িত</span>
+          </div>
+
+          <!-- Main Headline -->
+          <h1
+            class="text-4xl sm:text-5xl lg:text-[3.2rem] font-black text-main tracking-tight leading-[1.18] select-none">
+            বাংলায় সহজে জার্মান ভাষা শিখুন
+          </h1>
+
+          <!-- Supporting Description -->
+          <p class="text-base sm:text-lg text-muted font-normal leading-relaxed max-w-xl">
+            DeutschBuddy হলো বাংলাভাষীদের জন্য একটি আধুনিক ও স্বজ্ঞাত জার্মান শেখার প্ল্যাটফর্ম—যেখানে শব্দভাণ্ডার, সঠিক
+            উচ্চারণ, সংখ্যা, বাস্তব জীবনের কথোপকথন, ব্যাকরণ ও কুইজ এক জায়গায় পাওয়া যায়।
+          </p>
+
+          <!-- CTA Buttons -->
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <a routerLink="/alphabet"
+              class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-bold text-base shadow-lg shadow-violet-950/40 active:scale-95 transition-all">
+              <span>শেখা শুরু করুন</span>
+              <span>→</span>
+            </a>
+
+            <a href="#modules"
+              class="inline-flex items-center gap-1.5 text-sm font-semibold text-muted hover:text-main transition-colors group px-3 py-2">
+              <span>মডিউলগুলো দেখুন</span>
+              <span class="group-hover:translate-x-1 transition-transform">→</span>
+            </a>
+          </div>
+
+          <!-- Measurable Evidence / Capability Pill -->
+          <div class="pt-6 border-t border-slate-200 dark:border-slate-800/80 max-w-xl">
+            <div
+              class="p-4 sm:p-5 rounded-2xl card-surface border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span
+                    class="text-xs font-bold text-violet-600 dark:text-violet-400 uppercase tracking-wider">DeutschBuddy</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded badge-surface border font-medium">A1 Learning
+                    Suite</span>
+                </div>
+                <div class="text-base font-bold text-main mt-1">২৫০+ দৈনন্দিন জার্মান শব্দ</div>
+                <div class="text-xs text-muted mt-0.5">শব্দভাণ্ডার ও উচ্চারণ অনুশীলন</div>
+              </div>
+
+              <div
+                class="flex items-center gap-6 text-xs border-t sm:border-t-0 sm:border-l border-slate-200 dark:border-slate-800/80 pt-3 sm:pt-0 sm:pl-5">
+                <div>
+                  <div class="text-lg font-black text-main">৩০ টি</div>
+                  <div class="text-[10px] text-muted mt-0.5">বর্ণ ও Umlauts</div>
+                </div>
+                <div>
+                  <div class="text-lg font-black text-main">১০০+</div>
+                  <div class="text-[10px] text-muted mt-0.5">সংখ্যা ও কেস</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: 3D Learning Avatar + Staircase Learning Points -->
+        <div
+          class="lg:col-span-6 relative flex flex-col items-center lg:items-start justify-center min-h-[460px] lg:min-h-[520px]"
+          appScrollReveal revealVariant="fade-up" [revealDelay]="100">
+
+          <!-- Ambient Radial Glow behind Avatar -->
+          <div class="absolute inset-0 pointer-events-none flex items-center justify-center lg:justify-end -z-10"
+            aria-hidden="true">
+            <div
+              class="w-[340px] sm:w-[420px] h-[340px] sm:h-[420px] rounded-full bg-gradient-to-tr from-violet-600/15 via-cyan-500/10 to-transparent blur-3xl">
+            </div>
+          </div>
+
+          <!-- Central Learning Avatar (Shifted right) -->
+          <div
+            class="relative w-full max-w-[320px] sm:max-w-[360px] lg:max-w-[400px] aspect-square flex items-center justify-center ml-auto lg:translate-x-6">
+            <img [src]="isDarkMode() ? '/learning-avatar.jpg' : '/learning-avatar-light.jpg'"
+              alt="DeutschBuddy 3D Learning Character"
+              class="w-full h-full object-contain avatar-blend select-none" />
+          </div>
+
+          <!-- 3 Learning Points in Compact Staircase Progression (Left of avatar) -->
+          <div
+            class="w-full sm:max-w-[260px] lg:max-w-[240px] xl:max-w-[260px] lg:absolute lg:left-0 lg:top-1/2 lg:-translate-y-1/2 z-20 flex flex-col gap-3 mt-6 lg:mt-0">
+
+            <!-- Step 1: Interactive Vocabulary -->
+            <div class="staircase-step step-1 p-2.5 sm:p-3 rounded-xl card-surface border transition-all"
+              [appTiltCard]="{ maxTilt: 5, scale: 1.01 }">
+              <div class="flex items-center gap-2.5">
+                <div
+                  class="w-8 h-8 rounded-lg bg-violet-500/20 text-violet-600 dark:text-violet-300 border border-violet-500/30 flex items-center justify-center font-bold text-sm shrink-0 shadow-inner">
+                  📖
+                </div>
+                <div class="space-y-0.5 flex-1 min-w-0">
+                  <div class="flex items-center justify-between gap-1.5">
+                    <span class="text-xs font-bold text-main truncate">শব্দভাণ্ডার</span>
+                    <span
+                      class="text-[8px] font-bold px-1.5 py-0.5 rounded bg-violet-500/20 text-violet-600 dark:text-violet-300 border border-violet-500/30 font-mono shrink-0">ধাপ
+                      ০১</span>
+                  </div>
+                  <p class="text-[11px] text-muted leading-tight">
+                    ২৫০+ দৈনন্দিন জার্মান শব্দ
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2: Listen to Pronunciation -->
+            <div class="staircase-step step-2 p-2.5 sm:p-3 rounded-xl card-surface border transition-all"
+              [appTiltCard]="{ maxTilt: 5, scale: 1.01 }">
+              <div class="flex items-center gap-2.5">
+                <div
+                  class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-600 dark:text-cyan-300 border border-cyan-500/30 flex items-center justify-center font-bold text-sm shrink-0 shadow-inner">
+                  🎧
+                </div>
+                <div class="space-y-0.5 flex-1 min-w-0">
+                  <div class="flex items-center justify-between gap-1.5">
+                    <span class="text-xs font-bold text-main truncate">উচ্চারণ শুনুন</span>
+                    <span
+                      class="text-[8px] font-bold px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-600 dark:text-cyan-300 border border-cyan-500/30 font-mono shrink-0">ধাপ
+                      ০২</span>
+                  </div>
+                  <p class="text-[11px] text-muted leading-tight">
+                    সঠিক জার্মান বাচনভঙ্গি
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3: Practice -->
+            <div class="staircase-step step-3 p-2.5 sm:p-3 rounded-xl card-surface border transition-all"
+              [appTiltCard]="{ maxTilt: 5, scale: 1.01 }">
+              <div class="flex items-center gap-2.5">
+                <div
+                  class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 border border-emerald-500/30 flex items-center justify-center font-bold text-sm shrink-0 shadow-inner">
+                  ⚡
+                </div>
+                <div class="space-y-0.5 flex-1 min-w-0">
+                  <div class="flex items-center justify-between gap-1.5">
+                    <span class="text-xs font-bold text-main truncate">প্র্যাকটিস করুন</span>
+                    <span
+                      class="text-[8px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 border border-emerald-500/30 font-mono shrink-0">ধাপ
+                      ০৩</span>
+                  </div>
+                  <p class="text-[11px] text-muted leading-tight">
+                    ইন্টারেক্টিভ স্পিড কুইজ ও কার্ড ম্যাচিং
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =============================================================== -->
+    <!-- 02: Who is DeutschBuddy for? (কাদের জন্য এই প্ল্যাটফর্ম?)     -->
+    <!-- =============================================================== -->
+    <section id="personas" class="my-20 pt-8" appScrollReveal revealVariant="fade-up">
+      <div class="text-center mb-12">
+        <div
+          class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full badge-surface border text-xs font-semibold uppercase tracking-wider mb-3">
+          টার্গেট অডিয়েন্স
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-black text-main tracking-tight">
+          কাদের জন্য তৈরি DeutschBuddy?
+        </h2>
+        <p class="text-muted text-sm sm:text-base mt-2 max-w-xl mx-auto">
+          যেকোনো বাংলাভাষী যিনি শূন্য থেকে সহজে জার্মান ভাষা আয়ত্ত করতে চান, তাদের জন্যই DeutschBuddy।
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <!-- Persona 1 -->
+        <div class="p-6 rounded-2xl card-surface border flex flex-col justify-between"
+          [appTiltCard]="{ maxTilt: 4, scale: 1.01 }">
+          <div>
+            <div
+              class="w-12 h-12 rounded-xl bg-violet-500/15 border border-violet-500/30 text-violet-600 dark:text-violet-300 flex items-center justify-center text-2xl mb-4">
+              🎓
+            </div>
+            <h3 class="text-base font-bold text-main mb-2">উচ্চশিক্ষা প্রত্যাশী</h3>
+            <p class="text-xs text-muted leading-relaxed">
+              জার্মান ইউনিভার্সিটিতে ব্যাচেলরস বা মাস্টার্স ভর্তি, ভিসা ইন্টারভিউ ও দৈনন্দিন স্টুডেন্ট লাইফের জন্য।
+            </p>
+          </div>
+          <div
+            class="pt-4 mt-4 border-t border-slate-200 dark:border-slate-800 text-[11px] text-violet-600 dark:text-violet-400 font-semibold">
+            ভিসা ও ভর্তি প্রস্তুতি → (Coming Soon...)
+          </div>
+        </div>
+
+        <!-- Persona 2 -->
+        <div class="p-6 rounded-2xl card-surface border flex flex-col justify-between"
+          [appTiltCard]="{ maxTilt: 4, scale: 1.01 }">
+          <div>
+            <div
+              class="w-12 h-12 rounded-xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-600 dark:text-cyan-300 flex items-center justify-center text-2xl mb-4">
+              💼
+            </div>
+            <h3 class="text-base font-bold text-main mb-2">জব সিকার ও ক্যারিয়ার</h3>
+            <p class="text-xs text-muted leading-relaxed">
+              জার্মানিতে চাকরি, ব্লু-কার্ড ও কর্মক্ষেত্রে যোগাযোগের জন্য প্রয়োজনীয় প্রাথমিক জার্মান বাচনভঙ্গি।
+            </p>
+          </div>
+          <div
+            class="pt-4 mt-4 border-t border-slate-200 dark:border-slate-800 text-[11px] text-cyan-600 dark:text-cyan-400 font-semibold">
+            প্রফেশনাল ভিত্তি →(Coming Soon...)
+          </div>
+        </div>
+
+        <!-- Persona 3 -->
+        <div class="p-6 rounded-2xl card-surface border flex flex-col justify-between"
+          [appTiltCard]="{ maxTilt: 4, scale: 1.01 }">
+          <div>
+            <div
+              class="w-12 h-12 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-300 flex items-center justify-center text-2xl mb-4">
+              🌱
+            </div>
+            <h3 class="text-base font-bold text-main mb-2">A1 / A2 নতুন শিক্ষার্থী</h3>
+            <p class="text-xs text-muted leading-relaxed">
+              গোয়েথে বা টেলক পরীক্ষার প্রস্তুতি নিতে ইচ্ছুক শিক্ষার্থী, যাদের জন্য বাংলা ব্যাখ্যা অত্যন্ত ফলপ্রসূ।
+            </p>
+          </div>
+          <div
+            class="pt-4 mt-4 border-t border-slate-200 dark:border-slate-800 text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold">
+            গোয়েথে A1 গাইড →(Coming Soon...)
+          </div>
+        </div>
+
+        <!-- Persona 4 -->
+        <div class="p-6 rounded-2xl card-surface border flex flex-col justify-between"
+          [appTiltCard]="{ maxTilt: 4, scale: 1.01 }">
+          <div>
+            <div
+              class="w-12 h-12 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-300 flex items-center justify-center text-2xl mb-4">
+              🇧🇩
+            </div>
+            <h3 class="text-base font-bold text-main mb-2">প্রবাসী ও সাধারণ শিক্ষার্থী</h3>
+            <p class="text-xs text-muted leading-relaxed">
+              জার্মানি, অস্ট্রিয়া বা সুইজারল্যান্ডে বসবাসরত বাঙালি পরিবার ও শখের বশে নতুন ভাষা শিখতে আগ্রহীরা।
+            </p>
+          </div>
+          <div
+            class="pt-4 mt-4 border-t border-slate-200 dark:border-slate-800 text-[11px] text-amber-600 dark:text-amber-400 font-semibold">
+            দৈনন্দিন যোগাযোগ →
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =============================================================== -->
+    <!-- 03: Complete Learning Modules Overview                          -->
+    <!-- =============================================================== -->
+    <section id="modules" class="my-20 pt-8" appScrollReveal revealVariant="fade-up">
+      <div class="text-center mb-12">
+        <div
+          class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full badge-surface border text-xs font-semibold uppercase tracking-wider mb-3">
+          লার্নিং মডিউলসমূহ
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-black text-main tracking-tight">
+          সবকিছু যা আপনি শিখবেন
+        </h2>
+        <p class="text-muted text-sm sm:text-base mt-2 max-w-xl mx-auto">
+          শূন্য থেকে জার্মান ভাষার সম্পূর্ণ ভিত্তি তৈরির জন্য ৬টি বিশেষায়িত ইন্টারেক্টিভ মডিউল।
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Module 1: Alphabet -->
+        <a routerLink="/alphabet"
+          class="p-6 rounded-2xl card-surface border hover:border-violet-500/50 flex flex-col justify-between group cursor-pointer transition-all"
+          [appTiltCard]="{ maxTilt: 3, scale: 1.01 }">
+          <div>
+            <div
+              class="w-12 h-12 rounded-xl bg-violet-500/15 border border-violet-500/30 text-violet-600 dark:text-violet-300 font-black text-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+              🔤
+            </div>
+            <h3 class="text-lg font-bold text-main mb-2 flex items-center justify-between">
+              <span>জার্মান বর্ণমালা</span>
+              <span class="text-xs text-muted font-normal">২৬ বর্ণ + ৪ Umlauts</span>
+            </h3>
+            <p class="text-xs text-muted leading-relaxed">
+              A-Z মূল অক্ষর এবং Ä, Ö, Ü ও ß (Eszett) এর সঠিক জার্মান বাচনভঙ্গি ও বাংলা উচ্চারণ গাইড।
+            </p>
+          </div>
+          <div
+            class="pt-4 mt-5 border-t border-slate-200 dark:border-slate-800/80 text-xs text-violet-600 dark:text-violet-400 font-bold group-hover:translate-x-1 transition-transform flex items-center gap-1.5">
+            <span>বর্ণমালা মডিউল দেখুন</span>
+            <span>→</span>
+          </div>
+        </a>
+
+        <!-- Module 2: Numbers -->
+        <a routerLink="/numbers"
+          class="p-6 rounded-2xl card-surface border hover:border-cyan-500/50 flex flex-col justify-between group cursor-pointer transition-all"
+          [appTiltCard]="{ maxTilt: 3, scale: 1.01 }">
+          <div>
+            <div
+              class="w-12 h-12 rounded-xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-600 dark:text-cyan-300 font-black text-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+              🔢
+            </div>
+            <h3 class="text-lg font-bold text-main mb-2 flex items-center justify-between">
+              <span>জার্মান সংখ্যা ও গণনা</span>
+              <span class="text-xs text-muted font-normal">০ থেকে ১০০+</span>
+            </h3>
+            <p class="text-xs text-muted leading-relaxed">
+              জার্মান সংখ্যার উল্টো গঠন নীতি (যেমন: einundzwanzig = ১ ও ২০) এবং অডিওসহ সঠিক গণনা পদ্ধতি।
+            </p>
+          </div>
+          <div
+            class="pt-4 mt-5 border-t border-slate-200 dark:border-slate-800/80 text-xs text-cyan-600 dark:text-cyan-400 font-bold group-hover:translate-x-1 transition-transform flex items-center gap-1.5">
+            <span>সংখ্যা গণনা দেখুন</span>
+            <span>→</span>
+          </div>
+        </a>
+
+        <!-- Module 3: Vocabulary -->
+        <a routerLink="/vocabulary"
+          class="p-6 rounded-2xl card-surface border hover:border-indigo-500/50 flex flex-col justify-between group cursor-pointer transition-all"
+          [appTiltCard]="{ maxTilt: 3, scale: 1.01 }">
+          <div>
+            <div
+              class="w-12 h-12 rounded-xl bg-indigo-500/15 border border-indigo-500/30 text-indigo-600 dark:text-indigo-300 font-black text-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+              📖
+            </div>
+            <h3 class="text-lg font-bold text-main mb-2 flex items-center justify-between">
+              <span>দৈনন্দিন শব্দভাণ্ডার</span>
+              <span class="text-xs text-muted font-normal">২৫০+ ফ্ল্যাশকার্ড</span>
+            </h3>
+            <p class="text-xs text-muted leading-relaxed">
+              সম্ভাষণ, পরিবার, খাবার, সময়, রঙ, পেশাসহ বাস্তব জীবনের দরকারী শব্দ বাংলা অর্থ ও ধ্বনিসহ।
+            </p>
+          </div>
+          <div
+            class="pt-4 mt-5 border-t border-slate-200 dark:border-slate-800/80 text-xs text-indigo-600 dark:text-indigo-400 font-bold group-hover:translate-x-1 transition-transform flex items-center gap-1.5">
+            <span>শব্দকোষ ব্রাউজ করুন</span>
+            <span>→</span>
+          </div>
+        </a>
+
+        <!-- Module 4: Conversation -->
+        <a routerLink="/conversation"
+          class="p-6 rounded-2xl card-surface border hover:border-emerald-500/50 flex flex-col justify-between group cursor-pointer transition-all"
+          [appTiltCard]="{ maxTilt: 3, scale: 1.01 }">
+          <div>
+            <div
+              class="w-12 h-12 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-300 font-black text-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+              💬
+            </div>
+            <h3 class="text-lg font-bold text-main mb-2 flex items-center justify-between">
+              <span>বাস্তব জীবনের কথোপকথন</span>
+              <span class="text-xs text-muted font-normal">৪টি সংলাপ পরিস্থিতি</span>
+            </h3>
+            <p class="text-xs text-muted leading-relaxed">
+              রেস্তোরাঁ, হোটেল, ট্রেন স্টেশন ও পরিচিতি পর্বের মতো বাস্তব পরিস্থিতির সংলাপ ও স্পিচ প্লেব্যাক।
+            </p>
+          </div>
+          <div
+            class="pt-4 mt-5 border-t border-slate-200 dark:border-slate-800/80 text-xs text-emerald-600 dark:text-emerald-400 font-bold group-hover:translate-x-1 transition-transform flex items-center gap-1.5">
+            <span>সংলাপ অনুশীলন করুন</span>
+            <span>→</span>
+          </div>
+        </a>
+
+        <!-- Module 5: Grammar -->
+        <a routerLink="/grammar"
+          class="p-6 rounded-2xl card-surface border hover:border-teal-500/50 flex flex-col justify-between group cursor-pointer transition-all"
+          [appTiltCard]="{ maxTilt: 3, scale: 1.01 }">
+          <div>
+            <div
+              class="w-12 h-12 rounded-xl bg-teal-500/15 border border-teal-500/30 text-teal-600 dark:text-teal-300 font-black text-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+              📚
+            </div>
+            <h3 class="text-lg font-bold text-main mb-2 flex items-center justify-between">
+              <span>জার্মান ব্যাকরণ ল্যাব</span>
+              <span class="text-xs text-muted font-normal">Der, Die, Das ও ৩ কেস</span>
+            </h3>
+            <p class="text-xs text-muted leading-relaxed">
+              আর্টিকেল জেন্ডার রুলস, Nominativ, Akkusativ, Dativ কেস এবং নিয়মিত ও অনিয়মিত ক্রিয়ার কনজুগেশন।
+            </p>
+          </div>
+          <div
+            class="pt-4 mt-5 border-t border-slate-200 dark:border-slate-800/80 text-xs text-teal-600 dark:text-teal-400 font-bold group-hover:translate-x-1 transition-transform flex items-center gap-1.5">
+            <span>ব্যাকরণ নিয়মাবলী দেখুন</span>
+            <span>→</span>
+          </div>
+        </a>
+
+        <!-- Module 6: Word Game -->
+        <a routerLink="/game"
+          class="p-6 rounded-2xl card-surface border hover:border-amber-500/50 flex flex-col justify-between group cursor-pointer transition-all"
+          [appTiltCard]="{ maxTilt: 3, scale: 1.01 }">
+          <div>
+            <div
+              class="w-12 h-12 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-300 font-black text-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+              🎮
+            </div>
+            <h3 class="text-lg font-bold text-main mb-2 flex items-center justify-between">
+              <span>গ্যামিফায়েড কুইজ ও গেম</span>
+              <span class="text-xs text-muted font-normal">কার্ড ম্যাচ ও স্পিড কুইজ</span>
+            </h3>
+            <p class="text-xs text-muted leading-relaxed">
+              খেলার মাধ্যমে মেমরি ও দ্রুত সিদ্ধান্ত গ্রহণের জন্য শব্দ মিলানো ও টাইমড চ্যালেঞ্জ।
+            </p>
+          </div>
+          <div
+            class="pt-4 mt-5 border-t border-slate-200 dark:border-slate-800/80 text-xs text-amber-600 dark:text-amber-400 font-bold group-hover:translate-x-1 transition-transform flex items-center gap-1.5">
+            <span>গেম ও কুইজ খেলুন</span>
+            <span>→</span>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- =============================================================== -->
+    <!-- 04: The 4-Step Learning Method (৪টি সহজ ধাপে জার্মান শিক্ষা)    -->
+    <!-- =============================================================== -->
+    <section id="method" class="my-20 p-8 sm:p-12 rounded-3xl card-surface border" appScrollReveal
+      revealVariant="fade-up">
+      <div class="text-center mb-12">
+        <span class="text-xs px-3.5 py-1.5 rounded-full badge-surface border font-bold uppercase tracking-wider">
+          শিক্ষণ পদ্ধতি
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-black text-main tracking-tight mt-3">
+          কীভাবে DeutschBuddy আপনাকে দ্রুত শেখায়?
+        </h2>
+        <p class="text-muted text-xs sm:text-sm mt-1 max-w-lg mx-auto">
+          একটি বৈজ্ঞানিক ও প্রমাণসিদ্ধ ৪-ধাপের পুনরাবৃত্তি পদ্ধতি যা আপনার দীর্ঘমেয়াদী স্মৃতিতে শব্দ ধরে রাখে।
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <div class="p-5 rounded-2xl bg-slate-500/5 border border-slate-200 dark:border-slate-800">
+          <div class="text-2xl font-black text-violet-600 dark:text-violet-400 mb-2 font-mono">০১</div>
+          <h4 class="text-sm font-bold text-main mb-1">শুনুন ও ধ্বনি চিনুন</h4>
+          <p class="text-xs text-muted leading-relaxed">
+            নেটিভ জার্মান অডিও শুনে সঠিক উচ্চারণ ও বাংলা অর্থের সাথে সংযোগ তৈরি করুন।
+          </p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-slate-500/5 border border-slate-200 dark:border-slate-800">
+          <div class="text-2xl font-black text-cyan-600 dark:text-cyan-400 mb-2 font-mono">০২</div>
+          <h4 class="text-sm font-bold text-main mb-1">ফ্ল্যাশকার্ডে অনুশীলন</h4>
+          <p class="text-xs text-muted leading-relaxed">
+            ৩ডি ফ্ল্যাশকার্ড উল্টে শব্দ ও বাংলা অর্থ ঝালাই করে তাৎক্ষণিক স্মৃতি যাচাই করুন।
+          </p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-slate-500/5 border border-slate-200 dark:border-slate-800">
+          <div class="text-2xl font-black text-teal-600 dark:text-teal-400 mb-2 font-mono">০৩</div>
+          <h4 class="text-sm font-bold text-main mb-1">ব্যাকরণ ও কেস প্রয়োগ</h4>
+          <p class="text-xs text-muted leading-relaxed">
+            Der, Die, Das এবং Nominativ, Akkusativ, Dativ কেসের মাধ্যমে বাক্যের কাঠামো বুঝুন।
+          </p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-slate-500/5 border border-slate-200 dark:border-slate-800">
+          <div class="text-2xl font-black text-emerald-600 dark:text-emerald-400 mb-2 font-mono">০৪</div>
+          <h4 class="text-sm font-bold text-main mb-1">কুইজ দিয়ে মেমরি লক</h4>
+          <p class="text-xs text-muted leading-relaxed">
+            টাইমড কুইজ ও কার্ড ম্যাচিংয়ের মাধ্যমে শেখা জ্ঞান দীর্ঘমেয়াদী স্মৃতিতে স্থায়ী করুন।
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =============================================================== -->
+    <!-- 05: Frequently Asked Questions (FAQ)                            -->
+    <!-- =============================================================== -->
+    <section id="faq" class="my-20 pt-8" appScrollReveal revealVariant="fade-up">
+      <div class="text-center mb-12">
+        <div
+          class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full badge-surface border text-xs font-semibold uppercase tracking-wider mb-3">
+          সাধারণ জিজ্ঞাসা
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-black text-main tracking-tight">
+          সচরাচর জিজ্ঞাসিত প্রশ্নাবলী (FAQ)
+        </h2>
+        <p class="text-muted text-sm sm:text-base mt-2 max-w-xl mx-auto">
+          DeutschBuddy সম্পর্কিত আপনার যেকোনো সাধারণ প্রশ্নের উত্তর এখানে পেয়ে যাবেন।
+        </p>
+      </div>
+
+      <div class="max-w-3xl mx-auto space-y-3">
+        @for (faq of faqs(); track faq.question; let i = $index) {
+        <div class="rounded-2xl card-surface border overflow-hidden transition-all">
+          <button type="button" (click)="toggleFaq(i)"
+            class="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-bold text-sm sm:text-base text-main hover:text-violet-600 dark:hover:text-violet-300 transition-colors cursor-pointer">
+            <span>{{ faq.question }}</span>
+            <span
+              class="text-xs px-2 py-1 rounded-lg badge-surface border font-mono shrink-0 transition-transform duration-300"
+              [class.rotate-180]="faq.isOpen">
+              ▼
+            </span>
+          </button>
+          @if (faq.isOpen) {
+          <div
+            class="px-4 sm:px-5 pb-5 pt-1 text-xs sm:text-sm text-muted leading-relaxed border-t border-slate-200 dark:border-slate-800/60">
+            {{ faq.answer }}
+          </div>
+          }
+        </div>
+        }
+      </div>
+    </section>
+
+    <!-- =============================================================== -->
+    <!-- 06: Final Single Dominant Call to Action                        -->
+    <!-- =============================================================== -->
+    <section class="my-20 text-center p-10 sm:p-14 rounded-3xl card-surface border" appScrollReveal
+      revealVariant="fade-up">
+      <h2 class="text-3xl sm:text-4xl font-black text-main tracking-tight">
+        আজ থেকেই বাংলায় জার্মান শেখা শুরু করুন
+      </h2>
+      <p class="text-muted text-sm sm:text-base mt-2 max-w-lg mx-auto font-normal">
+        বাংলাভাষীদের জন্য সহজ, স্বজ্ঞাত ও সম্পূর্ণ বিনামূল্যে তৈরি একটি আধুনিক লার্নিং প্ল্যাটফর্ম।
+      </p>
+      <div class="mt-7">
+        <a routerLink="/alphabet"
+          class="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-bold text-base shadow-xl active:scale-95 transition-all">
+          <span>এখনই শেখা শুরু করুন</span>
+          <span>→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- =============================================================== -->
+    <!-- Footer                                                          -->
+    <!-- =============================================================== -->
+    <footer
+      class="pt-8 border-t border-slate-200 dark:border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted font-medium">
+      <div class="flex items-center gap-2">
+        <span class="font-bold text-main">DeutschBuddy</span> — Learn German in Bangla with ease
+      </div>
+      <div>
+        Designed with care for Bengali native speakers worldwide.
+      </div>
+    </footer>
+
+  </main>
+
+</div>

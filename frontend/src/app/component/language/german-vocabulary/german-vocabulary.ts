@@ -4,11 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { VocabItem, VOCABULARY_DATA } from '../../../data/vocabulary.data';
 import { NavBar } from '../../nav-bar/nav-bar';
+import { TiltCardDirective } from '../../../directives/tilt-card.directive';
+import { ScrollRevealDirective } from '../../../directives/scroll-reveal.directive';
 
 @Component({
   selector: 'app-german-vocabulary',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, NavBar],
+  imports: [CommonModule, FormsModule, RouterModule, NavBar, TiltCardDirective, ScrollRevealDirective],
   templateUrl: './german-vocabulary.html',
   styleUrl: './german-vocabulary.css',
 })
@@ -24,6 +26,9 @@ export class GermanVocabulary implements OnInit {
 
   // Track the current mode ('learn' | 'practice')
   protected readonly currentMode = signal<'learn' | 'practice'>('learn');
+
+  // Track flipped state for 3D flashcards in learn mode
+  protected readonly flippedCards = signal<Set<number>>(new Set());
 
   // Computed signal to filter dataset by category
   protected readonly filteredVocab = computed(() => {
@@ -87,6 +92,7 @@ export class GermanVocabulary implements OnInit {
         this.scoreCorrect.set(0);
         this.scoreIncorrect.set(0);
         this.streak.set(0);
+        this.flippedCards.set(new Set());
       } else {
         this.selectedCategory.set(null);
         this.isCompleted.set(false);
@@ -94,8 +100,27 @@ export class GermanVocabulary implements OnInit {
     });
   }
 
+  // Toggle single flashcard 3D flip
+  protected toggleCardFlip(id: number, event?: Event): void {
+    if (event) event.stopPropagation();
+    this.flippedCards.update(set => {
+      const next = new Set(set);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  }
+
+  protected isCardFlipped(id: number): boolean {
+    return this.flippedCards().has(id);
+  }
+
   // Play audio using native speech synthesis
-  protected playAudio(text: string): void {
+  protected playAudio(text: string, event?: Event): void {
+    if (event) event.stopPropagation();
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
@@ -162,17 +187,13 @@ export class GermanVocabulary implements OnInit {
       match => this.normalize(match).toLowerCase() === normalizedUser
     );
 
-    // Dynamically check English matches if the user adds them to the data model
+    // Dynamically check English matches if available
     const anyItem = item as any;
-
-    // Check englishMatches array
     if (!isMatch && anyItem.englishMatches && Array.isArray(anyItem.englishMatches)) {
       isMatch = anyItem.englishMatches.some(
         (match: string) => this.normalize(match).toLowerCase() === normalizedUser
       );
     }
-
-    // Check single english string
     if (!isMatch && anyItem.english && typeof anyItem.english === 'string') {
       isMatch = this.normalize(anyItem.english).toLowerCase() === normalizedUser;
     }
@@ -217,12 +238,6 @@ export class GermanVocabulary implements OnInit {
     }
   }
 
-  // Virtual keyboard key click helper
-  protected appendChar(char: string): void {
-    this.userInput.update(val => val + char);
-    this.focusInput();
-  }
-
   // Restart category quiz
   protected restartCategory(): void {
     if (this.selectedCategory()) {
@@ -244,7 +259,7 @@ export class GermanVocabulary implements OnInit {
   private normalize(str: string): string {
     if (!str) return '';
     return str
-      .replace(/[\u200B-\u200D\uFEFF]/g, '') // remove zero-width characters
+      .replace(/[\u200B-\u200D\uFEFF]/g, '')
       .trim();
   }
 }

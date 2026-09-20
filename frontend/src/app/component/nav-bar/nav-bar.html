@@ -1,19 +1,29 @@
-<header class="sticky top-4 z-50 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
-  <div class="flex items-center justify-between py-3 px-5 sm:px-6 rounded-2xl glass-card border border-slate-700/60 shadow-2xl backdrop-blur-xl bg-slate-950/70">
-    
-    <!-- Logo -->
-    <a routerLink="/" (click)="closeMobileMenu()" class="flex items-center gap-3 group cursor-pointer">
-      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-violet-600 via-cyan-500 to-emerald-400 p-0.5 shadow-lg shadow-violet-500/25 group-hover:scale-105 transition-transform duration-300">
-        <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center font-black text-violet-400 text-base tracking-wider">
-          DE
+<header
+  class="hidden lg:block sticky top-3 z-50 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-2 lg:mb-3 transition-all duration-300">
+  <div class="flex items-center justify-between rounded-2xl glass-2 border transition-all duration-300"
+    [class.py-2]="isScrolled()" [class.py-3]="!isScrolled()" [class.px-4]="isScrolled()" [class.px-6]="!isScrolled()"
+    [class.bg-slate-950\/85]="isScrolled()" [class.border-violet-500\/30]="isScrolled()"
+    [class.shadow-2xl]="isScrolled()" [class.shadow-violet-950\/30]="isScrolled()">
+
+    <!-- Logo & Brand Identity -->
+    <a routerLink="/" (click)="closeMobileMenu()" class="flex items-center gap-3 group cursor-pointer select-none">
+      <div
+        class="relative w-10 h-10 rounded-xl bg-gradient-to-tr from-violet-600 via-cyan-500 to-emerald-400 p-0.5 shadow-lg shadow-violet-500/25 group-hover:scale-105 transition-transform duration-300">
+        <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center overflow-hidden p-1">
+          <img src="/logo.png" alt="DeutschBuddy Logo" class="w-full h-full object-contain" />
+        </div>
+        <div
+          class="absolute -inset-1 rounded-xl bg-gradient-to-r from-violet-600 to-cyan-500 blur-sm opacity-0 group-hover:opacity-70 transition-opacity duration-300 -z-10">
         </div>
       </div>
       <div class="flex flex-col">
         <div class="flex items-center gap-2">
-          <span class="text-xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-slate-100 via-slate-200 to-violet-300">
+          <span
+            class="text-xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-slate-100 via-slate-200 to-violet-300">
             DeutschBuddy
           </span>
-          <span class="text-[10px] px-2 py-0.5 rounded-full bg-violet-500/15 border border-violet-500/30 text-violet-300 font-bold uppercase tracking-wider">
+          <span
+            class="text-[10px] px-2 py-0.5 rounded-full bg-violet-500/15 border border-violet-500/30 text-violet-300 font-bold uppercase tracking-wider">
             বাংলায়
           </span>
         </div>
@@ -21,87 +31,160 @@
     </a>
 
     <!-- Desktop Navigation Menu -->
-    <nav class="hidden md:flex items-center gap-1.5 text-xs font-semibold">
-      <a routerLink="/" 
-         routerLinkActive="bg-violet-500/15 text-violet-300 border-violet-500/30 shadow-sm" 
-         [routerLinkActiveOptions]="{exact: true}"
-         class="px-3.5 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/60 border border-transparent transition-all">
+    <nav class="hidden lg:flex items-center gap-1 text-xs font-semibold">
+      <a routerLink="/" routerLinkActive="active-nav-link text-violet-300" [routerLinkActiveOptions]="{exact: true}"
+        class="nav-link px-3 py-1.5 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/60 border border-transparent transition-all flex items-center gap-1.5">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"
+          class="!w-4 !h-4 !text-base"></mat-icon>
         হোম
       </a>
-      
-      <a routerLink="/alphabet" 
-         routerLinkActive="bg-violet-500/15 text-violet-300 border-violet-500/30 shadow-sm"
-         class="px-3.5 py-2 rounded-xl text-slate-300 hover:text-violet-400 hover:bg-slate-800/60 border border-transparent transition-all flex items-center gap-1.5">
-        <span class="text-violet-400">Aa</span> বর্ণমালা
+
+      <a routerLink="/alphabet" routerLinkActive="active-nav-link text-violet-300"
+        class="nav-link px-3 py-1.5 rounded-xl text-slate-300 hover:text-violet-300 hover:bg-slate-800/60 border border-transparent transition-all flex items-center gap-1.5">
+        <span class="text-violet-400 font-bold">Aa</span> বর্ণমালা
       </a>
 
-      <a routerLink="/numbers" 
-         routerLinkActive="bg-cyan-500/15 text-cyan-300 border-cyan-500/30 shadow-sm"
-         class="px-3.5 py-2 rounded-xl text-slate-300 hover:text-cyan-400 hover:bg-slate-800/60 border border-transparent transition-all flex items-center gap-1.5">
-        <span class="text-cyan-400">123</span> সংখ্যা
+      <a routerLink="/numbers" routerLinkActive="active-nav-link text-cyan-300"
+        class="nav-link px-3 py-1.5 rounded-xl text-slate-300 hover:text-cyan-300 hover:bg-slate-800/60 border border-transparent transition-all flex items-center gap-1.5">
+        <span class="text-cyan-400 font-bold">123</span> সংখ্যা
       </a>
 
-      <a routerLink="/vocabulary" 
-         routerLinkActive="bg-indigo-500/15 text-indigo-300 border-indigo-500/30 shadow-sm"
-         class="px-3.5 py-2 rounded-xl text-slate-300 hover:text-indigo-400 hover:bg-slate-800/60 border border-transparent transition-all flex items-center gap-1.5">
-        <span class="text-indigo-400">📖</span> শব্দকোষ
+      <a routerLink="/vocabulary" routerLinkActive="active-nav-link text-indigo-300"
+        class="nav-link px-3 py-1.5 rounded-xl text-slate-300 hover:text-indigo-300 hover:bg-slate-800/60 border border-transparent transition-all flex items-center gap-1.5">
+        <span>📖</span> শব্দকোষ
       </a>
 
-      <a routerLink="/conversation" 
-         routerLinkActive="bg-emerald-500/15 text-emerald-300 border-emerald-500/30 shadow-sm"
-         class="px-3.5 py-2 rounded-xl text-slate-300 hover:text-emerald-400 hover:bg-slate-800/60 border border-transparent transition-all flex items-center gap-1.5">
-        <span class="text-emerald-400">💬</span> সংলাপ
+      <a routerLink="/conversation" routerLinkActive="active-nav-link text-emerald-300"
+        class="nav-link px-3 py-1.5 rounded-xl text-slate-300 hover:text-emerald-300 hover:bg-slate-800/60 border border-transparent transition-all flex items-center gap-1.5">
+        <span>💬</span> সংলাপ
       </a>
 
-      <a routerLink="/game" 
-         routerLinkActive="bg-amber-500/15 text-amber-300 border-amber-500/30 shadow-sm"
-         class="px-3.5 py-2 rounded-xl text-slate-300 hover:text-amber-400 hover:bg-slate-800/60 border border-transparent transition-all flex items-center gap-1.5">
-        <span class="text-amber-400">🎮</span> শব্দ খেলা
+      <a routerLink="/grammar" routerLinkActive="active-nav-link text-teal-300"
+        class="nav-link px-3 py-1.5 rounded-xl text-slate-300 hover:text-teal-300 hover:bg-slate-800/60 border border-transparent transition-all flex items-center gap-1.5">
+        <span>📐</span> ব্যাকরণ
+      </a>
+
+      <a routerLink="/game" routerLinkActive="active-nav-link text-amber-300"
+        class="nav-link px-3 py-1.5 rounded-xl text-slate-300 hover:text-amber-300 hover:bg-slate-800/60 border border-transparent transition-all flex items-center gap-1.5">
+        <span>🎮</span> খেলা
       </a>
     </nav>
 
-    <!-- Header Right Action -->
-    <div class="hidden sm:flex items-center gap-3">
-      <a routerLink="/game" 
-         class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-500 text-white text-xs font-bold shadow-lg shadow-violet-600/30 hover:scale-105 active:scale-95 transition-all">
-        <span>🎮 শব্দ খেলা</span>
+    <!-- Header Right Action (Desktop) -->
+    <div class="hidden lg:flex items-center gap-3">
+      <a routerLink="/game"
+        class="relative inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-500 text-white text-xs font-bold shadow-lg shadow-violet-600/30 hover:scale-105 active:scale-95 transition-all overflow-hidden group">
+        <span class="relative z-10 flex items-center gap-1.5">
+          <span class="group-hover:rotate-12 transition-transform">🎮</span>
+          <span>শব্দ খেলা</span>
+        </span>
+        <div
+          class="absolute inset-0 bg-gradient-to-r from-cyan-500 to-violet-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        </div>
       </a>
     </div>
-
-    <!-- Mobile Hamburger Menu Button -->
-    <button (click)="toggleMobileMenu()" class="md:hidden p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        @if (!isMobileMenuOpen()) {
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-        } @else {
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-        }
-      </svg>
-    </button>
   </div>
-
-  <!-- Mobile Dropdown Navigation -->
-  @if (isMobileMenuOpen()) {
-    <div class="md:hidden mt-3 p-4 rounded-2xl glass-card border border-slate-800 bg-slate-950/95 backdrop-blur-2xl shadow-2xl flex flex-col gap-2 text-sm font-semibold animate-in fade-in slide-in-from-top-4 duration-200">
-      <a routerLink="/" (click)="closeMobileMenu()" class="px-4 py-3 rounded-xl hover:bg-slate-900 text-slate-200 flex items-center gap-3">
-        <span>🏠</span> হোম (ড্যাশবোর্ড)
-      </a>
-      <a routerLink="/alphabet" (click)="closeMobileMenu()" class="px-4 py-3 rounded-xl hover:bg-slate-900 text-slate-200 flex items-center gap-3">
-        <span class="text-violet-400">Aa</span> বর্ণমালা (Alphabet)
-      </a>
-      <a routerLink="/numbers" (click)="closeMobileMenu()" class="px-4 py-3 rounded-xl hover:bg-slate-900 text-slate-200 flex items-center gap-3">
-        <span class="text-cyan-400">123</span> সংখ্যা (Numbers)
-      </a>
-      <a routerLink="/vocabulary" (click)="closeMobileMenu()" class="px-4 py-3 rounded-xl hover:bg-slate-900 text-slate-200 flex items-center gap-3">
-        <span class="text-indigo-400">📖</span> শব্দকোষ (Vocabulary)
-      </a>
-      <a routerLink="/conversation" (click)="closeMobileMenu()" class="px-4 py-3 rounded-xl hover:bg-slate-900 text-slate-200 flex items-center gap-3">
-        <span class="text-emerald-400">💬</span> সংলাপ (Conversation)
-      </a>
-      <a routerLink="/game" (click)="closeMobileMenu()" class="px-4 py-3 rounded-xl bg-amber-500/10 text-amber-300 border border-amber-500/20 flex items-center gap-3 font-bold">
-        <span>🎮</span> শব্দ খেলা (Word Game)
-      </a>
-    </div>
-  }
 </header>
 
+<!-- Mobile Bottom Navigation Bar (Instagram Style) -->
+<nav
+  class="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-slate-950/90 backdrop-blur-2xl border-t border-slate-800/90 shadow-[0_-8px_30px_rgba(0,0,0,0.6)] px-2 pt-2 pb-[max(0.75rem,env(safe-area-inset-bottom))] transition-all duration-300"
+  aria-label="Mobile Navigation">
+  <div class="max-w-md mx-auto grid grid-cols-7 items-center justify-items-center">
+
+    <!-- 1. Home -->
+    <a routerLink="/" routerLinkActive="active-bottom-tab text-violet-400 font-bold"
+      [routerLinkActiveOptions]="{exact: true}"
+      class="bottom-tab flex flex-col items-center justify-center w-full py-1 text-slate-400 hover:text-slate-200 transition-all duration-200 active:scale-90">
+      <div class="relative flex items-center justify-center">
+        <svg class="w-5 h-5 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M3 9.75L12 3l9 6.75V20.25a.75.75 0 01-.75.75H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75v4.5a.75.75 0 01-.75.75H3.75a.75.75 0 01-.75-.75V9.75z" />
+        </svg>
+        <span
+          class="active-dot absolute -top-1 w-1.5 h-1.5 rounded-full bg-violet-400 opacity-0 transition-opacity"></span>
+      </div>
+      <span class="text-[9px] mt-1 leading-tight tracking-tight">হোম</span>
+    </a>
+
+    <!-- 2. Alphabet -->
+    <a routerLink="/alphabet" routerLinkActive="active-bottom-tab text-violet-400 font-bold"
+      class="bottom-tab flex flex-col items-center justify-center w-full py-1 text-slate-400 hover:text-slate-200 transition-all duration-200 active:scale-90">
+      <div class="relative flex items-center justify-center">
+        <span class="font-black text-xs tracking-tight">Aa</span>
+        <span
+          class="active-dot absolute -top-1 w-1.5 h-1.5 rounded-full bg-violet-400 opacity-0 transition-opacity"></span>
+      </div>
+      <span class="text-[9px] mt-1 leading-tight tracking-tight">বর্ণমালা</span>
+    </a>
+
+    <!-- 3. Numbers -->
+    <a routerLink="/numbers" routerLinkActive="active-bottom-tab text-cyan-400 font-bold"
+      class="bottom-tab flex flex-col items-center justify-center w-full py-1 text-slate-400 hover:text-slate-200 transition-all duration-200 active:scale-90">
+      <div class="relative flex items-center justify-center">
+        <span class="font-black text-xs tracking-tight">123</span>
+        <span
+          class="active-dot absolute -top-1 w-1.5 h-1.5 rounded-full bg-cyan-400 opacity-0 transition-opacity"></span>
+      </div>
+      <span class="text-[9px] mt-1 leading-tight tracking-tight">সংখ্যা</span>
+    </a>
+
+    <!-- 4. Vocabulary -->
+    <a routerLink="/vocabulary" routerLinkActive="active-bottom-tab text-indigo-400 font-bold"
+      class="bottom-tab flex flex-col items-center justify-center w-full py-1 text-slate-400 hover:text-slate-200 transition-all duration-200 active:scale-90">
+      <div class="relative flex items-center justify-center">
+        <svg class="w-5 h-5 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+        </svg>
+        <span
+          class="active-dot absolute -top-1 w-1.5 h-1.5 rounded-full bg-indigo-400 opacity-0 transition-opacity"></span>
+      </div>
+      <span class="text-[9px] mt-1 leading-tight tracking-tight">শব্দকোষ</span>
+    </a>
+
+    <!-- 5. Conversation -->
+    <a routerLink="/conversation" routerLinkActive="active-bottom-tab text-emerald-400 font-bold"
+      class="bottom-tab flex flex-col items-center justify-center w-full py-1 text-slate-400 hover:text-slate-200 transition-all duration-200 active:scale-90">
+      <div class="relative flex items-center justify-center">
+        <svg class="w-5 h-5 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+        </svg>
+        <span
+          class="active-dot absolute -top-1 w-1.5 h-1.5 rounded-full bg-emerald-400 opacity-0 transition-opacity"></span>
+      </div>
+      <span class="text-[9px] mt-1 leading-tight tracking-tight">সংলাপ</span>
+    </a>
+
+    <!-- 6. Grammar -->
+    <a routerLink="/grammar" routerLinkActive="active-bottom-tab text-teal-400 font-bold"
+      class="bottom-tab flex flex-col items-center justify-center w-full py-1 text-slate-400 hover:text-slate-200 transition-all duration-200 active:scale-90">
+      <div class="relative flex items-center justify-center">
+        <svg class="w-5 h-5 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+        </svg>
+        <span
+          class="active-dot absolute -top-1 w-1.5 h-1.5 rounded-full bg-teal-400 opacity-0 transition-opacity"></span>
+      </div>
+      <span class="text-[9px] mt-1 leading-tight tracking-tight">ব্যাকরণ</span>
+    </a>
+
+    <!-- 7. Game -->
+    <a routerLink="/game" routerLinkActive="active-bottom-tab text-amber-400 font-bold"
+      class="bottom-tab flex flex-col items-center justify-center w-full py-1 text-slate-400 hover:text-slate-200 transition-all duration-200 active:scale-90">
+      <div class="relative flex items-center justify-center">
+        <svg class="w-5 h-5 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M15.59 14.37a5 5 0 01-5.84 0M6.5 10a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm11 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a10 10 0 100 20 10 10 0 000-20z" />
+        </svg>
+        <span
+          class="active-dot absolute -top-1 w-1.5 h-1.5 rounded-full bg-amber-400 opacity-0 transition-opacity"></span>
+      </div>
+      <span class="text-[9px] mt-1 leading-tight tracking-tight">খেলা</span>
+    </a>
+
+  </div>
+</nav>

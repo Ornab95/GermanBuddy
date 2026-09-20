@@ -1,18 +1,21 @@
-import { Component, OnInit, signal, effect, computed, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, signal, effect, computed, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CONVERSATION_DATA, Conversation, Dialogue } from '../../../data/conversation.data';
 import { NavBar } from '../../nav-bar/nav-bar';
+import { TiltCardDirective } from '../../../directives/tilt-card.directive';
+import { ScrollRevealDirective } from '../../../directives/scroll-reveal.directive';
 
 @Component({
   selector: 'app-german-conversation',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, NavBar],
+  imports: [CommonModule, FormsModule, RouterModule, NavBar, TiltCardDirective, ScrollRevealDirective],
   templateUrl: './german-conversation.html',
   styleUrl: './german-conversation.css',
 })
 export class GermanConversation implements OnInit, OnDestroy {
+  private isBrowser = false;
 
   // Raw conversations list
   protected readonly conversations = signal<Conversation[]>(CONVERSATION_DATA);
@@ -68,9 +71,11 @@ export class GermanConversation implements OnInit, OnDestroy {
     return null;
   });
 
-  constructor() {
-    // Initializing SpeechRecognition if available in the browser
-    if (typeof window !== 'undefined') {
+  constructor(@Inject(PLATFORM_ID) platformId: object) {
+    this.isBrowser = isPlatformBrowser(platformId);
+
+    // Initializing SpeechRecognition if available in browser
+    if (this.isBrowser) {
       const SpeechRecognition =
         (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
       if (SpeechRecognition) {
@@ -110,7 +115,7 @@ export class GermanConversation implements OnInit, OnDestroy {
     // Effect to auto-scroll speaking dialog into view
     effect(() => {
       const idx = this.currentDialogueIndex();
-      if (idx !== -1 && typeof document !== 'undefined') {
+      if (idx !== -1 && this.isBrowser && typeof document !== 'undefined') {
         setTimeout(() => {
           const activeEl = document.getElementById(`dialogue-${idx}`);
           if (activeEl) {
@@ -123,7 +128,7 @@ export class GermanConversation implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Load bookmarks from local storage
-    if (typeof window !== 'undefined' && window.localStorage) {
+    if (this.isBrowser && window.localStorage) {
       const stored = localStorage.getItem('german_conversation_bookmarks');
       if (stored) {
         try {
@@ -180,10 +185,9 @@ export class GermanConversation implements OnInit, OnDestroy {
     const dialogue = conv.dialogues[index];
     this.activeSpeaker.set(dialogue.speaker);
 
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+    if (this.isBrowser && 'speechSynthesis' in window) {
       this.isSpeaking.set(true);
 
-      // Extract raw German sentence, remove any punctuation helpers for pronunciation
       const cleanGerman = dialogue.german.replace(/[¿¡!?.,]/g, '');
 
       this.speechUtterance = new SpeechSynthesisUtterance(cleanGerman);
@@ -223,9 +227,9 @@ export class GermanConversation implements OnInit, OnDestroy {
 
   // Play dialogue item vocabulary chip audio
   protected playVocabWord(word: string, event: MouseEvent): void {
-    event.stopPropagation(); // Prevent speech bubble hover trigger
+    event.stopPropagation();
     this.playAudioFeedback('click');
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+    if (this.isBrowser && 'speechSynthesis' in window) {
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(word);
       utterance.lang = 'de-DE';
@@ -241,7 +245,6 @@ export class GermanConversation implements OnInit, OnDestroy {
       this.pauseSpeech();
     } else {
       this.isPlayingAll.set(true);
-      // Start from current dialogue, or from 0 if completed
       const idx = this.currentDialogueIndex();
       const conv = this.activeConversation();
       if (conv) {
@@ -269,7 +272,7 @@ export class GermanConversation implements OnInit, OnDestroy {
     }
   }
 
-  // Navigate manually to the next dialogue bubble
+  // Navigate manually to next dialogue bubble
   protected nextSentence(): void {
     this.playAudioFeedback('click');
     const idx = this.currentDialogueIndex();
@@ -279,7 +282,7 @@ export class GermanConversation implements OnInit, OnDestroy {
     }
   }
 
-  // Navigate manually to the previous dialogue bubble
+  // Navigate manually to previous dialogue bubble
   protected prevSentence(): void {
     this.playAudioFeedback('click');
     const idx = this.currentDialogueIndex();
@@ -292,7 +295,6 @@ export class GermanConversation implements OnInit, OnDestroy {
   protected setSpeed(speed: number): void {
     this.playAudioFeedback('click');
     this.playbackSpeed.set(speed);
-    // If playing, re-speak current sentence to apply speed
     if (this.isSpeaking()) {
       this.replayCurrent();
     }
@@ -309,8 +311,7 @@ export class GermanConversation implements OnInit, OnDestroy {
       } else {
         newSet.add(id);
       }
-      // Persist in local storage
-      if (typeof window !== 'undefined' && window.localStorage) {
+      if (this.isBrowser && window.localStorage) {
         localStorage.setItem('german_conversation_bookmarks', JSON.stringify(Array.from(newSet)));
       }
       return newSet;
@@ -334,12 +335,11 @@ export class GermanConversation implements OnInit, OnDestroy {
     }
   }
 
-  // Evaluate the user's spoken input vs the active dialogue sentence
+  // Evaluate user's spoken input vs active dialogue sentence
   private evaluatePronunciation(spokenText: string): void {
     const active = this.currentDialogue();
     if (!active) return;
 
-    // Clean strings (remove spaces, lowercase, remove punctuation)
     const cleanSpoken = spokenText
       .toLowerCase()
       .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, '')
@@ -352,7 +352,6 @@ export class GermanConversation implements OnInit, OnDestroy {
       .replace(/\s+/g, ' ')
       .trim();
 
-    // Simple word match scoring
     const spokenWords = cleanSpoken.split(' ');
     const targetWords = cleanTarget.split(' ');
 
@@ -374,9 +373,9 @@ export class GermanConversation implements OnInit, OnDestroy {
     }
   }
 
-  // Synthesize lightweight browser AudioContext sounds for UI micro-interactions
+  // Synthesize lightweight browser AudioContext sounds
   protected playAudioFeedback(type: 'hover' | 'click' | 'success'): void {
-    if (typeof window === 'undefined') return;
+    if (!this.isBrowser) return;
 
     try {
       const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
@@ -404,12 +403,11 @@ export class GermanConversation implements OnInit, OnDestroy {
         osc.start();
         osc.stop(ctx.currentTime + 0.12);
       } else if (type === 'success') {
-        // Play short two-tone arpeggio
         osc.type = 'sine';
         const now = ctx.currentTime;
-        osc.frequency.setValueAtTime(523.25, now); // C5
-        osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
-        osc.frequency.setValueAtTime(783.99, now + 0.16); // G5
+        osc.frequency.setValueAtTime(523.25, now);
+        osc.frequency.setValueAtTime(659.25, now + 0.08);
+        osc.frequency.setValueAtTime(783.99, now + 0.16);
         gain.gain.setValueAtTime(0.05, now);
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
         osc.start();
@@ -426,7 +424,7 @@ export class GermanConversation implements OnInit, OnDestroy {
       clearTimeout(this.autoPlayTimeoutId);
       this.autoPlayTimeoutId = null;
     }
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+    if (this.isBrowser && 'speechSynthesis' in window) {
       window.speechSynthesis.cancel();
     }
   }

@@ -2,9 +2,38 @@
 @import 'tailwindcss';
 
 @layer base {
+  :root {
+    /* Glass Level Tokens */
+    --glass-1-bg: rgba(15, 23, 42, 0.55);
+    --glass-1-border: rgba(255, 255, 255, 0.08);
+    --glass-1-blur: 16px;
+    --glass-1-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+
+    --glass-2-bg: rgba(15, 23, 42, 0.68);
+    --glass-2-border: rgba(255, 255, 255, 0.12);
+    --glass-2-blur: 24px;
+    --glass-2-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.5);
+
+    --glass-3-bg: rgba(23, 31, 56, 0.78);
+    --glass-3-border: rgba(139, 92, 246, 0.25);
+    --glass-3-blur: 32px;
+    --glass-3-shadow: 0 25px 60px -15px rgba(139, 92, 246, 0.3), 0 0 40px -10px rgba(6, 182, 212, 0.2);
+
+    /* Atmospheric Light Colors */
+    --color-atmospheric-violet: rgba(139, 92, 246, 0.22);
+    --color-atmospheric-cyan: rgba(6, 182, 212, 0.2);
+    --color-atmospheric-emerald: rgba(16, 185, 129, 0.18);
+    --color-atmospheric-amber: rgba(245, 158, 11, 0.18);
+  }
+
   body {
     font-family: 'Plus Jakarta Sans', 'Hind Siliguri', system-ui, -apple-system, sans-serif;
     background-color: #030712;
+    background-image: 
+      radial-gradient(circle at 15% 15%, rgba(139, 92, 246, 0.12) 0%, transparent 40%),
+      radial-gradient(circle at 85% 65%, rgba(6, 182, 212, 0.1) 0%, transparent 45%),
+      radial-gradient(circle at 50% 90%, rgba(16, 185, 129, 0.08) 0%, transparent 40%);
+    background-attachment: fixed;
     color: #f3f4f6;
     overflow-x: hidden;
   }
@@ -13,6 +42,10 @@
 /* -------------------------------------------------------------
    3D Perspective & Spatial Transform Utilities
 ------------------------------------------------------------- */
+.perspective-500 {
+  perspective: 500px;
+}
+
 .perspective-1000 {
   perspective: 1000px;
 }
@@ -27,16 +60,36 @@
 
 .backface-hidden {
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .rotate-y-180 {
   transform: rotateY(180deg);
 }
 
-/* 3D Depth Card Tilt Effect */
+/* Spatial Depth Layers */
+.layer-bg {
+  transform: translateZ(-100px) scale(1.1);
+  pointer-events: none;
+}
+
+.layer-mid {
+  transform: translateZ(-30px);
+}
+
+.layer-fore {
+  transform: translateZ(20px);
+}
+
+.layer-hero {
+  transform: translateZ(60px);
+}
+
+/* 3D Depth Card Tilt Effect (Standard) */
 .tilt-card-3d {
-  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s cubic-bezier(0.23, 1, 0.32, 1), border-color 0.4s ease;
   transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .tilt-card-3d:hover {
@@ -65,6 +118,21 @@
   50% { transform: translate(60px, 40px) scale(1.2); }
 }
 
+@keyframes floatSpatial1 {
+  0%, 100% { transform: translateY(0px) rotateX(2deg) rotateY(-3deg); }
+  50% { transform: translateY(-14px) rotateX(-2deg) rotateY(3deg); }
+}
+
+@keyframes floatSpatial2 {
+  0%, 100% { transform: translateY(0px) rotateX(-3deg) rotateY(4deg); }
+  50% { transform: translateY(-18px) rotateX(3deg) rotateY(-2deg); }
+}
+
+@keyframes floatSpatial3 {
+  0%, 100% { transform: translateY(0px) rotateX(4deg) rotateY(2deg); }
+  50% { transform: translateY(-12px) rotateX(-3deg) rotateY(-4deg); }
+}
+
 @keyframes pulseGlow {
   0%, 100% { opacity: 0.35; transform: scale(1); }
   50% { opacity: 0.75; transform: scale(1.06); }
@@ -75,9 +143,9 @@
   50% { height: 22px; }
 }
 
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+@keyframes specularSweep {
+  0% { transform: translateX(-150%) skewX(-20deg); }
+  100% { transform: translateX(250%) skewX(-20deg); }
 }
 
 .bg-orb {
@@ -86,46 +154,55 @@
   filter: blur(100px);
   pointer-events: none;
   z-index: 0;
+  will-change: transform;
 }
 
 .bg-orb-1 {
   top: -5%;
   left: 10%;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.22) 0%, rgba(99, 102, 241, 0) 70%);
-  animation: ambientFloat1 18s ease-in-out infinite;
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, var(--color-atmospheric-violet) 0%, rgba(99, 102, 241, 0) 70%);
+  animation: ambientFloat1 20s ease-in-out infinite;
 }
 
 .bg-orb-2 {
   top: 35%;
   right: -5%;
-  width: 550px;
-  height: 550px;
-  background: radial-gradient(circle, rgba(6, 182, 212, 0.2) 0%, rgba(16, 185, 129, 0) 70%);
-  animation: ambientFloat2 22s ease-in-out infinite;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--color-atmospheric-cyan) 0%, rgba(16, 185, 129, 0) 70%);
+  animation: ambientFloat2 24s ease-in-out infinite;
 }
 
 .bg-orb-3 {
   bottom: 5%;
   left: 20%;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(236, 72, 153, 0.18) 0%, rgba(139, 92, 246, 0) 70%);
-  animation: ambientFloat3 25s ease-in-out infinite;
+  width: 650px;
+  height: 650px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.16) 0%, var(--color-atmospheric-violet) 70%);
+  animation: ambientFloat3 28s ease-in-out infinite;
 }
 
 /* Subtle Grid Background Pattern Overlay */
 .bg-grid-pattern {
-  background-size: 40px 40px;
+  background-size: 48px 48px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
 }
 
-/* Animation Utility Classes */
-.animate-float-slow {
-  animation: ambientFloat1 10s ease-in-out infinite;
+/* Floating animation utilities */
+.animate-float-1 {
+  animation: floatSpatial1 6s ease-in-out infinite;
+}
+
+.animate-float-2 {
+  animation: floatSpatial2 8s ease-in-out infinite;
+}
+
+.animate-float-3 {
+  animation: floatSpatial3 7s ease-in-out infinite;
 }
 
 .animate-pulse-glow {
@@ -138,32 +215,162 @@
 .wave-bar-4 { animation: soundWave 0.8s ease-in-out infinite 0.1s; }
 
 /* -------------------------------------------------------------
-   Modern Glassmorphism & Shimmer Cards
+   Multi-Tiered Glassmorphism Design System
 ------------------------------------------------------------- */
+/* Glass Level 1: Normal containers, quiet cards, background panels */
+.glass-1,
 .glass-card {
-  background: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--glass-1-bg);
+  backdrop-filter: blur(var(--glass-1-blur)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-1-blur)) saturate(160%);
+  border: 1px solid var(--glass-1-border);
+  box-shadow: var(--glass-1-shadow);
+  position: relative;
 }
 
+/* Subtle inner specular highlight for glass-1 */
+.glass-1::before,
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 60%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Glass Level 2: Interactive cards, modules, actionable elements */
+.glass-2,
 .glass-card-interactive {
-  background: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--glass-2-bg);
+  backdrop-filter: blur(var(--glass-2-blur)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-2-blur)) saturate(180%);
+  border: 1px solid var(--glass-2-border);
+  box-shadow: var(--glass-2-shadow);
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-2::before,
+.glass-card-interactive::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(139, 92, 246, 0.2) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
 .glass-card-interactive:hover {
-  background: rgba(30, 41, 59, 0.75);
-  border-color: rgba(139, 92, 246, 0.4);
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px -15px rgba(139, 92, 246, 0.25),
-              0 0 20px 0 rgba(139, 92, 246, 0.1);
+  background: rgba(26, 36, 66, 0.82);
+  border-color: rgba(139, 92, 246, 0.45);
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.3),
+              0 0 30px 0 rgba(6, 182, 212, 0.15);
 }
 
-/* Interactive 3D Flip Card Container */
+.glass-2:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+/* Glass Level 3: Hero cards, featured items, modals, prominent HUD */
+.glass-3 {
+  background: var(--glass-3-bg);
+  backdrop-filter: blur(var(--glass-3-blur)) saturate(200%);
+  -webkit-backdrop-filter: blur(var(--glass-3-blur)) saturate(200%);
+  border: 1px solid var(--glass-3-border);
+  box-shadow: var(--glass-3-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-3::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(139, 92, 246, 0.4) 40%, rgba(6, 182, 212, 0.4) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Specular Light Reflection Sweep on Hover */
+.glass-reflection {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-reflection::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 100%
+  );
+  transform: translateX(-150%) skewX(-20deg);
+  pointer-events: none;
+  transition: none;
+}
+
+.glass-reflection:hover::after {
+  animation: specularSweep 1.2s ease-in-out;
+}
+
+/* -------------------------------------------------------------
+   Scroll Reveal System Utility Classes
+------------------------------------------------------------- */
+.reveal-init {
+  opacity: 0;
+  will-change: transform, opacity;
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.variant-fade-up {
+  transform: translateY(35px);
+}
+
+.variant-depth-in {
+  transform: perspective(1000px) translateZ(-60px) scale(0.94);
+}
+
+.variant-tilt-in {
+  transform: perspective(1000px) rotateX(8deg) translateY(30px);
+}
+
+.variant-fade-left {
+  transform: translateX(-40px);
+}
+
+.variant-fade-right {
+  transform: translateX(40px);
+}
+
+.reveal-in {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* -------------------------------------------------------------
+   Interactive 3D Flip Card Container
+------------------------------------------------------------- */
 .flip-card-inner {
   position: relative;
   width: 100%;
@@ -191,23 +398,67 @@
   transform: rotateY(180deg);
 }
 
-/* Custom Animated Scrollbar */
+/* -------------------------------------------------------------
+   Custom Animated Scrollbar
+------------------------------------------------------------- */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.8);
+  background: rgba(3, 7, 18, 0.9);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(139, 92, 246, 0.3);
+  background: rgba(139, 92, 246, 0.35);
   border-radius: 9999px;
-  border: 2px solid rgba(15, 23, 42, 0.8);
+  border: 2px solid rgba(3, 7, 18, 0.9);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(139, 92, 246, 0.6);
+  background: rgba(139, 92, 246, 0.7);
 }
 
+/* -------------------------------------------------------------
+   Accessibility: Prefers Reduced Motion
+------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .tilt-card-3d:hover {
+    transform: none !important;
+  }
+
+  .reveal-init {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .bg-orb {
+    animation: none !important;
+  }
+
+  .animate-float-1,
+  .animate-float-2,
+  .animate-float-3,
+  .animate-pulse-glow {
+    animation: none !important;
+  }
+}
+
+/* -------------------------------------------------------------
+   Mobile Bottom Navigation Bar Safe Spacing
+------------------------------------------------------------- */
+@media (max-width: 1023px) {
+  body {
+    padding-bottom: calc(4.75rem + env(safe-area-inset-bottom, 0px));
+  }
+}

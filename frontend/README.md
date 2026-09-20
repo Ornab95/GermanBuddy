@@ -1,59 +1,57 @@
-# Frontend
+# 🇩🇪 DeutschBuddy — Frontend Application
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.11.
+This directory contains the client-side and SSR source code for **DeutschBuddy (GermanBuddy)**, built with **Angular 21**, **Tailwind CSS v4**, and **Vitest**.
 
-## Development server
+For complete project documentation, overview, and roadmap, please see the root [README.md](../README.md).
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
-```
+## 🛠 Tech Stack
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- **Framework**: Angular 21 (Signals, standalone components, control flow)
+- **Styling**: Tailwind CSS v4 with PostCSS & custom glassmorphism
+- **UI/UX**: 3D spatial tilt & flip cards, ambient glowing orbs, dark mode
+- **SSR**: `@angular/ssr` + Express 5
+- **Unit Testing**: Vitest 4 with jsdom
+- **Typography**: Hind Siliguri & Plus Jakarta Sans
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 🚀 Quick Development Commands
 
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+### Development Server
+Run `npm start` or `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
 ```bash
-ng build
+npm start
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+### Production Build
+Run `npm run build` or `npx ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ```bash
-ng test
+npm run build
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+### Unit Tests
+Run `npm test` or `ng test` to execute unit tests via [Vitest](https://vitest.dev/).
 
 ```bash
-ng e2e
+npm test
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+### SSR Server
+To run the server-side rendered build locally:
 
-## Additional Resources
+```bash
+npm run serve:ssr:frontend
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
+
+## 📁 Key Directories
+
+- `src/app/component/dashboard/`: Main homepage with 3D flashcard showcase and learning modules.
+- `src/app/component/language/`: Modules for German Alphabet, Numbers, Vocabulary, Conversation, and Grammar.
+- `src/app/component/game/`: Interactive Word Game (Speed Quiz & Card Matching).
+- `src/app/data/`: Static vocabulary and dialogue datasets.

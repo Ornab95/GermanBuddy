@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { GermanAlphabet } from './german-alphabet';
 
@@ -9,6 +10,7 @@ describe('GermanAlphabet', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [GermanAlphabet],
+      providers: [provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(GermanAlphabet);

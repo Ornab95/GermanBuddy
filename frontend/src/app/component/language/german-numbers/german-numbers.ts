@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NavBar } from '../../nav-bar/nav-bar';
+import { TiltCardDirective } from '../../../directives/tilt-card.directive';
+import { ScrollRevealDirective } from '../../../directives/scroll-reveal.directive';
 
 interface Item {
   german: string;
@@ -14,7 +16,7 @@ interface Item {
 @Component({
   selector: 'app-german-numbers',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, NavBar],
+  imports: [CommonModule, FormsModule, RouterModule, NavBar, TiltCardDirective, ScrollRevealDirective],
   templateUrl: './german-numbers.html',
   styleUrl: './german-numbers.css',
 })
@@ -180,6 +182,13 @@ export class GermanNumbers implements OnInit {
     });
   }
 
+  protected getGroupLabel(digit: string): string {
+    const num = parseInt(digit, 10);
+    if (num <= 20) return 'মৌলিক (0-20)';
+    if (num < 100) return 'উল্টো গণনা (21-99)';
+    return 'শতক (100+)';
+  }
+
   protected playAudio(text: string): void {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       window.speechSynthesis.cancel();
@@ -330,5 +339,3 @@ export class GermanNumbers implements OnInit {
       .trim();
   }
 }
-
-
